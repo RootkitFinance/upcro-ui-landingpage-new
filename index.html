@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://kit.fontawesome.com/b690895109.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+  <title>upCRO</title>
+</head>
+
+<body>
+
+  <style>
+    .slick-prev{
+      color: #fff;
+      background-color: #0d6efd;
+      border-color: #0d6efd;
+      padding-right: 3rem!important;
+      padding-left: 3rem!important;
+    }
+
+    .slick-next{
+      color: #fff;
+      background-color: #0d6efd;
+      border-color: #0d6efd;
+      padding-right: 3rem!important;
+      padding-left: 3rem!important;
+    }
+  </style>
+  <nav class="navbar navbar-expand-lg navbar-dark ">
+    <div class="container">
+      <a class="navbar-brand" href="#"><img src="assets/images/logo.PNG" alt=""></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link " aria-current="page" href="#intro">INTRODUCTION</a></li>
+          <li class="nav-item"><a class="nav-link " aria-current="page" href="#about">ABOUT</a></li>
+          <li class="nav-item"><a class="nav-link " aria-current="page" href="#technology">TECHNOLOGY</a></li>
+          <li class="nav-item"><a class="nav-link " aria-current="page" href="#features">FEATURES</a></li>
+          <li class="nav-item"><a class="nav-link " aria-current="page" href="#team">TEAM</a></li>
+          <li class="nav-item"><a class="nav-link " aria-current="page" href="#article">ARTICLE</a></li>
+          <li class="nav-item"><a class="nav-link " aria-current="page" href="#roadmap">ROADMAP</a></li>
+          <li class="nav-item"><a class="nav-link " aria-current="page" href="#buy">HOW TO BUY</a></li>
+        </ul>
+        <form class="d-flex">
+          <button onclick="openInNewTab()" class="btn btn-primary fs-8 fw-500 px-4">ENTER APP</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <section class="main" id="intro">
+    <div class="d-flex align-items-center flex-column justify-content-center child px-3 pt-4">
+      <h1 class="fs-2 fw-600">upCRO</h1>
+      <h2 class="fs-2 fw-600 text-center">Market Generation Event</h2>
+      <div class="row mx-0 justify-content-center">
+        <p class="col-lg-5 col-12 text-center fw-300">Our Market Generation Event (M.G.E.) contracts have been used by many teams to launch dozens of tokens. Its the most fair way to create a market with permentently locked liqudity. Using ERC31337 we can spend the same value again within our system to buy for users from the newly created market. UpCRO is the latest launch by the Rootkit team as part of the upEcosystem, coins designed to have increased volitility against their main paired token with auto-refilling buy back vaults.
+        </p>
+      </div>
+      <div class="d-flex align-items-center  flex-wrap justify-content-center pro-parrent mx-3 p-2 cd100">
+        <div class="d-flex flex-column align-items-center">
+          <div class="progress">
+            <span class="title timer days" data-from="0" data-to="85" data-speed="1800"></span>
+            <div class="overlay"></div>
+            <div class="left"></div>
+            <div class="right"></div>
+          </div>
+          <span class="fs-7" style="margin-top: -10px;">Days</span>
+        </div>
+        <div class="d-flex flex-column align-items-center">
+          <div class="progress">
+            <span class="title timer hours" data-from="0" data-to="85" data-speed="1800"></span>
+            <div class="overlay"></div>
+            <div class="left"></div>
+            <div class="right"></div>
+          </div>
+          <span class="fs-7" style="margin-top: -10px;">Hours</span>
+        </div>
+        <div class="d-flex flex-column align-items-center">
+          <div class="progress">
+            <span class="title timer minutes" data-from="0" data-to="85" data-speed="1800"></span>
+            <div class="overlay"></div>
+            <div class="left"></div>
+            <div class="right"></div>
+          </div>
+          <span class="fs-7" style="margin-top: -10px;">Min</span>
+        </div>
+        <div class="d-flex flex-column align-items-center">
+          <div class="progress">
+            <span class="title timer seconds" data-from="0" data-to="85" data-speed="1800"></span>
+            <div class="overlay"></div>
+            <div class="left"></div>
+            <div class="right"></div>
+          </div>
+          <span class="fs-7" style="margin-top: -10px;">Sec</span>
+        </div>
+      </div>
+      <button onclick="openInNewTab()" class="btn btn-primary fs-8 fw-500 px-5 mt-4">ENTER APP</button>
+
+    </div>
+    <video width="100%" height="auto" playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+      <source src="assets/images/main.mp4" type="video/mp4">
+    </video>
+  </section>
+
+  <section class="d-flex align-items-center" id="about" style="min-height: 100vh;">
+    <div class="container">
+      <div class="row mx-0">
+        <div class="col-lg-6 co-12 d-flex flex-column">
+          <span class="text-primary">About Us</span>
+          <span class="fs-2 fw-600">Firmly Established Team</span>
+          <p class="fs-7 fw-300 pt-1">
+            The ROOT team has been releasing innovative defi products for almost 2 years, if people say its impossible,
+            we'll give it a try. We take an entirely unique approach to mechanic design and ecosystem expansion while
+            always trying to look at markets from new perspectives. We have two main classes of tokens, UpTokens (ROOTS)
+            and upOnlyTokens(FLOWERS). UpTokens such as upCRO are named by the token they are paired against in the main
+            liquidity pool. UpOnlyTokens use a fully redefined market structure based on valume and they never go down
+            in price, price up on buy and price up on sell.
+          </p>
+        </div>
+        <div class="col-lg-6 col-12">
+          <img src="assets/images/robot.PNG" class="w-100" alt="">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="technology">
+    <div class="container px-4 mb-5" style="min-height: 100vh;">
+      <div class="card w-100  p-5 pb-0 d-flex flex-column align-items-center">
+        <img src="assets/images/boxes.png" class="boxes" alt="">
+        <span class="text-primary">TECHNOLOGY</span>
+        <span class="fs-2 fw-600">UpToken Tech</span>
+        <div class="row mx-0 justify-content-center">
+          <p class="fs-7 fw-300 pt-1 text-center col-lg-11 col-12">
+            Using our ERC31337 technology, we first create a price floor by building our token within certain
+            parameters. We are then able to extract all value from beneath the price floor that would otherwise be
+            trapped. Once the value below a price floor has served its purpose to guarantee the price, it's essentially
+            stuck value, we are able to recover it and put it to use. We incorparate various mechanics to increase the
+            price floor over time, including high taxes after vault buy backs and token burns.
+          </p>
+        </div>
+        <img src="assets/images/power.png" class="col-lg-9 col-12" alt="">
+        <div class="row mx-0 justify-content-center w-100 ">
+          <div class="col-lg-6 col-12 card-2 d-flex p-4  justify-content-center align-items-center">
+            <button onclick="openInNewTab()" class="btn btn-primary fs-8 fw-500 px-5 mt-4">ENTER APP</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="decore">
+    <img src="assets/images/decore.png" alt="">
+  </div>
+
+  <section id="features" class="d-flex align-items-center" style="min-height: 100vh;">
+    <div class="container">
+      <div class="row align-items-center mx-0">
+        <div class="col-lg-6 co-12 d-flex flex-column">
+          <span class="text-primary">New Features</span>
+          <span class="fs-2 fw-600">Packed With New Innovations</span>
+          <p class="fs-7 fw-300 pt-1">
+            UpCRO will launch with multiple new features including a drip fault, marketing vault, and some unique new
+            functions never before seen in Defi. With the addition of hte drip vault we will have a multi-layered double
+            auto-compounding staking system with predictable APY. O very high apy at launch to encourage buy-side market
+            activity A percent of all trade fees as well as 11% of the value raised will be given directly to the
+            Marketing Vault with spends happening in a verifiable way. We've also included some cool new functions
+            including the ability to convert any percent of price impact directly into liquidity without affecting the
+            user slippage.
+          </p>
+        </div>
+        <div class="col-lg-6 col-12">
+          <img src="assets/images/wave.PNG" class="w-100" alt="">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="team">
+    <div class="container px-4 mb-5" style="min-height: 100vh;">
+      <div class="card w-100  py-5 pb-0 d-flex flex-column align-items-center">
+        <img src="assets/images/boxes.png" class="boxes" alt="">
+        <span class="text-primary">Our Team</span>
+        <span class="fs-2 fw-600">Anon with Trusted Reputation</span>
+        <div class="row mx-0 justify-content-center">
+          <p class="fs-7 fw-300 pt-1 text-center col-lg-11 col-12">
+            The ROOT team consists of professor Kronos and multiple other anonymous members. Our real identities are known
+            to many people and teams and we have been part of the industry since there was only Bitcoin. We believe
+            keeping our privacy is important and our tech and reputation should stand on their own. We're very proud to
+            say we feel were accomplishing this as multiple other teams have now adopted our technology and even found new
+            uses for it or ways to implement it. Some of those learnings are being incorporated in to upCRO and we're
+            happy to have learned from those who adopted and improved what we created.
+          </p>
+        </div>
+        <video style="z-index:3;" width="100%" height="auto" playsinline="playsinline" autoplay="autoplay" muted="muted"
+          loop="loop">
+          <source src="assets/images/logo.mp4" type="video/mp4">
+        </video>
+        <div class="row mx-0 justify-content-center w-100 " style="margin-top: -80px; z-index: 4;">
+          <div class="col-lg-6 col-12 card-2 d-flex p-4  justify-content-center align-items-center">
+            <button class="btn btn-primary fs-8 fw-500 px-5 mt-4">ENTER APP</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="article" class="d-flex align-items-center" style="min-height: 100vh;">
+    <div class="container d-flex flex-column align-items-center">
+      <span class="text-primary">Read about</span>
+      <span class="fs-2 fw-600">Articles</span>
+      <div class="ads-class mt-3 w-100 " id="mediumContent">
+        
+      </div>
+  </section>
+
+  <section id="roadmap">
+    <div class="container px-4 mb-5" style="min-height: 100vh;">
+      <div class="card w-100 card-bg py-5 pb-0 d-flex flex-column align-items-center">
+        <img src="assets/images/boxes.png" class="boxes" alt="">
+        <span class="text-primary">How we move</span>
+        <span class="fs-2 fw-600">Roadmap</span>
+        <div class="row mx-0 mt-5 justify-content-center w-100">
+          <div class="col-lg-7 col-12 d-flex align-items-center mt-5">
+            <div class="diomand">
+              <div>
+                <span>01</span>
+              </div>
+            </div>
+            <div class="d-flex flex-column ps-5">
+              <span class=" fw-500">Activate Social channels and begin MGE</span>
+              <p class="fs-8 fw-200 pt-2">All social channels have been activated. The landing page and app page are live,
+                and the MGE has been activated.</p>
+            </div>
+          </div>
+          <div class="col-lg-7 col-12 d-flex align-items-center mt-5">
+            <div class="diomand">
+              <div>
+                <span>02</span>
+              </div>
+            </div>
+            <div class="d-flex flex-column ps-5">
+              <span class=" fw-500">Upgrade ERC31337 Contracts and add more features</span>
+              <p class="fs-8 fw-200 pt-2">Full rewrite of the ERC31337 standard designed for EmpireDex and RootDex is
+                complete. Two new vaults have been added, a Marketing vault and a Drip vault. Lastly a brand new liquidity
+                building function has been added that will be activated later.</p>
+            </div>
+          </div>
+          <div class="col-lg-7 col-12 d-flex align-items-center mt-5">
+            <div class="diomand">
+              <div>
+                <span>03</span>
+              </div>
+            </div>
+            <div class="d-flex flex-column ps-5">
+              <span class=" fw-500">Open MGE for BSC users to join with BNB</span>
+              <p class="fs-8 fw-200 pt-2">If you contribute this way, make sure your BSC wallet is also CRO compatible. We
+                recommend using MetaMask if you plan on contributing this way. Once the MGE ends, we lock the liquidity
+                then launch the token. Everyone who participates in the MGE gets the best possible price.</p>
+            </div>
+          </div>
+          <div class="col-lg-7 col-12 d-flex align-items-center mt-5">
+            <div class="diomand">
+              <div>
+                <span>04</span>
+              </div>
+            </div>
+            <div class="d-flex flex-column ps-5">
+              <span class=" fw-500">Token launch with over 10k% staking APY</span>
+              <p class="fs-8 fw-200 pt-2">Right when the MGE finishes and the market goes live there will be no
+                circulating tokens so if users want some of the 10k% APY staking rewards they will have to buy from the
+                market. This should create the perfect launch conditions</p>
+            </div>
+          </div>
+          <div class="col-lg-7 col-12 d-flex align-items-center mt-5">
+            <div class="diomand">
+              <div>
+                <span>05</span>
+              </div>
+            </div>
+            <div class="d-flex flex-column ps-5">
+              <span class=" fw-500">Activate Marketing Vault</span>
+              <p class="fs-8 fw-200 pt-2">The marketing vault will receive 11.11% of the MGE funds and 20% of all
+                collected trade fees. After initial volitility settles and the APY gets down to a reasonable level we will
+                begin our post launch marketing efforts.</p>
+            </div>
+          </div>
+          <div class="col-lg-7 col-12 d-flex align-items-center mt-5">
+            <div class="diomand">
+              <div>
+                <span>06</span>
+              </div>
+            </div>
+            <div class="d-flex flex-column ps-5">
+              <span class=" fw-500">Activate New Buy-Back Vault</span>
+              <p class="fs-8 fw-200 pt-2">Our newest vault, still in development, will have an auto-buy-back feature with
+                customizable paramiters. We will be working closely with our community to choose the vaults buy-back
+                strategies.</p>
+            </div>
+          </div>
+        </div>
+        <div class="row mx-0 justify-content-center w-100 mt-4 ">
+          <div class="col-lg-6 col-12 card-2 d-flex p-4  justify-content-center align-items-center">
+            <button class="btn btn-primary fs-8 fw-500 px-5 mt-4" onclick="openInNewTab()">ENTER APP</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="decore">
+    <img src="assets/images/decore.png" alt="">
+  </div>
+
+  <section id="buy" class="d-flex align-items-center my-5">
+    <div class="">
+      <div class="row mx-0 blue-bg">
+        <div class="col-lg-6 py-4 co-12 d-flex align-items-center  justify-content-center ">
+          <div class="row mx-0 justify-content-center">
+            <div class="d-flex flex-column align-items-start col-8">
+              <span class="fs-2 fw-600">How to buy</span>
+              <p class="fs-7">
+                If you've invested into any of our projects in the past, you know that our MGE and the ERC-31337
+                "elite"
+                wrapper are the secret sauces that set us apart. It's what separates us from any of the overhyped
+                "RFI/Safemoon/EverRise"-type reflection tokens that have tried to imitate us since Summer 2020.
+              </p>
+              <button onclick="howtobuy()" class="btn btn-dark fs-8 px-4" style="background-color: black; border: none;">CHECK OUR ARTICLE
+                HERE</button>
+            </div>
+
+          </div>
+        </div>
+        <div class="col-lg-6 col-12 px-0">
+          <img src="assets/images/glasses.png" class="w-100" alt="">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section >
+    <div class="d-flex flex-column align-items-center">
+      <h1 class="fs-3 fw-600">Social Media</h1>
+      <div class="d-flex align-items-center mt-4">
+        <a href="https://twitter.com/up_cro" target="_blank">
+          <img src="assets/images/i-1.png"  class="mx-2" style="width: 90px;" alt="">
+        </a>
+        <a href="https://t.me/upCRO" target="_blank">
+          <img src="assets/images/i-2.png" class="mx-2"  style="width: 90px;" alt="">
+        </a>
+        <a href="https://discord.gg/hMcnrthnSS" target="_blank">
+          <img src="assets/images/i-3.png"  class="mx-2" style="width: 90px;" alt="">
+        </a>
+        <a href="https://medium.com/@upcro" target="_blank">
+          <img src="assets/images/i-4.png" class="mx-2"  style="width: 90px;" alt="">
+        </a>
+      </div>
+      <span class="fs-8 py-4 mt-4 text-faded">2022, All Rights Reserved.</span>
+    </div>
+  </section>
+
+
+</body>
+
+<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+  integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<script src="vendor/countdowntime/moment.min.js"></script>
+<script src="vendor/countdowntime/moment-timezone.min.js"></script>
+<script src="vendor/countdowntime/moment-timezone-with-data.min.js"></script>
+<script src="vendor/countdowntime/countdowntime.js"></script>
+<script>
+
+  $('.cd100').countdown100({
+    /*Set Endtime here*/
+    /*Endtime must be > current time*/
+    endtimeYear: 2022,
+    endtimeMonth: 01,
+    endtimeDate: 26,
+    endtimeHours: 0,
+    endtimeMinutes: 20,
+    endtimeSeconds: 0,
+    timeZone: "Europe/London" 
+    // ex:  timeZone: "America/New_York"
+    //go to " http://momentjs.com/timezone/ " to get timezone
+  });
+</script>
+  
+<script>
+  function openInNewTab() {
+    window.open('https://app.upcro.finance', '_blank').focus();
+  }
+  function howtobuy() {
+    window.open('https://medium.com/@upcro/cross-chain-upcro-mge-join-from-bsc-or-cronos-claim-on-cronos-3f242763e91f', '_blank').focus();
+  }  
+  // setTimeout(() => {
+  //   document.querySelector('.loader2').style.display = "none "
+  //   console.log(1);
+  // }, 3000);
+
+  $.get("https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@upcro", function(data, status){
+    let div = ``;
+
+    for(let x=0;x<data.items.length;x++){
+      div += `<div class="d-flex  justify-content-center flex-column align-items-center p-3">
+          <div class="card p-0 m-0">
+            <img src="${data.items[x].thumbnail}" style="width:100%; height:200px;" class="w-100" alt="">
+            <div class="d-flex flex-column p-3">
+              <span class="fw-500 color-primary fs-7">${data.items[x].title}</span>
+              <div class="d-flex pt-2 align-items-center justify-content-between">
+                <span class=" color-primary fs-8 fw-100">${data.items[x].pubDate}</span>
+                <a href="${data.items[x].link}" class="fs-9 fw-500 text-primary">Read more -></a>
+              </div>
+            </div>
+          </div>
+        </div>`;
+    }
+    $("#mediumContent").append(div);
+
+
+    $('.ads-class').slick({
+      autoplay: true,
+      autoplaySpeed: 2000,
+      infinite: true,
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      dots: false,
+      responsive: [{
+        breakpoint: 700,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 1,
+        }
+      },
+      {
+        breakpoint: 400,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        }
+      }
+      ]
+    });
+  });
+</script>
+
+</html>
