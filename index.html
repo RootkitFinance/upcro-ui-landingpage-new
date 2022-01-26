@@ -82,7 +82,7 @@
         <p class="col-lg-5 col-12 text-center fw-300">Our Market Generation Event (M.G.E.) contracts have been used by many teams to launch dozens of tokens. Its the most fair way to create a market with permentently locked liqudity. Using ERC31337 we can spend the same value again within our system to buy for users from the newly created market. UpCRO is the latest launch by the Rootkit team as part of the upEcosystem, coins designed to have increased volitility against their main paired token with auto-refilling buy back vaults.
         </p>
       </div>
-      <!-- <div class="d-flex align-items-center  flex-wrap justify-content-center pro-parrent mx-3 p-2 cd100">
+      <div class="d-flex align-items-center  flex-wrap justify-content-center pro-parrent mx-3 p-2 cd100">
         <div class="d-flex flex-column align-items-center">
           <div class="progress">
             <span class="title timer days" data-from="0" data-to="85" data-speed="1800"></span>
@@ -119,9 +119,9 @@
           </div>
           <span class="fs-7" style="margin-top: -10px;">Sec</span>
         </div>
-      </div> -->
+      </div>
       <button onclick="openInNewTab()" class="btn btn-primary fs-8 fw-500 px-5 mt-4">ENTER APP</button>
-
+      <button onclick="buyNow()" class="btn btn-primary fs-8 fw-500 px-5 mt-4">BUY NOW</button>      
     </div>
     <video width="100%" height="auto" playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
       <source src="assets/images/main.mp4" type="video/mp4">
@@ -396,6 +396,26 @@
   integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
+<script src="vendor/countdowntime/moment.min.js"></script>
+<script src="vendor/countdowntime/moment-timezone.min.js"></script>
+<script src="vendor/countdowntime/moment-timezone-with-data.min.js"></script>
+<script src="vendor/countdowntime/countdowntime.js"></script>
+<script>
+
+  $('.cd100').countdown100({
+    /*Set Endtime here*/
+    /*Endtime must be > current time*/
+    endtimeYear: 2022,
+    endtimeMonth: 01,
+    endtimeDate: 26,
+    endtimeHours: 2,
+    endtimeMinutes: 45,
+    endtimeSeconds: 0,
+    timeZone: "Europe/London" 
+    // ex:  timeZone: "America/New_York"
+    //go to " http://momentjs.com/timezone/ " to get timezone
+  });
+</script>
   
 <script>
   function openInNewTab() {
@@ -404,6 +424,11 @@
   function howtobuy() {
     window.open('https://medium.com/@upcro/cross-chain-upcro-mge-join-from-bsc-or-cronos-claim-on-cronos-3f242763e91f', '_blank').focus();
   }  
+  function buyNow() {
+    window.open('https://cro.empiredex.org/#/swap?outputCurrency=0xb062084aFfDf75b9b494D56B8417F1B981Df790f', '_blank').focus();
+  }  
+
+  
   // setTimeout(() => {
   //   document.querySelector('.loader2').style.display = "none "
   //   console.log(1);
