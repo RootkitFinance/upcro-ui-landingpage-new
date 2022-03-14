@@ -1,17 +1,17 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { Suspense } from 'react';
-
+import './assets/css/App.scss';
 import { BrowserRouter } from 'react-router-dom';
 import AppRoutes from './routes';
+import { ChakraProvider } from '@chakra-ui/react'
 
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <AppRoutes />
-      </BrowserRouter>
+      <ChakraProvider>
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>`
+      </ChakraProvider>
     </>
   );
 }
