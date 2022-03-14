@@ -1,7 +1,11 @@
 import React from 'react'
+import Layout from './Layout';
 
 export default function HomePage() {
   return (
-    <div>HomePage</div>
+    <Layout className='app-page'>
+      <div>HomePage</div>
+    </Layout>
+    
   )
 }
