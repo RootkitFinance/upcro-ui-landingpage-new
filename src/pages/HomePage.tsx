@@ -6,6 +6,9 @@ import AboutusSec from '../components/Home/AboutusSec';
 import TechnologySec from '../components/Home/TechnologySec';
 import FeaturesSec from '../components/Home/FeaturesSec';
 import TeamSec from '../components/Home/TeamSec';
+import ArticleSec from '../components/Home/ArticleSec';
+import RoadmapSec from '../components/Home/RoadmapSec';
+import HowToBuySec from '../components/Home/HowToBuySec';
 
 export default function HomePage() {
   return (
@@ -17,6 +20,9 @@ export default function HomePage() {
           <TechnologySec />
           <FeaturesSec />
           <TeamSec />
+          <ArticleSec />
+          <RoadmapSec />
+          <HowToBuySec />
         </Box>
       </>
     </Layout>
