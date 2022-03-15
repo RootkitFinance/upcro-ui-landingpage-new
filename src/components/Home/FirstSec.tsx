@@ -1,0 +1,35 @@
+import React from 'react'
+import { Box, SimpleGrid, GridItem, Heading, Text, Button, Image } from '@chakra-ui/react'
+
+export default function FirstSec() {
+  return (
+    <>
+        <Box className='upcro_launch_main'>
+            <Box className='width_full'>
+                <SimpleGrid columns={12} columnGap={3} rowGap={2} >
+                    <GridItem colSpan={[12, 12, 12, 6]}>
+                        <Box className='launch_text_box'>
+                            <Box className='launch_text_box_inn'>
+                                <Heading as="h3">upCRO</Heading>
+                                <Text>
+                                    UpCRO is the latest launch by the Rootkit team as part of the upEcosystem, coins designed to have increased volitility against their main paired token with auto-refilling buy back vaults.
+                                </Text>
+                                <Box className='launch_btns'>
+                                    <Button as="a" href='#'>BUY NOW</Button>
+                                    <Button as="a" href='#' className='entr_a'>ENTER APP</Button>
+                                    <Button as="a" href='#'>CHART</Button>
+                                </Box>
+                            </Box>
+                        </Box>
+                    </GridItem>
+                    <GridItem colSpan={[12, 12, 12, 6]}>
+                        <Box className='launch_text_box'>
+                            <Image src='img/upcro_first_img.jpg' className='upcro_first_img' />
+                        </Box>
+                    </GridItem>
+                </SimpleGrid>
+            </Box>
+        </Box>
+    </>
+  )
+}

@@ -288,3 +288,372 @@ body{
     margin-bottom: 10px;
   }
 }
+.homepage_main {
+  background: url(../img/homepage_bg.jpg) no-repeat center;
+  min-height: 6992px;
+  background-size: cover;
+}
+.upcro_launch_main{
+  display: flex;
+  max-width: 1390px;
+  margin: 0 auto;
+  width: 100%;
+  padding-top: 140px;
+  padding-right: 15px;
+  padding-left: 15px;
+  .launch_text_box{
+    min-height: 693px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    .launch_text_box_inn{
+      max-width: 640px;
+      margin-left: auto;
+      padding-right: 7px;
+      h3{
+        font-family: $f_primary;
+        font-weight: 600;
+        font-size: 46px;
+        line-height: 54px;
+        color: #FFFFFF;
+      }
+      p{
+        font-family: $f_primary;
+        font-weight: 400;
+        font-size: 22px;
+        line-height: 34px;
+        color: #FFFFFF;
+        margin-top: 32px;
+        margin-bottom: 55px;
+      }
+      .launch_btns{
+        display: flex;
+        align-items: center;
+        a{
+          background: #0D6EFD;
+          border-radius: 60px;
+          width: 200px;
+          height: 42px;
+          font-family: $f_primary;
+          font-weight: 700;
+          font-size: 14px;
+          line-height: 16px;
+          text-align: center;
+          color: #FFFFFF;
+          &:hover{
+            background: #07295c;
+          }
+        }
+        .entr_a{
+          margin: 0 15px;
+        }
+      }
+    }
+  }
+  .upcro_first_img{
+    border-radius: 50%;
+    max-width: 691px;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+.width_full{
+  width: 100% !important; 
+}
+@media screen and (max-width: 1400px) {
+  .upcro_launch_main .launch_text_box .launch_text_box_inn .launch_btns a {
+    width: 150px;
+    height: 36px;
+    font-size: 13px;
+    line-height: 16px;
+  }
+  .upcro_launch_main .launch_text_box .launch_text_box_inn p {
+    font-size: 21px;
+    line-height: 32px;
+    margin-top: 25px;
+    margin-bottom: 40px;
+  }
+}
+@media screen and (max-width: 991px) {
+  .upcro_launch_main .launch_text_box .launch_text_box_inn {
+    margin-left: 0;
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+  .upcro_launch_main .launch_text_box{
+    min-height: 0;
+    margin-bottom: 30px;
+  }
+}
+@media screen and (max-width: 575px) {
+  .upcro_launch_main .launch_text_box .launch_text_box_inn .launch_btns{
+    flex-direction: column;
+    align-items: flex-start;
+    .entr_a {
+      margin: 10px 0 10px 0;
+    }
+  }
+  .upcro_launch_main .launch_text_box .launch_text_box_inn h3 {
+    font-size: 40px;
+    line-height: 50px;
+  }
+  .upcro_launch_main .launch_text_box .launch_text_box_inn p {
+    font-size: 18px;
+    line-height: 28px;
+    margin-top: 15px;
+    margin-bottom: 28px;
+  }
+  .upcro_launch_main {
+    padding-top: 100px;
+  }
+  .upcro_launch_main .launch_text_box .launch_text_box_inn{
+    padding: 0;
+  }
+}
+.aboutus_main{
+  margin-top: 83px;
+  .about_border_box{
+    position: relative;
+    min-height: 200px;
+    border-radius: 90px;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: -1px;
+      border: 1px solid transparent;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 1), rgba(13, 110, 253, 1)) border-box;
+      -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      -webkit-mask-composite: destination-out;
+      border-radius: 90px;
+      pointer-events: none;
+    }
+    .sadow_box{
+      padding: 30px 0 35px 0;
+      background: #000000;
+      box-shadow: 0px 15px 80px rgba(13, 110, 253, 0.5);
+      border-radius: 90px;
+      h6{
+        font-family: $f_primary;
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 24px;
+        text-align: center;
+        color: #95BFFE;}
+      h3{
+        font-family: $f_primary;
+        font-weight: 600;
+        font-size: 42px;
+        margin-top: 14px;
+        line-height: 49px;
+        text-align: center;
+        color: #FFFFFF;
+      }
+    }
+    .about_text_prnt{
+      display: flex;
+      justify-content: center;
+      max-width: 1110px;
+      padding: 50px 15px 85px 15px;
+      margin: 0 auto;
+      p{
+        font-family: $f_primary;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 28px;
+        color: #FFFFFF;
+      }
+    }
+    .upcro_ic{
+      position: absolute;
+      bottom: -35px;
+      left: calc(50% - 35px);
+      filter: drop-shadow(0px 15px 80px rgba(13, 110, 253, 0.6)) !important;
+    }
+  }
+}
+@media screen and (max-width: 991px) {
+  .aboutus_main .about_border_box .sadow_box {
+    padding: 25px 0 31px 0;
+    h6{
+      font-size: 19px;
+      line-height: 24px;
+    }
+    h3{
+      font-size: 38px;
+      margin-top: 12px;
+      line-height: 46px;
+    }
+  }
+}
+@media screen and (max-width: 767px) {
+  .aboutus_main .about_border_box .sadow_box {
+    padding: 22px 0 28px 0;
+    h6{
+      font-size: 19px;
+      line-height: 24px;
+    }
+    h3{
+      font-size: 34px;
+      margin-top: 10px;
+      line-height: 40px;
+    }
+  }
+  .aboutus_main .about_border_box .about_text_prnt {
+    padding: 46px 15px 66px 15px;
+    p{
+      font-size: 17px;
+      line-height: 26px;
+    }
+  }
+}
+@media screen and (max-width: 575px) {
+  .aboutus_main .about_border_box .sadow_box {
+    h6{
+      font-size: 17px;
+      line-height: 22px;
+    }
+    h3{
+      font-size: 27px;
+      margin-top: 12px;
+      line-height: 32px;  
+    }
+  }
+  .aboutus_main .about_border_box .about_text_prnt {
+    padding: 40px 15px 60px 15px;
+    p{
+      font-size: 15px;
+      line-height: 22px;
+    }
+  }
+  .aboutus_main {
+    margin-top: 30px;
+  }
+}
+.technology_main{
+  margin-top: 198px;
+  padding: 0 15px;
+  .tech_bg_box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 759px;
+    padding: 0 20px;
+    max-width: 1744px;
+    width: 100%;
+    background: #0D6EFD url(../img/tech_bg_img.png) no-repeat center 0;
+    background-size: cover;
+    border-radius: 90px;
+    margin: 0 auto;
+    h6{
+      font-family: $f_primary;
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 24px;
+      text-align: center;
+      text-transform: uppercase;
+      color: #95BFFE;
+      margin-top: 45px;
+    }
+    h3{
+      font-family: $f_primary;
+      font-weight: 600;
+      font-size: 44px;
+      line-height: 52px;
+      text-align: center;
+      color: #FFFFFF;
+      margin-top: 15px;
+      margin-bottom: 25px;
+    }
+    p{
+      font-family: $f_primary;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 28px;
+      color: #FFFFFF;
+      max-width: 1026px;
+      margin-bottom: 48px;
+    }
+    .techno_img_prnt{
+      margin-top: auto;
+      margin-bottom: -5px;
+      // img{
+      //   mix-blend-mode: multiply;
+      // }
+    }
+    .darkbg_btn_bx{
+      background: #000000;
+      box-shadow: 0px -2px 30px rgba(149, 191, 254, 0.2) !important;
+      border-radius: 60px 60px 0px 0px;
+      margin-top: auto;
+      max-width: 493px;
+      min-height: 88px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      a{
+        width: 206px;
+        height: 42px;
+        background: #0D6EFD;
+        border-radius: 60px;
+        font-family: $f_primary;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 16px;
+        text-align: center;
+        color: #FFFFFF;
+      }
+    }
+  }
+}
+@media screen and (max-width: 767px) {
+  .technology_main .tech_bg_box .darkbg_btn_bx {
+    max-width: 378px;
+  }
+}
+@media screen and (max-width: 575px) {
+  .technology_main .tech_bg_box h6 {
+    font-size: 18px;
+    line-height: 20px;
+    margin-top: 35px;
+  }
+  .technology_main .tech_bg_box h3 {
+    font-size: 36px;
+    line-height: 40px;
+    margin-top: 12px;
+    margin-bottom: 20px;
+  }
+  .technology_main .tech_bg_box p {
+    font-size: 16px;
+    line-height: 22px;
+    margin-bottom: 25px;
+  }
+  .technology_main .tech_bg_box {
+    padding: 0 10px;
+  }
+  .technology_main .tech_bg_box .darkbg_btn_bx a {
+    width: 150px;
+    height: 38px;
+    font-size: 13px;
+    line-height: 16px;
+  }
+  .technology_main .tech_bg_box {
+    border-radius: 35px;
+    min-height: 0;
+  }
+  .technology_main .tech_bg_box .darkbg_btn_bx{
+    margin-top: 0;
+  }
+  .technology_main .tech_bg_box .darkbg_btn_bx {
+    max-width: 210px;
+    min-height: 76px;
+  }
+  .technology_main .tech_bg_box .techno_img_prnt{
+    margin-top: 0;
+  }
+}
