@@ -9,7 +9,7 @@ export default function FirstSec() {
                 <SimpleGrid columns={12} columnGap={3} rowGap={2} >
                     <GridItem colSpan={[12, 12, 12, 6]}>
                         <Box className='launch_text_box'>
-                            <Box className='launch_text_box_inn'>
+                            <Box className='launch_text_box_inn' data-aos="fade-up" data-aos-delay="1000" data-aos-duration="800">
                                 <Heading as="h3">upCRO</Heading>
                                 <Text>
                                     UpCRO is the latest launch by the Rootkit team as part of the upEcosystem, coins designed to have increased volitility against their main paired token with auto-refilling buy back vaults.
@@ -23,7 +23,7 @@ export default function FirstSec() {
                         </Box>
                     </GridItem>
                     <GridItem colSpan={[12, 12, 12, 6]}>
-                        <Box className='launch_text_box'>
+                        <Box className='launch_text_box' data-aos="zoom-in" data-aos-delay="500">
                             <Image src='img/upcro_first_img.jpg' className='upcro_first_img' />
                         </Box>
                     </GridItem>

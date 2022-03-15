@@ -9,6 +9,5 @@ export default function Articles() {
       <div>Articles</div>
     </LayoutTwo>
     
-    
   )
 }

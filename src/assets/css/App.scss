@@ -1,3 +1,4 @@
+@import "~aos/dist/aos.css";
 @font-face {
     font-family: 'Roboto';
     src: url('../fonts/Roboto-Black.eot');
@@ -599,6 +600,7 @@ body{
       display: flex;
       align-items: center;
       justify-content: center;
+      position: relative;
       a{
         width: 206px;
         height: 42px;
@@ -929,7 +931,7 @@ body{
   }
   .artcl_slider_inn{
     background: #000000;
-    box-shadow: 0px 20px 40px rgba(13, 110, 253, 0.4) !important;
+    box-shadow: 0px 20px 23px rgba(13, 110, 253, 0.4) !important;
     border-radius: 16px;
     max-width: 400px;
     margin: 0 auto;

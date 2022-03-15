@@ -10,7 +10,7 @@ function App() {
       <ChakraProvider>
         <BrowserRouter>
           <AppRoutes />
-        </BrowserRouter>`
+        </BrowserRouter>
       </ChakraProvider>
     </>
   );

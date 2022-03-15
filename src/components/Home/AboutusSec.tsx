@@ -4,7 +4,7 @@ import { Box, Container, Image, Heading, Text } from '@chakra-ui/react'
 export default function AboutusSec() {
   return (
     <>
-        <Box className="aboutus_main">
+        <Box className="aboutus_main" data-aos="fade-up" data-aos-delay="300" data-aos-duration="800">
             <Container maxW="container.xl">
                 <Box className='about_border_box'>
                     <Box className='sadow_box'>

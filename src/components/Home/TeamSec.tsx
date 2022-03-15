@@ -4,7 +4,7 @@ import { Box, Container, Heading, SimpleGrid, GridItem, Button, Text, Image } fr
 export default function TeamSec() {
   return (
     <>
-        <Box className='team_main'>
+        <Box className='team_main' data-aos="fade-up" data-aos-delay="300" data-aos-duration="800">
             <Container maxW="container.xl">
                 <Box className='about_border_box'>
                     <Box className='sadow_box'>

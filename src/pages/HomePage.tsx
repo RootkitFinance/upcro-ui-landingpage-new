@@ -9,8 +9,10 @@ import TeamSec from '../components/Home/TeamSec';
 import ArticleSec from '../components/Home/ArticleSec';
 import RoadmapSec from '../components/Home/RoadmapSec';
 import HowToBuySec from '../components/Home/HowToBuySec';
+import AOS from 'aos';
 
 export default function HomePage() {
+  AOS.init();
   return (
     <Layout className='app-page'>
       <>
@@ -29,3 +31,4 @@ export default function HomePage() {
     
   )
 }
+
