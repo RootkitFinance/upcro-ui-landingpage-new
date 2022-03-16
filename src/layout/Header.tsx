@@ -16,6 +16,8 @@ import {
   HamburgerIcon,
   CloseIcon
 } from '@chakra-ui/icons';
+import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export default function Header() {
   const { isOpen, onToggle } = useDisclosure();
@@ -46,7 +48,9 @@ export default function Header() {
             <Text
               textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
               >
-              <Image src='img/logo.png' alt='' className='main_logo'/>
+              <NavLink to="/">
+                <Image src='img/logo.png' alt='' className='main_logo'/>
+              </NavLink>
             </Text>
 
             <Flex display={{ base: 'none', lg: 'flex' }} ml={10} className="desc_linl_pnt">
@@ -57,7 +61,7 @@ export default function Header() {
                 <a href='#'>TECHNOLOGY</a>
                 <a href='#'>FEATURES</a>
                 <a href='#'>TEAM</a>
-                <a href='#'>ARTICLE</a>
+                <NavLink to="/articles">ARTICLE</NavLink>
                 <a href='#'>ROADMAP</a>
                 <a href='#' className='last_link'>HOW TO BUY</a>
               </Box>
@@ -70,13 +74,12 @@ export default function Header() {
             direction={'row'}
             className="enterapp_prnt"
             >
-            <Button
-              as={'a'}
-              href={'#'}
+            <NavLink
+              to="/dashboard"
               className="enterapp_btn"
               >
               ENTER APP
-            </Button>
+            </NavLink>
           </Stack>
         </Flex>
 

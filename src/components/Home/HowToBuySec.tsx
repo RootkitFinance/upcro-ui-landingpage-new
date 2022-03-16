@@ -4,7 +4,7 @@ import { Box, SimpleGrid, GridItem, Heading, Text, Button, Image } from '@chakra
 export default function HowToBuySec() {
   return (
     <>
-        <Box className='howtobuy_main'>
+        <Box className='howtobuy_main' data-aos="fade-up" data-aos-delay="500">
             <Box className='howtobuy_inn'>
                 <SimpleGrid columns={12} columnGap={0} rowGap={2} >
                     <GridItem colSpan={[12, 12, 12, 6]}>

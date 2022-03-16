@@ -33,7 +33,7 @@ export default function ArticleSec() {
       };
   return (
     <>
-        <Box className='articlesec_main'>
+        <Box className='articlesec_main' data-aos="fade-up" data-aos-delay="300" data-aos-duration="800">
             <Container maxW="container.xl">
                 <Heading as="h6">Read about</Heading>
                 <Heading as="h3">Articles</Heading>
@@ -47,7 +47,7 @@ export default function ArticleSec() {
                                         <Heading as="h4">UpCRO to launch on Empire Dex</Heading>
                                         <Box className='flex_box'>
                                             <Text><Image src='img/clndr_ic.svg' alt='' /> 16.01.2022</Text>
-                                            <Button as="a">Read More <Image src='img/arrow_ic.svg' alt='' /></Button>
+                                            <Button as="a" href='#'>Read More <Image src='img/arrow_ic.svg' alt='' /></Button>
                                         </Box>
                                     </Box>
                                 </Box>
@@ -61,7 +61,7 @@ export default function ArticleSec() {
                                         <Heading as="h4">ROOT Bridge User guide</Heading>
                                         <Box className='flex_box'>
                                             <Text><Image src='img/clndr_ic.svg' alt='' /> 16.01.2022</Text>
-                                            <Button as="a">Read More <Image src='img/arrow_ic.svg' alt='' /></Button>
+                                            <Button as="a" href='#'>Read More <Image src='img/arrow_ic.svg' alt='' /></Button>
                                         </Box>
                                     </Box>
                                 </Box>
@@ -75,7 +75,7 @@ export default function ArticleSec() {
                                         <Heading as="h4">xToken Staking and the Drip Vault</Heading>
                                         <Box className='flex_box'>
                                             <Text><Image src='img/clndr_ic.svg' alt='' /> 16.01.2022</Text>
-                                            <Button as="a">Read More <Image src='img/arrow_ic.svg' alt='' /></Button>
+                                            <Button as="a" href='#'>Read More <Image src='img/arrow_ic.svg' alt='' /></Button>
                                         </Box>
                                     </Box>
                                 </Box>
@@ -89,7 +89,7 @@ export default function ArticleSec() {
                                         <Heading as="h4">ROOT Bridge User guide</Heading>
                                         <Box className='flex_box'>
                                             <Text><Image src='img/clndr_ic.svg' alt='' /> 16.01.2022</Text>
-                                            <Button as="a">Read More <Image src='img/arrow_ic.svg' alt='' /></Button>
+                                            <Button as="a" href='#'>Read More <Image src='img/arrow_ic.svg' alt='' /></Button>
                                         </Box>
                                     </Box>
                                 </Box>
