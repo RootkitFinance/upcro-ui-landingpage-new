@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
 import {
   Box,
   Flex,
@@ -21,9 +21,16 @@ import { NavLink } from 'react-router-dom';
 
 export default function Header() {
   const { isOpen, onToggle } = useDisclosure();
+
+  const [scroll, setScroll] = useState(false)
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      setScroll(window.scrollY > 10)
+    })
+  }, [])
   return (
     <>
-      <Box as='header' className='header'>
+      <Box as='header'  className={scroll ? "header scrolled" : "header"}>
         <Flex
           color={useColorModeValue('gray.600', 'white')}
           align={'center'}

@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import Header from '../layout/Header';
 import Footer from '../layout/Footer';
 import { useLocation } from 'react-router-dom';
@@ -119,14 +120,14 @@ const LayoutTwo = (props:any) => {
               <span>dashboard</span>
             </NavLink>
             <NavLink
-              to='/Staking'
+              to='/staking'
               className={splitLocation[1] === '' ? 'active' : ''}
             >
               <Image src='img/sidebar_link_ic02.svg' alt="" />
               <span>Stake</span>
             </NavLink>
             <NavLink
-              to='/'
+              to='/swap'
               className={splitLocation[1] === '' ? 'active' : ''}
             >
               <Image src='img/sidebar_link_ic03.svg' alt="" />
@@ -212,12 +213,18 @@ const LayoutTwo = (props:any) => {
     onOpen: () => void;
   }
   const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
+      const [scroll, setScroll] = useState(false)
+      useEffect(() => {
+        window.addEventListener("scroll", () => {
+          setScroll(window.scrollY > 10)
+        })
+      }, [])
     return (
       <Flex
         ml={{ base: 0, xl: 60 }}
         alignItems="center"
         justifyContent={{ base: 'space-between', xl: 'flex-end' }}
-        className="sidebar_header"
+        className={scroll ? "sidebar_header scrolled" : "sidebar_header"}
         {...rest}>
         <IconButton
           display={{ base: 'flex', xl: 'none' }}
