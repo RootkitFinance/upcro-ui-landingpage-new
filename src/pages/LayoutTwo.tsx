@@ -141,7 +141,7 @@ const LayoutTwo = (props:any) => {
               <span>Pools</span>
             </NavLink>
             <NavLink
-              to='/'
+              to='/faq'
               className={splitLocation[1] === '' ? 'active' : ''}
             >
               <Image src='img/sidebar_link_ic06.svg' alt="" />

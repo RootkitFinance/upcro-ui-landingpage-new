@@ -2,6 +2,7 @@ import { lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Articles from '../pages/Articles';
 import Dashboard from '../pages/Dashboard';
+import Faq from '../pages/Faq';
 import HomePage from '../pages/HomePage';
 import Staking from '../pages/Staking';
 import Swap from '../pages/Swap';
@@ -24,7 +25,7 @@ const AppRoutes = () => {
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/staking' element={<Staking />} />
         <Route path='/swap' element={<Swap />} />
-        
+        <Route path='/faq' element={<Faq />} />
 
        
       </Routes>

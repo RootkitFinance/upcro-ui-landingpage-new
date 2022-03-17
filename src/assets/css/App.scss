@@ -2469,3 +2469,159 @@ body{
     margin-bottom: 24px;
   }
 } 
+.faq_main{
+  min-height: 1824px;
+  background: url(../img/faq_bg.jpg) no-repeat center;
+  background-size: cover;
+  padding-top: 98px;
+  padding-bottom: 40px;
+  background-attachment: fixed;
+  .faq_prnt{
+    max-width: 1150px;
+    margin: 0 auto;
+    h3{
+      font-family: $f_primary;
+      font-weight: 700;
+      font-size: 36px;
+      line-height: 42px;
+      text-align: center;
+      color: #FFFFFF;
+      margin-bottom: 20px;
+    }
+  }
+}
+.faq_accordians_prnt{
+  padding-left: 39px;
+  .main_accordian{
+    .boedrd_faq{
+      border: 1px solid #0D6EFD !important;
+      box-shadow: 0px 0px 10px 2px rgba(149, 191, 254, 0.5) !important;
+      border-radius: 0px 60px 60px 0px !important;
+      background: rgba(255, 255, 255, 0.05) !important;
+      margin-bottom: 18px;
+      &>h2>button{
+        box-shadow: none !important;
+        padding: 20px 20px 20px 0;
+        svg{
+          height: 70px;
+          width: 70px;
+          border-radius: 50%;
+          background-color: #000000;
+          background: url(../img/open_acdn_ic.svg) no-repeat center;
+          background-size: contain;
+          margin-left: 10px;
+          &.css-j2ph2z{
+            background: url(../img/close_acrdin_ic.svg) no-repeat center;
+            transform: rotate(0deg) !important;
+            background-size: contain;
+          }
+          path{
+            display: none !important;
+          }
+        }
+        &>div{
+          display: flex;
+          align-items: center;
+          font-family: $f_primary;
+          font-weight: 600;
+          font-size: 26px;
+          line-height: 30px;
+          color: #FFFFFF;
+          img{
+            height: 78px;
+            width: 78px;
+            border-radius: 50%;
+            margin-left: -44px;
+            margin-right: 34px;
+          }
+        }
+      }
+      .chakra-collapse>div{
+        font-family: $f_primary;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 26px;
+        color: #FFFFFF;
+        max-width: 933px;
+        padding-left: 70px;
+        padding-bottom: 35px;
+        padding-top: 3px;
+      }
+    }
+  }
+}
+@media screen and (max-width: 767px) {
+  .faq_accordians_prnt .main_accordian .boedrd_faq > h2 > button > div img {
+    height: 60px;
+    width: 60px;
+    margin-left: -33px;
+    margin-right: 11px;
+  }
+  .faq_accordians_prnt .main_accordian .boedrd_faq > h2 > button > div {
+    font-size: 21px;
+    line-height: 26px;
+  }
+  .faq_accordians_prnt .main_accordian .boedrd_faq > h2 > button svg {
+    height: 45px;
+    width: 45px;
+  }
+  .faq_accordians_prnt .main_accordian .boedrd_faq > h2 > button {
+    padding: 10px 17px 10px 0;
+  }
+  .faq_accordians_prnt {
+    padding-left: 28px;
+  }
+  .faq_accordians_prnt .main_accordian .boedrd_faq .chakra-collapse > div {
+    font-size: 16px;
+    line-height: 24px;
+    padding-left: 41px;
+    padding-bottom: 23px;
+    padding-top: 3px;
+  }
+}
+@media screen and (max-width: 575px) {
+  .faq_main .faq_prnt h3 {
+    font-size: 26px;
+    line-height: 32px;
+    margin-bottom: 18px;
+  }
+  .faq_accordians_prnt .main_accordian .boedrd_faq > h2 > button > div img {
+    height: 45px;
+    width: 45px;
+    margin-left: -25px;
+    margin-right: 11px;
+  }
+  .faq_accordians_prnt .main_accordian .boedrd_faq > h2 > button > div {
+    font-size: 15px;
+    line-height: 20px;
+  }
+  .faq_accordians_prnt {
+    padding-left: 23px;
+  }
+  .faq_accordians_prnt .main_accordian .boedrd_faq > h2 > button svg {
+    height: 38px;
+    width: 38px;
+  }
+  .faq_accordians_prnt .main_accordian .boedrd_faq > h2 > button {
+    padding: 10px 12px 10px 0;
+  }
+  .faq_accordians_prnt .main_accordian .boedrd_faq .chakra-collapse > div {
+    font-size: 13px;
+    line-height: 18px;
+    padding-left: 32px;
+    padding-bottom: 16px;
+    padding-right: 10px;
+    padding-top: 0px;
+  }
+  .faq_accordians_prnt .main_accordian .boedrd_faq {
+    border-radius: 0px 35px 35px 0px !important;
+    margin-bottom: 13px;
+  }
+  .faq_main{
+    min-height: 1824px;
+    background: url(../img/faq_bg.jpg) no-repeat center;
+    background-size: cover;
+    padding-top: 80px;
+    padding-bottom: 20px;
+  }
+}
