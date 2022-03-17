@@ -4,6 +4,7 @@ import Articles from '../pages/Articles';
 import Dashboard from '../pages/Dashboard';
 import Faq from '../pages/Faq';
 import HomePage from '../pages/HomePage';
+import Roadmap from '../pages/Roadmap';
 import Staking from '../pages/Staking';
 import Swap from '../pages/Swap';
 
@@ -26,8 +27,7 @@ const AppRoutes = () => {
         <Route path='/staking' element={<Staking />} />
         <Route path='/swap' element={<Swap />} />
         <Route path='/faq' element={<Faq />} />
-
-       
+        <Route path='/roadmap' element={<Roadmap />} />
       </Routes>
      
     </>

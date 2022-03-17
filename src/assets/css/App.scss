@@ -2625,3 +2625,258 @@ body{
     padding-bottom: 20px;
   }
 }
+.roadmap_main{
+  background: url(../img/roadmap_bg.jpg) no-repeat center;
+  background-size:  cover;
+  min-height: 2658px;
+  padding-top: 98px;
+  h3{
+    font-family: $f_primary;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 42px;
+    text-align: center;
+    color: #FFFFFF;
+  }
+}
+.radmp_cntnt_prnt{
+  max-width: 910px;
+  margin: 0 auto;
+  margin-top: 40px;
+}
+.ready_text_prnt{
+  display: flex;
+  width: 215px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  h4{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 132px;
+    height: 43px;
+    border: 2px solid #3ADE00;
+    border-radius: 4px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 26px;
+    text-align: center;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    position: relative;
+    &::before{
+      position: absolute;
+      content: "";
+      bottom: -472px;
+      left: 50%;
+      width: 2px;
+      height: 472px;
+      background: #3ADE00;
+    }
+  }
+}
+.ready_cntnt_inn{
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin-bottom: 40px;
+  z-index: 1;
+  .number_bx{
+    display: flex;
+    width: 215px;
+    align-items: center;
+    justify-content: center;
+    min-height: 166px;
+    h2{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 117px;
+      width: 117px;
+      border-radius: 50%;
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 600;
+      font-size: 44px;
+      line-height: 52px;
+      text-align: center;
+      color: #95BFFE;
+      background: #191D25;
+      border: 2px solid #3ADE00;
+    }
+  }
+  .vaulavtin{
+    min-height: 166px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    h5{
+      padding-top: 25px;
+      font-family: $f_primary;
+      font-weight: 600;
+      font-size: 28px;
+      line-height: 33px;
+      color: #FFFFFF;
+      margin-bottom: 15px;
+      width: 100%;
+    }
+    p{
+      width: 100%;
+      font-family: $f_primary;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 24px;
+      color: #FFFFFF;
+    }
+    ul{
+      padding-left: 14px;
+      width: 100%;
+      li{
+        font-family: $f_primary;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 24px;
+        color: #FFFFFF;
+      }
+    }
+  }
+}
+.roadmp_devlop_box{
+  margin-top: 55px;
+  margin-bottom: 55px;
+  .ready_text_prnt h4{
+    width: 215px;
+    border: 2px solid #0D6EFD;
+    &::before{
+      background: #0D6EFD;
+    }
+  }
+  .ready_cntnt_inn .number_bx h2{
+    border: 2px solid #0D6EFD;
+  }
+}
+.roadmp_future_box{
+  .ready_text_prnt h4{
+    width: 215px;
+    border: 2px solid #FF8E3C;
+    &::before{
+      background: #FF8E3C;
+      height: 714px;
+      bottom: -714px;
+    }
+  }
+  .ready_cntnt_inn .number_bx h2{
+    border: 2px solid #FF8E3C;
+  }
+}
+@media screen and (max-width: 767px) {
+  .ready_text_prnt {
+    width: 130px;
+    margin-bottom: 10px;
+  }
+  .ready_text_prnt h4 {
+    width: 110px;
+    height: 36px;
+    font-size: 18px;
+    line-height: 20px;
+  }
+  .ready_cntnt_inn .number_bx {
+    width: 130px;
+    min-width: 130px;
+    min-height: 140px;
+  }
+  .ready_cntnt_inn .number_bx h2 {
+    height: 70px;
+    width: 70px;
+    font-size: 28px;
+    line-height: 42px;
+  }
+  .ready_cntnt_inn {
+    margin-bottom: 8px;
+  }
+  .ready_cntnt_inn .vaulavtin h5 {
+    font-size: 22px;
+    line-height: 28px;
+    margin-bottom: 10px;
+  }
+  .roadmp_devlop_box .ready_text_prnt h4 {
+    width: 130px;
+    font-size: 15px;
+  }
+  .ready_cntnt_inn .vaulavtin ul li, .ready_cntnt_inn .vaulavtin ul p {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .roadmp_future_box .ready_text_prnt h4::before {
+    background: #FF8E3C;
+    height: 611px;
+    bottom: -611px;
+  }
+  .roadmap_main {
+    padding-bottom: 100px;
+  }
+}
+@media screen and (max-width: 575px) {
+  .ready_cntnt_inn .vaulavtin h5 {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 10px;
+  }
+  .ready_cntnt_inn .vaulavtin ul li, .ready_cntnt_inn .vaulavtin p {
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .roadmp_future_box .ready_text_prnt h4 {
+    width: 130px;
+    font-size: 15px;
+  }
+  .ready_cntnt_inn .vaulavtin {
+    margin-left: -20px;
+    min-height: 140px;
+  }
+  .roadmp_devlop_box {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .ready_text_prnt h4::before {
+    bottom: -401px;
+    height: 401px;
+  }
+  .roadmap_main h3 {
+    font-size: 30px;
+    line-height: 36px;
+  }
+  .radmp_cntnt_prnt {
+    margin-top: 26px;
+  }
+  .roadmap_main {
+    min-height: 0;
+    padding-top: 80px;
+    padding-bottom: 50px;
+  }
+  .number_bx_last h2{
+    position: relative;
+    &::before{
+      position: absolute;
+      content: "";
+      top: -82px;
+      left: 50%;
+      width: 2px;
+      height: 82px;
+      background: #FF8E3C;
+    }
+  }
+  .roadmp_future_box .ready_text_prnt h4::before {
+    height: 561px;
+    bottom: -561px;
+  }
+  .ready_text_prnt {
+    width: 130px;
+    margin-bottom: 0;
+  }
+}
