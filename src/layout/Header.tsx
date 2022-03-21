@@ -131,14 +131,51 @@ export default function Header() {
           {/* <MobileNav /> */}
           <Box className='mobl_link_prnt'>
             <Box className='link_prnt'>
-              <a href='#'>INTRODUCTION</a>
-              <a href='#'>ABOUT</a>
-              <a href='#'>TECHNOLOGY</a>
-              <a href='#'>FEATURES</a>
-              <a href='#'>TEAM</a>
-              <a href='#'>ARTICLE</a>
-              <a href='#'>ROADMAP</a>
-              <a href='#' className='last_link'>HOW TO BUY</a>
+            <Link
+                to='Introduction'
+                activeClass='active'
+                spy={true}
+                smooth={true}
+                offset={-60}
+                duration={500}>
+                INTRODUCTION</Link>
+              <Link to='About'
+                activeClass='active'
+                spy={true}
+                smooth={true}
+                offset={-60}
+                duration={500}>ABOUT</Link>
+                <Link to='Technology'
+                  activeClass='active'
+                  spy={true}
+                  smooth={true}
+                  offset={-60}
+                  duration={500}>TECHNOLOGY</Link>
+                <Link to='Features'
+                  activeClass='active'
+                  spy={true}
+                  smooth={true}
+                  offset={-60}
+                  duration={500}>FEATURES</Link>
+                <Link to='Team'
+                  activeClass='active'
+                  spy={true}
+                  smooth={true}
+                  offset={-60}
+                  duration={500}>TEAM</Link>
+                <NavLink to="/articles">ARTICLE</NavLink>
+                <Link to='Roadmap'
+                  activeClass='active'
+                  spy={true}
+                  smooth={true}
+                  offset={-60}
+                  duration={500}>ROADMAP</Link>
+                <Link to='HowToBuy'
+                  activeClass='active'
+                  spy={true}
+                  smooth={true}
+                  offset={-60}
+                  duration={500} className='last_link'>HOW TO BUY</Link>
             </Box>
           </Box>
         </Collapse>
