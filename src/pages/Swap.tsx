@@ -1,7 +1,6 @@
 import React from 'react'
-import { Box, Container, Heading, Text, Button, Image, Select } from '@chakra-ui/react'
+import { Box, Container, Heading, Text, Button, Image } from '@chakra-ui/react'
 import LayoutTwo from './LayoutTwo'
-import { components } from 'react-select';
 import ReactSelect from 'react-select';
 
 const currency = [

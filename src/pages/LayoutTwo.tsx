@@ -1,58 +1,29 @@
 import React, { useState, useEffect } from "react";
-import Header from '../layout/Header';
-import Footer from '../layout/Footer';
 import { useLocation } from 'react-router-dom';
 // import Sidebar from '../layouttwo/Sidebar';
 import {
   IconButton,
-  Avatar,
   Box,
   CloseButton,
   Flex,
   HStack,
-  VStack,
   Icon,
-  useColorModeValue,
   Drawer,
   DrawerContent,
   Text,
   useDisclosure,
   BoxProps,
   FlexProps,
-  Menu,
-  MenuButton,
-  MenuDivider,
-  MenuItem,
-  MenuList,
   Image,
   Link,
   Button,
 } from '@chakra-ui/react';
 import {
-  FiHome,
-  FiTrendingUp,
-  FiCompass,
-  FiStar,
-  FiSettings,
-  FiMenu,
-  FiBell,
-  FiChevronDown,
+  FiMenu
 } from 'react-icons/fi';
 import { IconType } from 'react-icons';
 import { ReactText } from 'react';
 import { NavLink } from 'react-router-dom';
-
-interface LinkItemProps {
-  name: string;
-  icon: IconType;
-}
-const LinkItems: Array<LinkItemProps> = [
-  { name: 'Home', icon: FiHome },
-  { name: 'Trending', icon: FiTrendingUp },
-  { name: 'Explore', icon: FiCompass },
-  { name: 'Favourites', icon: FiStar },
-  { name: 'Settings', icon: FiSettings },
-];
 
 const LayoutTwo = (props:any) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
