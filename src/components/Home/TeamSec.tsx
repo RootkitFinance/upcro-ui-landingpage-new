@@ -1,9 +1,11 @@
 import React from 'react'
 import { Box, Container, Heading, SimpleGrid, GridItem, Button, Text, Image } from '@chakra-ui/react'
+import { Element } from 'react-scroll';
 
 export default function TeamSec() {
   return (
     <>
+    <Element name='Team'>
         <Box className='team_main' data-aos="fade-up" data-aos-delay="300" data-aos-duration="800">
             <Container maxW="container.xl">
                 <Box className='about_border_box'>
@@ -33,6 +35,7 @@ export default function TeamSec() {
                 </Box>
             </Container>
         </Box>
+    </Element>
     </>
   )
 }

@@ -1,9 +1,11 @@
 import React from 'react'
 import { Box, Button, Container, Heading, Image, Text } from '@chakra-ui/react'
+import { Element } from 'react-scroll';
 
 export default function RoadmapSec() {
   return (
     <>
+    <Element name='Roadmap'>
         <Container maxW="container.xl">
             <Box className='roadmapsec_main'>
                 <Box className='roamap_bg' />
@@ -72,6 +74,7 @@ export default function RoadmapSec() {
                 </Box>
             </Box>
         </Container>   
+    </Element>
     </>
   )
 }

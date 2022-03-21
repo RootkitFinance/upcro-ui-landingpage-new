@@ -1,9 +1,11 @@
 import React from 'react'
 import { Box, Button, Heading, Image, Text } from '@chakra-ui/react'
+import { Element } from 'react-scroll';
 
 export default function TechnologySec() {
   return (
     <>
+    <Element name='Technology'>
       <Box className="technology_main">
         <Box className='tech_bg_box'>
           <Heading as="h6" data-aos="fade" data-aos-delay="200">TECHNOLOGY</Heading>
@@ -17,6 +19,7 @@ export default function TechnologySec() {
           </Box>
         </Box>
       </Box>
+    </Element>
     </>
   )
 }

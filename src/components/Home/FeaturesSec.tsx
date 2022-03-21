@@ -1,9 +1,11 @@
 import React from 'react'
 import { Box, Container, SimpleGrid, GridItem, Heading, Text, Image } from '@chakra-ui/react'
+import { Element } from 'react-scroll';
 
 export default function FeaturesSec() {
   return (
     <>
+    <Element name='Features'>
         <Box className='feature_main'>
             <Container maxW="container.xl">
                 <Box className='featur_max_box'>
@@ -24,6 +26,7 @@ export default function FeaturesSec() {
                 </Box>
             </Container>
         </Box>
+    </Element>
     </>
   )
 }

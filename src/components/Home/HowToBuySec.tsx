@@ -1,9 +1,11 @@
 import React from 'react'
 import { Box, SimpleGrid, GridItem, Heading, Text, Button, Image } from '@chakra-ui/react'
+import { Element } from 'react-scroll';
 
 export default function HowToBuySec() {
   return (
     <>
+    <Element name='HowToBuy'>
         <Box className='howtobuy_main' data-aos="fade-up" data-aos-delay="500">
             <Box className='howtobuy_inn'>
                 <SimpleGrid columns={12} columnGap={0} rowGap={2} >
@@ -24,6 +26,7 @@ export default function HowToBuySec() {
                 </SimpleGrid>
             </Box>
         </Box>
+    </Element>
     </>
   )
 }

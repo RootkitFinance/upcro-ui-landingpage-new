@@ -1,9 +1,11 @@
 import React from 'react'
 import { Box, SimpleGrid, GridItem, Heading, Text, Button, Image } from '@chakra-ui/react'
+import { Element } from 'react-scroll';
 
 export default function FirstSec() {
   return (
     <>
+    <Element name='Introduction'>
         <Box className='upcro_launch_main'>
             <Box className='width_full'>
                 <SimpleGrid columns={12} columnGap={3} rowGap={2} >
@@ -30,6 +32,7 @@ export default function FirstSec() {
                 </SimpleGrid>
             </Box>
         </Box>
+    </Element>
     </>
   )
 }
