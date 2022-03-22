@@ -2275,6 +2275,20 @@ body{
   backdrop-filter: blur(10px);
   overflow: hidden;
   margin-bottom: 40px;
+  position: relative;
+  .swap_center_btn{
+    position: absolute;
+    left: calc(50% - 18px);
+    min-width: 36px;
+    height: 36px;
+    padding: 0 !important;
+    background: #20262F;
+    box-shadow: none !important;
+    bottom: calc(50% - 3px);
+    &:hover{
+      background: #11151a;
+    }
+  }
   h4{
     padding: 27px 0 20px 0;
     font-family: $f_primary;
@@ -2435,6 +2449,9 @@ body{
   }
 }
 @media screen and (max-width: 575px) {
+  .swap_border_Box .swap_center_btn{
+    bottom: calc(50% - 7px);
+  }
   .swap_main {
     padding-top: 80px;
   }
@@ -2481,6 +2498,14 @@ body{
     margin-bottom: 24px;
   }
 } 
+@media screen and (max-width: 479px) {
+  .swap_border_Box .text_row_darc {
+    flex-direction: column;
+  }
+  .swap_border_Box .swap_center_btn {
+    bottom: calc(50% - -14px);
+  }
+}
 .faq_main{
   min-height: 1824px;
   background: url(../img/faq_bg.jpg) no-repeat center;
