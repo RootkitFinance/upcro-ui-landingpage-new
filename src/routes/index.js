@@ -1,5 +1,7 @@
+import { Switch } from '@chakra-ui/react';
+import React from 'react';
 import { lazy } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 import Articles from '../pages/Articles';
 import Dashboard from '../pages/Dashboard';
 import Faq from '../pages/Faq';
@@ -21,6 +23,7 @@ const AppRoutes = () => {
         ) : (
           <Route path='/' element={<HomePage />} />
         )} */}
+        
         <Route path='/' element={<HomePage />} />
         <Route path='/articles' element={<Articles />} />
         <Route path='/dashboard' element={<Dashboard />} />

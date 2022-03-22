@@ -1,8 +1,88 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { Box, Button, Heading, Image, Text } from '@chakra-ui/react'
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+import useTokenBalance from "../../hooks/useTokenBalance";
+import {  ROOTED_ADDRESS, ROOTED_TICKER, STAKING_ADDRESS, STAKING_TICKER } from "../../constants";
+import BigNumber from "bignumber.js";
+import { useWeb3React } from "@web3-react/core";
+// import { TokenService } from "../../services/TokenServices";
+import { extractErrorMessage } from "../../utils/extractErrorMessage";
+import { StakingService } from "../../services/StakingServices";
+
+enum Action {
+    Stake,
+    Unstake
+}
+
+enum StakingStatus {
+    None,
+    Approving,
+    Approved,
+    Staking,
+    Staked
+}
 
 export default function StakeTabOne() {
+    const { account, library } = useWeb3React();
+    const rootedBalance = useTokenBalance(ROOTED_ADDRESS);
+    const stakingBalance = useTokenBalance(STAKING_ADDRESS);
+    const [action,
+        // setAction
+    ] = useState<Action>(Action.Stake);
+    const [balance, setBalance] = useState<BigNumber>(new BigNumber(0));
+    const [completedAction, setCompletedAction] = useState("");
+    const [pendingAction, setPendingAction] = useState("");
+    const [value, setValue] = useState<string>("");
+    const [status, setStatus] = useState<StakingStatus>(StakingStatus.None);
+
+    useEffect(() => {
+        setBalance(action === Action.Stake ? rootedBalance : stakingBalance)
+    }, [action, rootedBalance, stakingBalance])
+
+     const stake = async () => {
+        const amount = parseFloat(value);
+        if (Number.isNaN(amount) || amount <= 0) {
+            // setError("Enter amount");
+            return;
+        }
+        // setError("");
+
+        try {
+            setCompletedAction(`${value} ${action === Action.Stake ? ROOTED_TICKER : STAKING_TICKER} ${action === Action.Stake ? "staked" : "unstaked"}`);
+            setPendingAction(`${action === Action.Stake ? "Staking" : "Unstaking"}...`);
+            setStatus(StakingStatus.Staking);
+
+            const service = new StakingService(library, account!)
+            const txResponse = action === Action.Stake 
+                ? await service.stake(value) 
+                : await service.unstake(value)
+
+            if (txResponse) {
+                const receipt = await txResponse.wait()
+                if (receipt?.status === 1) {
+                    // setTransactionHash(receipt.transactionHash);
+                }
+                else {
+                    // setError("Transaction Failed")
+                }
+            }
+            setStatus(StakingStatus.Staked);
+            setValue("");
+        }
+        catch (e) {
+            console.log(e)
+            const errorMessage = extractErrorMessage(e);
+            if(errorMessage) {
+                // setError(errorMessage);
+            }
+            setStatus(StakingStatus.None)
+        }
+     }
+    console.log('status', status)
+    console.log('balance', balance)
+    console.log('pending ac', pendingAction)
+    console.log('complete',completedAction )
+    console.log('complete', stake )
   return (
     <>
         <Box className='stakone_main'>

@@ -5,11 +5,11 @@ import {
   Table,
   Thead,
   Tbody,
-  Tfoot,
+  // Tfoot,
   Tr,
   Th,
   Td,
-  TableCaption,
+  // TableCaption,
 } from '@chakra-ui/react'
 
 export default function Dashboard() {

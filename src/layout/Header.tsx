@@ -4,7 +4,6 @@ import {
   Flex,
   Text,
   IconButton,
-  Button,
   Stack,
   Collapse,
   useColorModeValue,
@@ -16,7 +15,6 @@ import {
   HamburgerIcon,
   CloseIcon
 } from '@chakra-ui/icons';
-import { Link } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 
 export default function Header() {
