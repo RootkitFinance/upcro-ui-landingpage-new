@@ -35,8 +35,8 @@ export default function Articles() {
                 </Box>
               </GridItem>
             </SimpleGrid>
-            <HowToBuySec />
           </Container>
+          <HowToBuySec />
         </Box>
       </>
     </Layout>

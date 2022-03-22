@@ -1411,6 +1411,7 @@ body{
   justify-content: center;
   padding: 40px 0 25px 0;
   background: #000000;
+  margin-top: -1px;
   h4{
     font-family: $f_primary;
     font-weight: 600;
@@ -2146,7 +2147,15 @@ body{
     }
   }
 }
+@media screen and (max-width: 991px) {
+  .article_main_page{
+    padding-top: 140px;
+  }
+}
 @media screen and (max-width: 767px) {
+  .article_main_page{
+    padding-top: 120px;
+  }
   .contracts_box .upcro_copyflex {
     flex-direction: column;
   }
@@ -2156,6 +2165,9 @@ body{
   }
 }
 @media screen and (max-width: 575px) {
+  .article_main_page{
+    padding-top: 90px;
+  }
   .tab_btn_prnt .tab_border .staktab01 {
     box-shadow: none !important;
     width: 124px;
