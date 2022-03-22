@@ -210,6 +210,7 @@ body{
       font-size: 14px;
       line-height: 16px;
       text-align: center;
+      box-shadow: none !important;
       color: #FFFFFF;
       border: 1px solid #0D6EFD;
       transition: all 0.2s ease-out;
@@ -349,6 +350,7 @@ body{
           font-size: 14px;
           line-height: 16px;
           text-align: center;
+          box-shadow: none !important;
           color: #FFFFFF;
           &:hover{
             background: #07295c;
@@ -1576,6 +1578,7 @@ body{
     border-radius: 60px;
     border: 1px solid #0D6EFD;
     background: transparent;
+    box-shadow: none !important;
     &:hover{
       background: #0D6EFD;
     }
@@ -1591,6 +1594,7 @@ body{
 .sidebar_close_btn{
   margin-left: auto !important;
   border: 1px solid #ffffff !important;
+  box-shadow: none !important;
   svg{
     color: #ffffff !important;
   }
@@ -1973,6 +1977,7 @@ body{
     height: 48px;
     margin-top: 20px;
     transition: all 0.2s ease-out;
+    box-shadow: none !important;
     &:hover{
       background: #0645a3;
     }
@@ -2025,6 +2030,7 @@ body{
         border-radius: 4px;
         width: 56px;
         height: 36px;
+        box-shadow: none !important;
         transition: all 0.2s ease-out;
         &:hover{
           background: #0D6EFD;
@@ -2060,6 +2066,7 @@ body{
     text-align: center;
     color: #FFFFFF;
     background: transparent;
+    box-shadow: none !important;
     transition: all 0.2s ease-out;
     margin: 0 4px;
     &:hover{
@@ -2355,6 +2362,7 @@ body{
     width: 100%;
     height: 48px;
     margin-top: 30px;
+    box-shadow: none !important;
     transition: all 0.2s ease-out;
     &:hover{
       background: #0645a3;
@@ -2883,5 +2891,88 @@ body{
   .ready_text_prnt {
     width: 130px;
     margin-bottom: 0;
+  }
+}
+.pools_main{
+  background: url(../img/pool_page_bg.jpg) no-repeat center;
+  background-size: cover;
+  min-height: 100vh;
+  width: 100%;
+  padding: 84px 15px 40px 15px;
+  .pool_list_box{
+    max-width: 1490px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid #0D6EFD;
+    box-shadow: 0px 0px 10px 2px !important;
+    overflow: hidden;
+    .flex_chart_header{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 30px;
+      h3{
+        font-family: $f_primary;
+        font-weight: 700;
+        font-size: 26px;
+        line-height: 30px;
+        color: #FFFFFF;
+        min-width: 200px;
+      }
+      .search_bar{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        max-width: 547.93px;
+        height: 52px;
+        width: 100%;
+        background: #333B49;
+        border-radius: 60px;
+        padding: 0 12px 0 20px;
+        input{
+          font-family: $f_primary;
+          font-weight: 300;
+          font-size: 15.4075px;
+          line-height: 18px;
+          color: #FFFFFF;
+          background: transparent !important;
+          box-shadow: none !important;
+          border: none !important;
+          outline: none !important;
+          width: 80%;
+        }
+        button{
+          padding: 0 !important;
+          height: auto;
+          min-width: 0;
+          background: transparent !important;
+          box-shadow: none !important;
+          &:hover{
+            img{
+              filter: invert(54%) sepia(93%) saturate(5742%) hue-rotate(207deg) brightness(96%) contrast(107%) !important;
+            }
+          }
+        }
+      }
+    }
+  }
+  .pagination_row {
+    background: #323B49;
+  }
+}
+@media screen and (max-width: 575px) {
+  .pools_main .pool_list_box .flex_chart_header{
+    flex-direction: column;
+    padding: 10px 15px;
+  }
+  .pools_main .pool_list_box .flex_chart_header h3 {
+    font-size: 22px;
+    line-height: 34px;
+    min-width: 0;
+  }
+  .pools_main .pool_list_box .flex_chart_header .search_bar {
+    height: 40px;
   }
 }
