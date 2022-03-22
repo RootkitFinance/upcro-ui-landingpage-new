@@ -352,6 +352,7 @@ body{
           text-align: center;
           box-shadow: none !important;
           color: #FFFFFF;
+          border: 1px solid #0D6EFD;
           &:hover{
             background: #07295c;
           }
@@ -406,14 +407,14 @@ body{
     }
   }
   .upcro_launch_main .launch_text_box .launch_text_box_inn h3 {
-    font-size: 40px;
-    line-height: 50px;
+    font-size: 36px;
+    line-height: 46px;
   }
   .upcro_launch_main .launch_text_box .launch_text_box_inn p {
-    font-size: 18px;
-    line-height: 28px;
-    margin-top: 15px;
-    margin-bottom: 28px;
+    font-size: 17px;
+    line-height: 24px;
+    margin-top: 10px;
+    margin-bottom: 20px;
   }
   .upcro_launch_main {
     padding-top: 100px;
@@ -527,12 +528,12 @@ body{
   .aboutus_main .about_border_box .sadow_box {
     h6{
       font-size: 17px;
-      line-height: 22px;
+      line-height: 20px;
     }
     h3{
       font-size: 27px;
       margin-top: 12px;
-      line-height: 32px;  
+      line-height: 28px;  
     }
   }
   .aboutus_main .about_border_box .about_text_prnt {
@@ -544,6 +545,9 @@ body{
   }
   .aboutus_main {
     margin-top: 30px;
+  }
+  .aboutus_main .about_border_box .sadow_box {
+    padding: 15px 0 20px 0;
   }
 }
 .technology_main{
@@ -589,6 +593,9 @@ body{
       color: #FFFFFF;
       max-width: 1026px;
       margin-bottom: 48px;
+      b{
+        color: #95BFFE;
+      }
     }
     .techno_img_prnt{
       margin-top: auto;
@@ -622,6 +629,7 @@ body{
         color: #FFFFFF;
         box-shadow: none !important;
         transition: all 0.2s ease-out;
+        border: 1px solid #0D6EFD;
         &:hover{
           background: #043f99;
         }
@@ -649,8 +657,8 @@ body{
   .technology_main .tech_bg_box h3 {
     font-size: 36px;
     line-height: 40px;
-    margin-top: 12px;
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 15px;
   }
   .technology_main .tech_bg_box p {
     font-size: 16px;
@@ -745,8 +753,8 @@ body{
     line-height: 22px;
   }
   .feature_main .featur_max_box .feature_text_box h3 {
-    font-size: 29px;
-    line-height: 36px;
+    font-size: 26px;
+    line-height: 30px;
   }
   .feature_main .featur_max_box .feature_text_box p {
     font-size: 15px;
@@ -820,6 +828,7 @@ body{
         color: #FFFFFF;
         margin: 0 auto;
         bottom: -21px;
+        border: 1px solid #0D6EFD;
         position: relative;
         box-shadow:  none !important;
         transition: all 0.2s ease-out;
@@ -884,14 +893,17 @@ body{
   }
 }
 @media screen and (max-width: 575px) {
+  .team_main .about_border_box .sadow_box {
+    padding: 15px 15px 20px 15px;
+  }
   .team_main .about_border_box .sadow_box h6 {
     font-size: 18px;
     line-height: 22px;
   }
   .team_main .about_border_box .sadow_box h3 {
-    font-size: 28px;
-    margin-top: 13px;
-    line-height: 32px;
+    font-size: 26px;
+    margin-top: 11px;
+    line-height: 30px;
   }
   .team_main .team_p_prnt {
     margin-top: 41px;
@@ -968,6 +980,9 @@ body{
           font-size: 16px;
           line-height: 16px;
           color: #FFFFFF;
+          img{
+            margin-top: -1px;
+          }
         }
         a{
           display: flex;
@@ -1081,8 +1096,8 @@ body{
   .articlesec_main h3 {
     font-size: 36px;
     line-height: 40px;
-    margin-top: 10px;
-    margin-bottom: 14px;
+    margin-top: 5px;
+    margin-bottom: 12px;
 }
   .articlesec_main .artcl_slider_inn .slider_text_box h4 {
     font-size: 13px;
@@ -1098,19 +1113,37 @@ body{
     font-size: 13px;
   }
   .articlesec_main .slick-prev {
-    bottom: -15px !important;
+    bottom: 4px !important;
     height: 15px !important;
     width: 57px !important;
-    left: calc(50% - 136px) !important;
+    left: calc(50% - 120px) !important;
   }
   .articlesec_main .slick-next{
-    bottom: -15px !important;
+    bottom: 4px !important;
     height: 15px !important;
     width: 57px !important;
-    right: calc(50% - 136px) !important;
+    right: calc(50% - 120px) !important;
   }
   .articlesec_main .slick-dots {
-    bottom: -11px;
+    bottom: 4px;
+  }
+  .slider_prnt_artcl {
+    .slick-dots li {
+      width: 16px;
+      margin: 0 3px;
+      button {
+        width: 11px;
+        height: 11px;
+      }
+    }
+  }
+  .articlesec_main .slick-dots li button:hover {
+    width: 16px;
+    height: 16px;
+  }
+  .articlesec_main .slick-dots .slick-active button {
+    width: 16px;
+    height: 16px;
   }
 }
 .roadmapsec_main{
@@ -1228,6 +1261,7 @@ body{
     text-align: center;
     color: #FFFFFF;
     background: #0D6EFD;
+    border: 1px solid #0D6EFD;
     border-radius: 60px;
     margin: 0 auto !important;
     margin-bottom: -21px !important;
@@ -1265,8 +1299,32 @@ body{
   }
 }
 @media screen and (max-width: 575px) {
+  .roadmapsec_main .sadow_box {
+    padding: 15px 0 20px 0;
+  }
   .roadmapsec_main {
     margin-top: 70px;
+    border-radius: 50px;
+  }
+  .roadmapsec_main::before{
+    border-radius: 50px;
+  }
+  .roadmapsec_main .roadmap_cntnt .road_cntnt_row .road_map_img0 {
+    height: 110px;
+    width: 110px;
+  }
+  .roadmapsec_main .roadmap_cntnt .road_cntnt_row .road_map_img_prnt {
+    height: 130px !important;
+    min-width: 110px !important;
+  }
+  .roadmapsec_main .roadmap_cntnt .road_cntnt_row .road_text_prnt h5 {
+    font-size: 22px;
+    line-height: 26px;
+    margin-bottom: 12px;
+  }
+  .roadmapsec_main .roadmap_cntnt .road_cntnt_row .road_text_prnt p {
+    font-size: 14px;
+    line-height: 18px;
   }
   .roadmapsec_main .roadmap_cntnt .road_cntnt_row {
     flex-direction: column;
@@ -1275,7 +1333,7 @@ body{
   }
   .roadmapsec_main .sadow_box h3 {
     font-size: 34px;
-    margin-top: 12px;
+    margin-top: 10px;
     line-height: 34px;
   }
   .roadmapsec_main .sadow_box h6 {
@@ -1973,6 +2031,7 @@ body{
     text-align: center;
     color: #FFFFFF;
     background: #0D6EFD;
+    border: 1px solid #0D6EFD;
     border-radius: 60px;
     width: 100%;
     height: 48px;
@@ -2384,6 +2443,7 @@ body{
     text-align: center;
     color: #FFFFFF;
     background: #0D6EFD;
+    border: 1px solid #0D6EFD;
     border-radius: 60px;
     width: 100%;
     height: 48px;
