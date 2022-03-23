@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Box, SimpleGrid, GridItem, Heading, Image, Button, Text } from '@chakra-ui/react'
 import LayoutTwo from './LayoutTwo'
 import {
@@ -11,6 +11,9 @@ import {
 } from '@chakra-ui/react'
 
 export default function Dashboard() {
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   return (
     <>
         <LayoutTwo>
