@@ -13,8 +13,8 @@ export default function HowToBuySec() {
                         <Box className='howtobuy_cntnt'>
                             <Box className='htb_cntnt_box'>
                                 <Heading as="h3">How to buy</Heading>
-                                <Text>If you've invested into any of our projects in the past, you know that our MGE and the ERC-31337 "elite" wrapper are the secret sauces that set us apart. It's what separates us from any of the overhyped "RFI/Safemoon/EverRise"-type reflection tokens that have tried to imitate us since Summer 2020.</Text>
-                                <Button as="a" href="#">CHECK OUR ARTICLE HERE</Button>
+                                <Text>Head on over to EmpireDEX, connect your wallet and set your slippage to 4% <br/></Text>
+                                <Button as="a" href="https://cro.empiredex.org/#/swap?outputCurrency=0xb062084aFfDf75b9b494D56B8417F1B981Df790f" target="_blank">CHECK OUR ARTICLE HERE</Button>
                             </Box>
                         </Box>
                     </GridItem>
