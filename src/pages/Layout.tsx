@@ -1,3 +1,4 @@
+import React from 'react';
 import Header from '../layout/Header';
 import Footer from '../layout/Footer';
 
@@ -9,7 +10,7 @@ const Layout = (props:any) => {
         {props.children}
       <Footer />
     </div>
-  );
+  );  
 };
 
 export default Layout;
