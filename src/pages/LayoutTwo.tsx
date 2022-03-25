@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-// import Header from '../layout/Header';
-// import Footer from '../layout/Footer';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components'
 // import Sidebar from '../layouttwo/Sidebar';
@@ -14,38 +12,23 @@ import useBalance from '../hooks/useBalance'
 import { BASE_DECIMALS, BASE_TICKER } from "../constants";
 import {
   IconButton,
-  // Avatar,
   Box,
   CloseButton,
   Flex,
   HStack,
-  // VStack,
-  // Icon,
-  // useColorModeValue,
+  Icon,
   Drawer,
   DrawerContent,
   Text,
   useDisclosure,
   BoxProps,
   FlexProps,
-  // Menu,
-  // MenuButton,
-  // MenuDivider,
-  // MenuItem,
-  // MenuList,
   Image,
   Link,
   Button,
 } from '@chakra-ui/react';
 import {
-  // FiHome,
-  // FiTrendingUp,
-  // FiCompass,
-  // FiStar,
-  // FiSettings,
-  FiMenu,
-  // FiBell,
-  // FiChevronDown,
+  FiMenu
 } from 'react-icons/fi';
 // import { IconType } from 'react-icons';
 // import { ReactText } from 'react';
@@ -70,7 +53,6 @@ const AccountElement = styled.div<{ active: boolean }>`
   white-space: nowrap;
   width: 100%;
   cursor: pointer;
-
   :focus {
     border: 1px solid blue;
   }
@@ -172,7 +154,7 @@ const LayoutTwo = (props: any) => {
               <span>Swap</span>
             </NavLink>
             <NavLink
-              to='/'
+              to='/pools'
               className={splitLocation[1] === '' ? 'active' : ''}
             >
               <Image src='img/sidebar_link_ic04.svg' alt="" />

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Box, Container, Heading, Text, Button, Image } from '@chakra-ui/react'
 import LayoutTwo from './LayoutTwo'
-// import { components } from 'react-select';
 import ReactSelect from 'react-select';
 
 const currency = [
@@ -46,6 +45,7 @@ export default function Swap() {
                                         <ReactSelect
                                             className='select_one'
                                             classNamePrefix="slct"
+                                            value={currency}
                                             options={currency}
                                             formatOptionLabel={currency => (
                                             <Box className='slect_bg'>
@@ -63,13 +63,15 @@ export default function Swap() {
                                     <Text>Balance: 0.00</Text>
                                 </Box>
                             </Box>
+                            <Button className='swap_center_btn'><Image src='img/down_arw_ic.svg' /></Button>
                             <Box className='swap_upcro_brdr_bx swap_btc_brdr_bx'>
                                 <Box className='flex_bx'>
-                                    <input type="number" value="281.594" />
+                                    <input type="number" value="3655.548654" />
                                     <Box className='slect_box'>
                                         <ReactSelect
                                             className='select_one'
                                             classNamePrefix="slct"
+                                            value={currencytwo}
                                             options={currencytwo}
                                             formatOptionLabel={currencytwo => (
                                             <div className="country-option slect_bg">
@@ -81,13 +83,13 @@ export default function Swap() {
                                     </Box>      
                                 </Box>
                                 <Box className='flex_bx flex_bx_02'>
-                                    <Text>$281.594</Text>
-                                    <Text>Balance: 0.00</Text>
+                                    <Text>$256.312</Text>
+                                    <Text>Balance: 1,688,648</Text>
                                 </Box>
                             </Box>
                             <Box className='text_row_darc'>
                                 <Text>1 upCRO = 0.00846454 BTC</Text>
-                                <Text>Gas: $32.455</Text>
+                                <Text>($0.00065486635)</Text>
                                 <Text>Gas: $32.455</Text>
                             </Box>
                             <Button className='stake_full_btn'>Stake</Button>

@@ -1,9 +1,11 @@
 import React from 'react'
 import { Box, SimpleGrid, GridItem, Heading, Text, Button, Image } from '@chakra-ui/react'
+import { Element } from 'react-scroll';
 
 export default function FirstSec() {
   return (
     <>
+    <Element name='Introduction'>
         <Box className='upcro_launch_main'>
             <Box className='width_full'>
                 <SimpleGrid columns={12} columnGap={3} rowGap={2} >
@@ -12,7 +14,9 @@ export default function FirstSec() {
                             <Box className='launch_text_box_inn' data-aos="fade-up" data-aos-delay="1000" data-aos-duration="800">
                                 <Heading as="h3">upCRO</Heading>
                                 <Text>
-                                    UpCRO is the latest launch by the Rootkit team as part of the upEcosystem, coins designed to have increased volitility against their main paired token with auto-refilling buy back vaults.
+                                    UpCRO is our most advanced UpToken ever and our first ERC-31337 token on Cronos chain.
+                                    <br/>
+                                    Paired against CRO; upCRO is the cornerstone vault of the Root Finance upToken ecosystem on Cronos.
                                 </Text>
                                 <Box className='launch_btns'>
                                     <Button as="a" href='#'>BUY NOW</Button>
@@ -30,6 +34,7 @@ export default function FirstSec() {
                 </SimpleGrid>
             </Box>
         </Box>
+    </Element>
     </>
   )
 }

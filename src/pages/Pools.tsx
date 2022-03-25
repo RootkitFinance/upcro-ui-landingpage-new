@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react'
-import { Box, SimpleGrid, GridItem, Heading, Image, Button, Text } from '@chakra-ui/react'
+import React from 'react'
+import { Box, Heading, Image, Button, Text } from '@chakra-ui/react'
 import LayoutTwo from './LayoutTwo'
 import {
   Table,
@@ -10,44 +10,19 @@ import {
   Td,
 } from '@chakra-ui/react'
 
-export default function Dashboard() {
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+export default function Pools() {
   return (
     <>
         <LayoutTwo>
-          <Box className='dashboard_main_page'>
-            <Box className='dashboard_cntnt_box'>
-              <SimpleGrid columns={12} columnGap={4} rowGap={3} >
-                <GridItem colSpan={[12, 12, 12, 6]}>
-                  <Box className='dashboard_chart_box price_chart_main'>
-                    <Image src='img/price_chart_img.png' alt='' />
-                  </Box>
-                </GridItem>
-                <GridItem colSpan={[12, 12, 12, 6]}>
-                  <Box className='dashboard_chart_box price_chart_main'>
-                    <Image src='img/tvl_chrt_img.png' alt='' />
-                  </Box>
-                </GridItem>
-                <GridItem colSpan={[12, 12, 12, 6]}>
-                  <Box className='dashboard_chart_box'>
-                    <Box className='flex_chart_header'>
-                      <Heading as="h3">List of all contracts</Heading>
-                    </Box>
-                  </Box>
-                </GridItem>
-                <GridItem colSpan={[12, 12, 12, 6]}>
-                  <Box className='dashboard_chart_box'>
-                    <Box className='flex_chart_header'>
-                      <Heading as="h3">Pending votes</Heading>
-                    </Box>
-                  </Box>
-                </GridItem>
-                <GridItem colSpan={[12, 12, 12, 12]}>
-                  <Box className='dashboard_chart_box dashboard_chart_box_last'>
+            <Box className='pools_main'>
+              <Box className='pool_list_box'>
+                <Box className='dashboard_chart_box dashboard_chart_box_last'>
                     <Box className='flex_chart_header flex_chart_header_last'>
                       <Heading as="h3">List of all pools</Heading>
+                      <Box className='search_bar'>
+                        <input type="text" placeholder="Type for search" />
+                        <Button className="serch_btn"><Image src="img/search_ic.svg" alt="" /> </Button>
+                      </Box>
                     </Box>
                     <Box className='pools_tablemain'>
                       <Table variant='simple'>
@@ -131,6 +106,20 @@ export default function Dashboard() {
                             <Th isNumeric><Box className="volume_column" >$361.06m</Box></Th>
                             <Th isNumeric>$54.06m</Th>
                           </Tr>
+                          <Tr>
+                            <Td>11</Td>
+                            <Td><Box className='poolcolm_data'><Image src="img/table_ic02.svg" alt="" />WBTC/ETH<span>0.3%</span></Box></Td>
+                            <Td isNumeric></Td>
+                            <Td isNumeric><Box className="volume_column" >$144.06m</Box></Td>
+                            <Td isNumeric>$16.06m</Td>
+                          </Tr>
+                          <Tr>
+                            <Td>12</Td>
+                            <Td><Box className='poolcolm_data'><Image src="img/table_ic01.svg" alt="" />UNI/ETH<span>0.3%</span></Box></Td>
+                            <Td isNumeric></Td>
+                            <Td isNumeric><Box className="volume_column" >$361.06m</Box></Td>
+                            <Td isNumeric>$54.06m</Td>
+                          </Tr>
                         </Tbody>
                       </Table>
                     </Box>
@@ -140,10 +129,8 @@ export default function Dashboard() {
                       <Button><Image src='img/pagination_next.svg' alt="" /></Button>
                     </Box>
                   </Box>
-                </GridItem>
-              </SimpleGrid>
+              </Box>
             </Box>
-          </Box>
         </LayoutTwo>
     </>
   )

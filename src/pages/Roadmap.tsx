@@ -2,10 +2,7 @@ import React from 'react'
 import { Box, Container, Heading, Text } from '@chakra-ui/react'
 import LayoutTwo from './LayoutTwo'
 import {
-    // List,
     ListItem,
-    // ListIcon,
-    // OrderedList,
     UnorderedList,
   } from '@chakra-ui/react'
 

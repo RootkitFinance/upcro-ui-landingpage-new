@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Box, SimpleGrid, GridItem, Image, Heading, Container } from '@chakra-ui/react';
 import HowToBuySec from '../components/Home/HowToBuySec';
 
@@ -9,6 +9,9 @@ import AOS from 'aos';
 
 export default function Articles() {
   AOS.init();
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
   return (
     <Layout className='app-page'>
       <>
@@ -35,8 +38,8 @@ export default function Articles() {
                 </Box>
               </GridItem>
             </SimpleGrid>
-            <HowToBuySec />
           </Container>
+          <HowToBuySec />
         </Box>
       </>
     </Layout>
