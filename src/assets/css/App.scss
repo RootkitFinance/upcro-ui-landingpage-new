@@ -605,9 +605,15 @@ body{
     .techno_img_prnt{
       margin-top: auto;
       margin-bottom: -15px;
+      position: relative;
       // img{
       //   mix-blend-mode: multiply;
       // }
+      .circle_img {
+        position: absolute;
+        left: 41%;
+        top: 12%;
+      }
     }
     .darkbg_btn_bx{
       background: #000000;
@@ -3191,7 +3197,15 @@ body{
     -webkit-transform: scale(1.08);
     transform: scale(1.08);
     }
-  }
-  
+  }  
 }
-
+@media screen and (max-width: 575px) {
+  .technology_main .tech_bg_box .techno_img_prnt {
+    .techno_img {
+      max-width: 300px;
+    }
+    .circle_img {
+      max-width: 55px;
+    }
+  }
+}
