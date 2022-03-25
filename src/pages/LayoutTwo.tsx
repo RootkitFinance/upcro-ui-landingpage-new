@@ -16,7 +16,6 @@ import {
   CloseButton,
   Flex,
   HStack,
-  Icon,
   Drawer,
   DrawerContent,
   Text,
