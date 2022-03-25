@@ -1,8 +1,23 @@
 import React from 'react'
 import { Box, Container, SimpleGrid, GridItem, Heading, Text, Image } from '@chakra-ui/react'
 import { Element } from 'react-scroll';
+import { motion, useMotionValue, useTransform } from "framer-motion";
+
 
 export default function FeaturesSec() {
+    const x = useMotionValue(200);
+    const y = useMotionValue(200);
+
+    const rotateX = useTransform(y, [0, 400], [15, -15]);
+    const rotateY = useTransform(x, [0, 400], [-15, 15]);
+
+    function handleMouse(event:any) {
+        const rect = event.currentTarget.getBoundingClientRect();
+
+        x.set(event.clientX - rect.left);
+        y.set(event.clientY - rect.top);
+    }
+
   return (
     <>
     <Element name='Features'>
@@ -21,7 +36,26 @@ export default function FeaturesSec() {
                     </GridItem>
                     <GridItem colSpan={[12, 12, 12, 6]}>
                         <Box className='feature_img_prnt' data-aos="zoom-in" data-aos-delay="500">
-                            <Image src='img/newfeature_img.png' alt='' />
+                        <motion.div onMouseMove={handleMouse}
+                                style={{
+                                    display: "flex",
+                                    placeItems: "center",
+                                    placeContent: "center",
+                                    width: "100%",
+                                    perspective: 400
+                                }}>
+                                <motion.div 
+                                style={{
+                                    width: "100%",
+                                    rotateX: rotateX,
+                                    rotateY: rotateY
+                                }}>
+                                    <Box className='radial_gradiant_box'>
+                                        <Image src='img/newfeature_img.png' alt='' />
+                                    </Box>
+                                </motion.div>
+                            </motion.div>
+                            
                         </Box>
                     </GridItem>
                 </SimpleGrid>

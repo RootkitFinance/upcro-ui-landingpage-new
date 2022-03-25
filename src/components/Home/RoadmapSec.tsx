@@ -16,7 +16,7 @@ export default function RoadmapSec() {
                 <Box className='roadmap_cntnt'>
                     <Box className='road_cntnt_row road_cntnt_row_01'>
                         <Box className='road_map_img_prnt' data-aos="zoom-out" data-aos-delay="700">
-                            <Image src='img/road_map_img01.png' alt='' className='road_map_img0' />
+                            <Image src='img/road_map_img01.png' alt='' className='road_map_img0 pulse' />
                         </Box>
                         <Box className='road_text_prnt' data-aos="fade-up" data-aos-delay="500">
                             <Heading as="h5">UpOnly Integration</Heading>
@@ -25,7 +25,7 @@ export default function RoadmapSec() {
                     </Box>
                     <Box className='road_cntnt_row'>
                         <Box className='road_map_img_prnt' data-aos="zoom-out" data-aos-delay="800">
-                            <Image src='img/road_map_img02.png' alt='' className='road_map_img0' />
+                            <Image src='img/road_map_img02.png' alt='' className='road_map_img0 pulse' />
                         </Box>
                         <Box className='road_text_prnt' data-aos="fade-up" data-aos-delay="600">
                             <Heading as="h5">Activate New Buyback Vault</Heading>
@@ -34,7 +34,7 @@ export default function RoadmapSec() {
                     </Box>
                     <Box className='road_cntnt_row'>
                         <Box className='road_map_img_prnt' data-aos="zoom-out" data-aos-delay="900">
-                            <Image src='img/road_map_img03.png' alt='' className='road_map_img0' />
+                            <Image src='img/road_map_img03.png' alt='' className='road_map_img0 pulse' />
                         </Box>
                         <Box className='road_text_prnt' data-aos="fade-up" data-aos-delay="700">
                             <Heading as="h5">Activate Marketing Vault</Heading>
@@ -43,7 +43,7 @@ export default function RoadmapSec() {
                     </Box>
                     <Box className='road_cntnt_row'>
                         <Box className='road_map_img_prnt' data-aos="zoom-out" data-aos-delay="1000">
-                            <Image src='img/road_map_img04.png' alt='' className='road_map_img0' />
+                            <Image src='img/road_map_img04.png' alt='' className='road_map_img0 pulse' />
                         </Box>
                         <Box className='road_text_prnt' data-aos="fade-up" data-aos-delay="800">
                             <Heading as="h5">Token launch with over 10k% staking APY</Heading>
@@ -52,7 +52,7 @@ export default function RoadmapSec() {
                     </Box>
                     <Box className='road_cntnt_row'>
                         <Box className='road_map_img_prnt' data-aos="zoom-out" data-aos-delay="1100">
-                            <Image src='img/road_map_img05.png' alt='' className='road_map_img0' />
+                            <Image src='img/road_map_img05.png' alt='' className='road_map_img0 pulse' />
                         </Box>
                         <Box className='road_text_prnt' data-aos="fade-up" data-aos-delay="900">
                             <Heading as="h5">Activate Marketing Vault</Heading>
@@ -61,7 +61,7 @@ export default function RoadmapSec() {
                     </Box>
                     <Box className='road_cntnt_row'>
                         <Box className='road_map_img_prnt' data-aos="zoom-out" data-aos-delay="1200">
-                            <Image src='img/road_map_img06.png' alt='' className='road_map_img0' />
+                            <Image src='img/road_map_img06.png' alt='' className='road_map_img0 pulse' />
                         </Box>
                         <Box className='road_text_prnt' data-aos="fade-up" data-aos-delay="1000">
                             <Heading as="h5">Activate New Buy-Back Vault</Heading>
@@ -70,7 +70,7 @@ export default function RoadmapSec() {
                     </Box>
                 </Box>
                 <Box className='enter_roadmap_btn_prnt'>
-                    <Button as="a" href='#' className='enter_roadmap_btn'>ENTER APP</Button>
+                    <Button as="a" href='#' className='enter_roadmap_btn btn_box_shedow'>ENTER APP</Button>
                 </Box>
             </Box>
         </Container>   

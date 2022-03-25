@@ -1,8 +1,22 @@
 import React from 'react'
 import { Box, Container, Heading, SimpleGrid, GridItem, Button, Text, Image } from '@chakra-ui/react'
 import { Element } from 'react-scroll';
+import { motion, useMotionValue, useTransform } from "framer-motion";
+
 
 export default function TeamSec() {
+    const x = useMotionValue(200);
+    const y = useMotionValue(200);
+
+    const rotateX = useTransform(y, [0, 400], [10, -10]);
+    const rotateY = useTransform(x, [0, 400], [-5, 5]);
+
+    function handleMouse(event:any) {
+        const rect = event.currentTarget.getBoundingClientRect();
+
+        x.set(event.clientX - rect.left);
+        y.set(event.clientY - rect.top);
+    }
   return (
     <>
     <Element name='Team'>
@@ -24,13 +38,32 @@ export default function TeamSec() {
                             </GridItem>
                             <GridItem colSpan={[12, 12, 12, 6]}>
                                 <Box className='team_p_prnt team_img_prnt'>
-                                    <Image src='img/team_img.png' alt='' />
+                                    <motion.div onMouseMove={handleMouse}
+                                        style={{
+                                            display: "flex",
+                                            placeItems: "center",
+                                            placeContent: "center",
+                                            width: "100%",
+                                            perspective: 400
+                                        }}>
+                                        <motion.div 
+                                        style={{
+                                            width: "100%",
+                                            rotateX: rotateX,
+                                            rotateY: rotateY
+                                        }}>
+                                            <Box className='radial_gradiant_box'>
+                                            <Image src='img/team_img.png' alt='' />
+                                            </Box>
+                                            {/* <Image src='img/firstsection_img.jpg' className='upcro_first_img' /> */}
+                                        </motion.div>
+                                    </motion.div>
                                 </Box>
                             </GridItem>
                         </SimpleGrid>
                     </Box>
                     <Box className='enter_app_btn_prnt'>
-                        <Button as="a" href="#" className='enter_app_btn'>ENTER APP</Button>
+                        <Button as="a" href="#" className='enter_app_btn btn_box_shedow'>ENTER APP</Button>
                     </Box>
                 </Box>
             </Container>

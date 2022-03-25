@@ -1,8 +1,22 @@
 import React from 'react'
 import { Box, SimpleGrid, GridItem, Heading, Text, Button, Image } from '@chakra-ui/react'
 import { Element } from 'react-scroll';
+import { motion, useMotionValue, useTransform } from "framer-motion";
 
 export default function FirstSec() {
+    const x = useMotionValue(200);
+    const y = useMotionValue(200);
+
+    const rotateX = useTransform(y, [0, 400], [15, -15]);
+    const rotateY = useTransform(x, [0, 400], [-15, 15]);
+
+    function handleMouse(event:any) {
+        const rect = event.currentTarget.getBoundingClientRect();
+
+        x.set(event.clientX - rect.left);
+        y.set(event.clientY - rect.top);
+    }
+
   return (
     <>
     <Element name='Introduction'>
@@ -19,16 +33,35 @@ export default function FirstSec() {
                                     Paired against CRO; upCRO is the cornerstone vault of the Root Finance upToken ecosystem on Cronos.
                                 </Text>
                                 <Box className='launch_btns'>
-                                    <Button as="a" href='#'>BUY NOW</Button>
-                                    <Button as="a" href='#' className='entr_a'>ENTER APP</Button>
-                                    <Button as="a" href='#'>CHART</Button>
+                                    <Button className='btn_box_shedow' as="a" href='#'>BUY NOW</Button>
+                                    <Button as="a" href='#' className='entr_a btn_box_shedow'>ENTER APP</Button>
+                                    <Button className='btn_box_shedow' as="a" href='#'>CHART</Button>
                                 </Box>
                             </Box>
                         </Box>
                     </GridItem>
                     <GridItem colSpan={[12, 12, 12, 6]}>
                         <Box className='launch_text_box' data-aos="zoom-in" data-aos-delay="500">
-                            <Image src='img/upcro_first_img.jpg' className='upcro_first_img' />
+                            <motion.div onMouseMove={handleMouse}
+                                style={{
+                                    display: "flex",
+                                    placeItems: "center",
+                                    placeContent: "center",
+                                    width: "100%",
+                                    perspective: 400
+                                }}>
+                                <motion.div 
+                                style={{
+                                    width: "100%",
+                                    rotateX: rotateX,
+                                    rotateY: rotateY
+                                }}>
+                                    <Box className='radial_gradiant_box'>
+                                        <Image src='img/upbnb_first_sec.png' className='upcro_first_img' />
+                                    </Box>
+                                    {/* <Image src='img/firstsection_img.jpg' className='upcro_first_img' /> */}
+                                </motion.div>
+                            </motion.div>
                         </Box>
                     </GridItem>
                 </SimpleGrid>
