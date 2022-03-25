@@ -90,7 +90,7 @@
     "react-use-gesture": "^7.0.16",
     "react-window": "^1.8.5",
     "rebass": "^4.0.7",
-    "styled-components": "^5.2.0"
+    "styled-components": "^5.2.0",
     "@types/react-scroll": "^1.8.2",
     "@types/react-slick": "^0.23.4"
   }
