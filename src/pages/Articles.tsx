@@ -1,5 +1,5 @@
 
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 import { Box, SimpleGrid, GridItem, Image, Heading, Container } from '@chakra-ui/react';
 import HowToBuySec from '../components/Home/HowToBuySec';
 import { TwitterTimelineEmbed } from 'react-twitter-embed';
@@ -8,46 +8,46 @@ import Layout from './Layout';
 import AOS from 'aos';
 import Axios from 'axios';
 
+interface IArticle {
+  title?: string;
+  thumbnail?: string;
+  pubDate?: string;
+  link?: string;
+}
+
+
 export default function Articles() {
   AOS.init();
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
 
+  const [articles, setArticles] = useState<IArticle[]>([])
+
   useEffect(() => {
     let mediumURL = "https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@upcro"
     Axios.get(mediumURL)
       .then((data) => {
-        // console.log(data.data)
-        // const avatar = data.data.feed.image;
-        // const profileLink = data.data.feed.link;
-        const res = data.data.items; //This is an array with the content. No feed, no info about author etc..
-        // const posts = res.filter((item: { categories: string | any[]; }) => item.categories.length > 0);
-        // const title = data.data.feed.title;
+        const res = data.data.items; //This is an array with the content. No feed, no info about author etc..    
+        let articlesData = res != undefined ? res.map((e: any) => {
+            return {
+                title: e.title,
+                pubDate: e.pubDate, 
+                thumbnail: e.thumbnail,
+                link: e.link
+            }
+        }) : []
 
-        // this.setState(
-        //   (pre) => ({
-        //     profile: {
-        //       ...pre.profile,
-        //       ptitle: title,
-        //       profileurl: profileLink,
-        //       avtar: avatar,
-
-        //     },
-        //     item: posts,
-        //     isloading: false
-        //   }),
-        //   () => {
-        //     console.log(this.state);
-        //   }
-        // );
-        console.log(res);
+        console.log(res)
+        setArticles(articlesData)
       })
       .catch((e) => {
         // this.setState({ error: e.toJSON() })
         console.log(e);
       });
   }, [])
+
+  console.log(articles)
   return (
     <Layout className='app-page'>
       <>
