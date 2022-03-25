@@ -1,11 +1,20 @@
 
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { Box, Button, Container, Heading, Image, Text } from '@chakra-ui/react'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Axios from 'axios';
+
+interface IArticle {
+    title?: string;
+    thumbnail?: string;
+    pubDate?: string;
+    link?: string;
+}
 
 export default function ArticleSec() {
+
     var settings = {
         dots: true,
         infinite: true,
@@ -31,6 +40,32 @@ export default function ArticleSec() {
             }
           ]
       };
+
+      const [articles, setArticles] = useState<IArticle[]>([])
+
+      useEffect(() => {
+        let mediumURL = "https://api.rss2json.com/v1/api.json?rss_url=https://medium.com/feed/@upcro"
+        Axios.get(mediumURL)
+          .then((data) => {
+            const res = data.data.items; //This is an array with the content. No feed, no info about author etc..    
+            let articlesData = res != undefined ? res.map((e: any) => {
+                return {
+                    title: e.title,
+                    pubDate: e.pubDate, 
+                    thumbnail: e.thumbnail,
+                    link: e.link
+                }
+            }) : []
+
+            console.log(res)
+            setArticles(articlesData)
+          })
+          .catch((e) => {
+            // this.setState({ error: e.toJSON() })
+            console.log(e);
+          });
+      }, [])
+      
   return (
     <>
         <Box className='articlesec_main' data-aos="fade-up" data-aos-delay="300" data-aos-duration="800">
@@ -39,62 +74,25 @@ export default function ArticleSec() {
                 <Heading as="h3">Articles</Heading>
                 <Box className='slider_prnt_artcl'>
                     <Slider {...settings}>
-                        <div>
-                            <Box className='artcl_slider_cntnt'>
-                                <Box className='artcl_slider_inn'>
-                                    <Image src='img/slider_img_01.png' alt='' />
-                                    <Box className='slider_text_box'>
-                                        <Heading as="h4">UpCRO to launch on Empire Dex</Heading>
-                                        <Box className='flex_box'>
-                                            <Text><Image src='img/clndr_ic.svg' alt='' /> 16.01.2022</Text>
-                                            <Button as="a" href='#'>Read More <Image src='img/arrow_ic.svg' alt='' /></Button>
+                        { 
+                            articles !=  undefined ? 
+                            articles.slice(0,5).map((article) => {
+                                return <div>
+                                    <Box className='artcl_slider_cntnt'>
+                                        <Box className='artcl_slider_inn'>
+                                            <Image src={article.thumbnail} alt='' />
+                                            <Box className='slider_text_box'>
+                                                <Heading as="h4">{article.title}</Heading>
+                                                <Box className='flex_box'>
+                                                    <Text><Image src='img/clndr_ic.svg' alt='' /> {article.pubDate}</Text>
+                                                    <Button as="a" href={article.link}>Read More <Image src='img/arrow_ic.svg' alt='' /></Button>
+                                                </Box>
+                                            </Box>
                                         </Box>
                                     </Box>
-                                </Box>
-                            </Box>
-                        </div>
-                        <div>
-                            <Box className='artcl_slider_cntnt'>
-                                <Box className='artcl_slider_inn'>
-                                    <Image src='img/slider_img_02.png' alt='' />
-                                    <Box className='slider_text_box'>
-                                        <Heading as="h4">ROOT Bridge User guide</Heading>
-                                        <Box className='flex_box'>
-                                            <Text><Image src='img/clndr_ic.svg' alt='' /> 16.01.2022</Text>
-                                            <Button as="a" href='#'>Read More <Image src='img/arrow_ic.svg' alt='' /></Button>
-                                        </Box>
-                                    </Box>
-                                </Box>
-                            </Box>
-                        </div>
-                        <div>
-                            <Box className='artcl_slider_cntnt'>
-                                <Box className='artcl_slider_inn'>
-                                    <Image src='img/slider_img_03.png' alt='' />
-                                    <Box className='slider_text_box'>
-                                        <Heading as="h4">xToken Staking and the Drip Vault</Heading>
-                                        <Box className='flex_box'>
-                                            <Text><Image src='img/clndr_ic.svg' alt='' /> 16.01.2022</Text>
-                                            <Button as="a" href='#'>Read More <Image src='img/arrow_ic.svg' alt='' /></Button>
-                                        </Box>
-                                    </Box>
-                                </Box>
-                            </Box>
-                        </div>
-                        <div>
-                            <Box className='artcl_slider_cntnt'>
-                                <Box className='artcl_slider_inn'>
-                                    <Image src='img/slider_img_01.png' alt='' />
-                                    <Box className='slider_text_box'>
-                                        <Heading as="h4">ROOT Bridge User guide</Heading>
-                                        <Box className='flex_box'>
-                                            <Text><Image src='img/clndr_ic.svg' alt='' /> 16.01.2022</Text>
-                                            <Button as="a" href='#'>Read More <Image src='img/arrow_ic.svg' alt='' /></Button>
-                                        </Box>
-                                    </Box>
-                                </Box>
-                            </Box>
-                        </div>
+                                </div> 
+                            }) : <></>
+                        }
                     </Slider>
                 </Box>
             </Container>
