@@ -8,6 +8,7 @@ import { useWeb3React } from "@web3-react/core";
 // import { TokenService } from "../../services/TokenServices";
 import { extractErrorMessage } from "../../utils/extractErrorMessage";
 import { StakingService } from "../../services/StakingServices";
+import { shortenAddress, supportedChain } from '../../utils'
 
 enum Action {
     Stake,
@@ -23,17 +24,31 @@ enum StakingStatus {
 }
 
 export default function StakeTabOne() {
-    const { account, library } = useWeb3React();
+    const { account, library, chainId } = useWeb3React();
     const rootedBalance = useTokenBalance(ROOTED_ADDRESS);
     const stakingBalance = useTokenBalance(STAKING_ADDRESS);
     const [action,
-        // setAction
+        setAction
     ] = useState<Action>(Action.Stake);
     const [balance, setBalance] = useState<BigNumber>(new BigNumber(0));
     const [completedAction, setCompletedAction] = useState("");
     const [pendingAction, setPendingAction] = useState("");
     const [value, setValue] = useState<string>("");
     const [status, setStatus] = useState<StakingStatus>(StakingStatus.None);
+    const [rate, setRate] = useState("");
+
+    useEffect(() => {
+        const getRate = async () => {
+            if (account && chainId && supportedChain(chainId!)) {
+                const stakedPerRooted = await new StakingService(library, account!).getRate();
+                setRate(`${action === Action.Stake ? `1 ${ROOTED_TICKER} = ${stakedPerRooted.toFixed(4)} ${STAKING_TICKER}` : `1 ${STAKING_TICKER} = ${(1/stakedPerRooted).toFixed(4)} ${ROOTED_TICKER}`}`);
+            }
+        }
+
+        getRate();    
+        const timer = setInterval(() => getRate(), 30000)
+        return () => clearInterval(timer)
+    }, [library, account, chainId, action])
 
     useEffect(() => {
         setBalance(action === Action.Stake ? rootedBalance : stakingBalance)
@@ -94,14 +109,14 @@ export default function StakeTabOne() {
             <Tabs variant='unstyled'>
             <TabList className='tab_btn_prnt'>
                 <Box className='tab_border'>
-                    <Tab bg={'#0D6EFD'} _selected={{ color: '#FFFFFF', bg: 'transparent' }} className="staktab01">Stake upCRO</Tab>
-                    <Tab bg={'#0D6EFD'} _selected={{ color: '#FFFFFF', bg: 'transparent' }} className="staktab02">Unstake xUpCRO</Tab>
+                    <Tab bg={'#0D6EFD'} _selected={{ color: '#FFFFFF', bg: 'transparent' }} className="staktab01" onClick={() => setAction(Action.Stake)} >Stake upCRO</Tab>
+                    <Tab bg={'#0D6EFD'} _selected={{ color: '#FFFFFF', bg: 'transparent' }} className="staktab02" onClick={() => setAction(Action.Unstake)} >Unstake xUpCRO</Tab>
                 </Box>
             </TabList>
             <TabPanels>
                 <TabPanel className='stake_tab_panel01_prnt'>
                     <Box className='stake_tab_panel01'>
-                        <Heading as="h6">1 upCRO = 0.9851 xUpCRO</Heading>
+                        <Heading as="h6">{rate}</Heading>
                         <Box className='stake_inpt_box'>
                             <Box className='text_row'>
                                 <Text>Amount to stake</Text>
@@ -117,10 +132,9 @@ export default function StakeTabOne() {
                         </Box>
                         <Button className='stake_full_btn'>Stake</Button>
                     </Box>
-                    <Box className='stake_emp_dex_btns'>
-                        <Button disabled >Stake</Button>
-                        <Button>EmpireDEX</Button>
-                        <Button>DEXScreener</Button>
+                    <Box className='stake_emp_dex_btns stake_emp_dex_btns02'>
+                        <Button  onClick={() => window.open(`https://cro.empiredex.org/#/swap?inputCurrency=0xb062084aFfDf75b9b494D56B8417F1B981Df790f`, "_blank")?.focus()}>EmpireDEX</Button>
+                        <Button  onClick={() => window.open(`https://dexscreener.com/cronos/0xb0a7d88202eb8bf3c43d506b712b4e474eb9cda3`, "_blank")?.focus()}>DEXScreener</Button> 
                     </Box>
                 </TabPanel>
                 <TabPanel className='stake_tab_panel01_prnt stake_tab_panel02_prnt'>
@@ -142,8 +156,8 @@ export default function StakeTabOne() {
                         <Button className='stake_full_btn'>Unstake</Button>
                     </Box>
                     <Box className='stake_emp_dex_btns stake_emp_dex_btns02'>
-                        <Button>EmpireDEX</Button>
-                        <Button>DEXScreener</Button>
+                        <Button  onClick={() => window.open(`https://cro.empiredex.org/#/swap?inputCurrency=0xb062084aFfDf75b9b494D56B8417F1B981Df790f`, "_blank")?.focus()}>EmpireDEX</Button>
+                        <Button  onClick={() => window.open(`https://dexscreener.com/cronos/0xb0a7d88202eb8bf3c43d506b712b4e474eb9cda3`, "_blank")?.focus()}>DEXScreener</Button> 
                     </Box>
                 </TabPanel>
             </TabPanels>
@@ -152,8 +166,8 @@ export default function StakeTabOne() {
         <Box className='contracts_box'>
             <Heading as="h4">Contracts</Heading>
             <Box className='upcro_copyflex'>
-                <Heading as="h6">upCRO<Text>0xb0620........f790f<Button><Image src="img/copy_ic.svg" alt='' /></Button></Text></Heading>
-                <Heading as="h6" className='right_h6'>xUpCRO<Text>0x78Bf85......ed90e<Button><Image src="img/copy_ic.svg" alt='' /></Button></Text></Heading>
+                <Heading as="h6">upCRO<Text>{shortenAddress(ROOTED_ADDRESS)}<Button><Image src="img/copy_ic.svg" alt='' /></Button></Text></Heading>
+                <Heading as="h6" className='right_h6'>xUpCRO<Text>{shortenAddress(STAKING_ADDRESS)}<Button><Image src="img/copy_ic.svg" alt='' /></Button></Text></Heading>
             </Box>
             <Box className='upcro_copyflex'></Box>
         </Box>

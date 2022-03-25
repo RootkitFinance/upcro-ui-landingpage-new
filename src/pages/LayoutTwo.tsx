@@ -136,7 +136,7 @@ const LayoutTwo = (props: any) => {
               className={splitLocation[1] === 'dashboard' ? 'active' : ''}
             >
               <Image src='img/sidebar_link_ic01.svg' alt="" />
-              <span>dashboard</span>
+              <span>Dashboard</span>
             </NavLink>
             <NavLink
               to='/staking'
