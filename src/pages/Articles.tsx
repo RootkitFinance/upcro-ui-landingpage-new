@@ -52,7 +52,9 @@ export default function Articles() {
     <Layout className='app-page'>
       <>
         <Box className="article_main_page">
-          <Container maxW="container.xl">
+          <Image src='img/articl_bg_01.png' className="articl_bg_01" alt='' />
+          <Image src='img/articl_bg_02.png' className="articl_bg_02" alt='' />
+          <Container maxW="container.xl" className='article_main_page_inn'>
             <SimpleGrid columns={20} columnGap={4} rowGap={3} >
               <GridItem colSpan={[20, 20, 12, 12]}>
                 <Box className='article_left_box'>

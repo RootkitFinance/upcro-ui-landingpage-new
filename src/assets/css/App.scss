@@ -1935,9 +1935,24 @@ body{
 }
 .article_main_page{
   padding-top: 200px;
-  background: url(../img/artivle_bg.jpg) no-repeat center;
+  background: #000000;
   background-size: cover;
-  min-height: 2446px;
+  padding-bottom: 30px;
+  position: relative;
+  .articl_bg_01{
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+  .articl_bg_02{
+    position: absolute;
+    top: 533px;
+    left: 0;
+  }
+  .article_main_page_inn{
+    position: relative;
+    z-index: 1;
+  }
 }
 .article_text_img{
   display: flex;
