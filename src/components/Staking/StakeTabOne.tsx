@@ -9,6 +9,12 @@ import { useWeb3React } from "@web3-react/core";
 import { extractErrorMessage } from "../../utils/extractErrorMessage";
 import { StakingService } from "../../services/StakingServices";
 import { shortenAddress, supportedChain } from '../../utils'
+import { getDisplayBalance, getFullDisplayBalance } from '../../utils/formatBalance';
+import { TokenService } from '../../services/TokenServices';
+import { PendingContent } from '../Button';
+import { ErrorMessage } from '../ErrorMessage';
+import TransactionCompletedModal from '../TransactionCompletedModal';
+import { escapeRegExp } from '../../utils'
 
 enum Action {
     Stake,
@@ -36,6 +42,9 @@ export default function StakeTabOne() {
     const [value, setValue] = useState<string>("");
     const [status, setStatus] = useState<StakingStatus>(StakingStatus.None);
     const [rate, setRate] = useState("");
+    const [isApproved, setIsApproved] = useState<boolean>(false);
+    const [transactionHash, setTransactionHash] = useState<string>("");
+    const [error, setError] = useState("");
 
     useEffect(() => {
         const getRate = async () => {
@@ -51,48 +60,93 @@ export default function StakeTabOne() {
     }, [library, account, chainId, action])
 
     useEffect(() => {
+        const getIsApprove = async () => {
+            const service = new TokenService(library, account!, ROOTED_ADDRESS);
+            const approved = await service.isApproved(STAKING_ADDRESS);
+            setIsApproved(approved);
+            if(approved) {
+                setStatus(StakingStatus.Approved);
+            }
+        }
+        if(account && chainId && supportedChain(chainId!)) {
+            getIsApprove();
+        }
+    }, [library, account, chainId])
+    
+    useEffect(() => {
         setBalance(action === Action.Stake ? rootedBalance : stakingBalance)
     }, [action, rootedBalance, stakingBalance])
 
-     const stake = async () => {
-        const amount = parseFloat(value);
+    const stake = async () => {
+    const amount = parseFloat(value);
         if (Number.isNaN(amount) || amount <= 0) {
-            // setError("Enter amount");
+            setError("Enter amount");
             return;
         }
-        // setError("");
+        setError("");
 
+    try {
+        setCompletedAction(`${value} ${action === Action.Stake ? ROOTED_TICKER : STAKING_TICKER} ${action === Action.Stake ? "staked" : "unstaked"}`);
+        setPendingAction(`${action === Action.Stake ? "Staking" : "Unstaking"}...`);
+        setStatus(StakingStatus.Staking);
+
+        const service = new StakingService(library, account!)
+        const txResponse = action === Action.Stake 
+            ? await service.stake(value) 
+            : await service.unstake(value)
+
+        if (txResponse) {
+            const receipt = await txResponse.wait()
+            if (receipt?.status === 1) {
+                setTransactionHash(receipt.transactionHash);
+            }
+            else {
+                setError("Transaction Failed")
+            }
+        }
+        setStatus(StakingStatus.Staked);
+        setValue("");
+    }
+    catch (e) {
+        console.log(e)
+        const errorMessage = extractErrorMessage(e);
+        if(errorMessage) {
+            setError(errorMessage);
+        }
+        setStatus(StakingStatus.None)
+    }
+    }
+
+    const approve = async () => {
         try {
-            setCompletedAction(`${value} ${action === Action.Stake ? ROOTED_TICKER : STAKING_TICKER} ${action === Action.Stake ? "staked" : "unstaked"}`);
-            setPendingAction(`${action === Action.Stake ? "Staking" : "Unstaking"}...`);
-            setStatus(StakingStatus.Staking);
-
-            const service = new StakingService(library, account!)
-            const txResponse = action === Action.Stake 
-                ? await service.stake(value) 
-                : await service.unstake(value)
-
+            setStatus(StakingStatus.Approving);
+            const service = new TokenService(library, account!, ROOTED_ADDRESS);
+            const txResponse = await service.approve(STAKING_ADDRESS);
             if (txResponse) {
                 const receipt = await txResponse.wait()
                 if (receipt?.status === 1) {
-                    // setTransactionHash(receipt.transactionHash);
+                    setTransactionHash(receipt.transactionHash);
                 }
                 else {
-                    // setError("Transaction Failed")
+                    setError("Transaction Failed")
                 }
             }
-            setStatus(StakingStatus.Staked);
-            setValue("");
+            setStatus(StakingStatus.Approved);
+            setIsApproved(true);
         }
         catch (e) {
-            console.log(e)
+            console.log(e);
             const errorMessage = extractErrorMessage(e);
             if(errorMessage) {
-                // setError(errorMessage);
+                setError(errorMessage);
             }
-            setStatus(StakingStatus.None)
+            setStatus(StakingStatus.None);
         }
-     }
+    }
+
+    const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`) // match escaped "." characters via in a non-capturing group
+    const isValid = (value: string) => value === '' || inputRegex.test(escapeRegExp(value))
+
     console.log('status', status)
     console.log('balance', balance)
     console.log('pending ac', pendingAction)
@@ -100,6 +154,8 @@ export default function StakeTabOne() {
     console.log('complete', stake )
   return (
     <>
+        <TransactionCompletedModal title={completedAction} hash={transactionHash} isOpen={status === StakingStatus.Staked} onDismiss={() => setStatus(StakingStatus.None)} />
+            
         <Box className='stakone_main'>
             <Heading as="h4" >Staking</Heading>
             {/* <Box className='stake_unstake_cro_btn_prnt'>
@@ -120,17 +176,39 @@ export default function StakeTabOne() {
                         <Box className='stake_inpt_box'>
                             <Box className='text_row'>
                                 <Text>Amount to stake</Text>
-                                <Text>Balance: 0.00</Text>
+                                <Text>Balance: {getDisplayBalance(balance, 2)}</Text>
                             </Box>
                             <Box className='inpt_btn_row'>
-                                <input type="number" value="0.0"></input>
+                                <input type="number" value={value} 
+                                onChange={event => {
+                                if (!isValid(event.target.value)) return  
+                                const newValue = event.target.value.replace(/,/g, '.')
+                                setValue(newValue)
+                                }}></input>
                                 <Box className='btn_text_prnt'>
-                                    <Button>MAX</Button>
+                                    <Button onClick={() => setValue(getFullDisplayBalance(balance))}>MAX</Button>
                                     <Text>upCRO</Text>
                                 </Box>
                             </Box>
                         </Box>
-                        <Button className='stake_full_btn'>Stake</Button>
+
+                        {
+                            isApproved ?
+                            
+                            <Button className='stake_full_btn' disabled={status === StakingStatus.Staking || !supportedChain(chainId)} onClick={stake}>
+                                {status === StakingStatus.Staking 
+                                ? <PendingContent text={pendingAction}/> 
+                                : `Stake`}
+                            </Button> : 
+                            <Button className='stake_full_btn' onClick={approve} disabled={status === StakingStatus.Approving || !supportedChain(chainId)}>
+                                {status === StakingStatus.Approving 
+                                    ? <PendingContent text={"Approving..."}/>
+                                    : status === StakingStatus.Approved ? "Approved" : "Approve"
+                                }
+                            </Button>
+                        }
+
+                        {error ? <ErrorMessage error={error} /> : null}
                     </Box>
                     <Box className='stake_emp_dex_btns stake_emp_dex_btns02'>
                         <Button  onClick={() => window.open(`https://cro.empiredex.org/#/swap?inputCurrency=0xb062084aFfDf75b9b494D56B8417F1B981Df790f`, "_blank")?.focus()}>EmpireDEX</Button>
@@ -139,21 +217,45 @@ export default function StakeTabOne() {
                 </TabPanel>
                 <TabPanel className='stake_tab_panel01_prnt stake_tab_panel02_prnt'>
                     <Box className='stake_tab_panel01'>
-                        <Heading as="h6">1 upCRO = 1.0151 xUpCRO</Heading>
+                        <Heading as="h6">{rate}</Heading>
                         <Box className='stake_inpt_box'>
                             <Box className='text_row'>
                                 <Text>Amount to unstake</Text>
-                                <Text>Balance: 0.00</Text>
+                                <Text>Balance: {getDisplayBalance(balance, 2)}</Text>
                             </Box>
                             <Box className='inpt_btn_row'>
-                                <input type="number" value="0.0"></input>
+                                <input type="number" value={value}
+                                onChange={event => {
+                                    if (!isValid(event.target.value)) return  
+                                    const newValue = event.target.value.replace(/,/g, '.')
+                                    setValue(newValue)
+                                    }}></input>
                                 <Box className='btn_text_prnt'>
-                                    <Button>MAX</Button>
+                                    <Button onClick={() => {setValue(getFullDisplayBalance(balance))}}>MAX</Button>
                                     <Text>xUpCRO</Text>
                                 </Box>
                             </Box>
                         </Box>
-                        <Button className='stake_full_btn'>Unstake</Button>
+
+                        {
+                            isApproved ? 
+                            
+                            <Button className='stake_full_btn' disabled={status === StakingStatus.Staking || !supportedChain(chainId)} onClick={stake}>
+                                {status === StakingStatus.Staking 
+                                ? <PendingContent text={pendingAction}/> 
+                                : `Unstake`}
+                            </Button>
+
+                            : 
+                            <Button className='stake_full_btn' onClick={approve} disabled={status === StakingStatus.Approving || !supportedChain(chainId)}>
+                                {status === StakingStatus.Approving 
+                                    ? <PendingContent text={"Approving..."}/>
+                                    : status === StakingStatus.Approved ? "Approved" : "Approve"
+                                }
+                            </Button>
+                        }
+                        
+                        {error ? <ErrorMessage error={error} /> : null}
                     </Box>
                     <Box className='stake_emp_dex_btns stake_emp_dex_btns02'>
                         <Button  onClick={() => window.open(`https://cro.empiredex.org/#/swap?inputCurrency=0xb062084aFfDf75b9b494D56B8417F1B981Df790f`, "_blank")?.focus()}>EmpireDEX</Button>
