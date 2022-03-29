@@ -86,7 +86,7 @@ const LayoutTwo = (props: any) => {
           returnFocusOnClose={false}
           onOverlayClick={onClose}
           size="full">
-          <DrawerContent className='drawer_slider'>
+          <DrawerContent className='drawer_slider drwr_wdth'>
             <SidebarContent onClose={onClose} modalOpen={modalOpen} toggleWalletModal={toggleWalletModal}/>
           </DrawerContent>
         </Drawer>
@@ -117,7 +117,7 @@ const LayoutTwo = (props: any) => {
         zIndex={999999}
         h="full"
         {...rest}
-        className="sidebar_main"
+        className="sidebar_main wdth_bx"
       >
         <WalletModal walletModalOpen={modalOpen} toggleWalletModal={toggleWalletModal} />
         <Flex  alignItems="center" className='sidebar_logo_prnt'>

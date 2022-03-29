@@ -170,7 +170,7 @@ export default function StakeTabOne() {
                 </Box>
             </TabList>
             <TabPanels>
-                <TabPanel className='stake_tab_panel01_prnt'>
+                <TabPanel className='stake_tab_panel01_prnt tbpnl_pdng_bx'>
                     <Box className='stake_tab_panel01'>
                         <Heading as="h6">{rate}</Heading>
                         <Box className='stake_inpt_box'>
@@ -215,7 +215,7 @@ export default function StakeTabOne() {
                         <Button  onClick={() => window.open(`https://dexscreener.com/cronos/0xb0a7d88202eb8bf3c43d506b712b4e474eb9cda3`, "_blank")?.focus()}>DEXScreener</Button> 
                     </Box>
                 </TabPanel>
-                <TabPanel className='stake_tab_panel01_prnt stake_tab_panel02_prnt'>
+                <TabPanel className='stake_tab_panel01_prnt stake_tab_panel02_prnt tbpnl_pdng_bx'>
                     <Box className='stake_tab_panel01'>
                         <Heading as="h6">{rate}</Heading>
                         <Box className='stake_inpt_box'>
