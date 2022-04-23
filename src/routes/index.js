@@ -1,4 +1,3 @@
-import { Switch } from '@chakra-ui/react';
 import React from 'react';
 import { lazy } from 'react';
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
