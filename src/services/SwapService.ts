@@ -43,10 +43,7 @@ export class SwapService {
             let amtIn = amountIn
             let amtOut = (parseFloat(amountOut) - (parseFloat(amountOut) * (4 / 100))).toFixed(18)
             let timeout = ethers.utils.parseEther((add_minutes(new Date(), 20).getTime()/1000).toString()).toString()
-            
-            console.log(amountIn)
-            console.log(amountOut)
-            console.log(timeout)
+
             return await this.empireRouterContract.swapETHForExactTokens(
                 ethers.utils.parseEther(amtOut.toString()),
                 [token0, token1],

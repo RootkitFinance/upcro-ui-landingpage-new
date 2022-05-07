@@ -6,6 +6,8 @@ import { SUPPORTED_WALLETS } from '../../constants'
 import { injected } from '../../connectore'
 import Loader from '../Loader/loader'
 import { darken } from 'polished'
+import { Text } from '@chakra-ui/react'
+
 const PendingSection = styled.div`
   ${({ theme }) => theme.flexColumnNoWrap};
   align-items: center;
@@ -93,7 +95,7 @@ export default function PendingView({
           ) : (
             <>
               <StyledLoader />
-              Initializing...
+              <Text color={"#FFFFFF"}>Initializing...</Text>
             </>
           )}
         </LoadingWrapper>

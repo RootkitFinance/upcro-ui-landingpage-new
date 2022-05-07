@@ -9,7 +9,7 @@ import { ReactComponent as Close } from '../../assets/img/x.svg'
 import { injected, walletconnect } from '../../connectore'
 import WalletConnectIcon from '../../assets/img/walletConnectIcon.svg'
 import { ExternalLink } from '../Link'
-import { Button } from '@chakra-ui/react'
+import { Button, Text } from '@chakra-ui/react'
 import Identicon from '../IdentIcon'
 import Copy from './Copy'
 
@@ -185,7 +185,7 @@ interface AccountDetailsProps {
               SUPPORTED_WALLETS[k].connector === connector && (connector !== injected || isMetaMask === (k === 'METAMASK'))
           )
           .map(k => SUPPORTED_WALLETS[k].name)[0]
-        return <WalletName>Connected with {name}</WalletName>
+        return <WalletName color='#FFFFFF'>Connected with {name}</WalletName>
       }
 
       function getStatusIcon() {
@@ -210,9 +210,9 @@ interface AccountDetailsProps {
         <>
           <UpperSection>
             <CloseIcon onClick={toggleWalletModal}>
-              <CloseColor />
+              <CloseColor color='#FFFFFF'/>
             </CloseIcon>
-            <HeaderRow>Account</HeaderRow>
+            <HeaderRow><Text color='#FFFFFF'>Account</Text></HeaderRow>
             <AccountSection>
               <YourAccount>
                 <InfoCard>
@@ -230,7 +230,7 @@ interface AccountDetailsProps {
                         </WalletAction>
                       )}
                       <WalletAction
-                        style={{ fontSize: '.825rem', fontWeight: 400 }}
+                        style={{ fontSize: '.825rem', fontWeight: 400, backgroundColor:"#065BD8" }}
                         onClick={() => {
                           openOptions()
                         }}

@@ -267,9 +267,9 @@ export default function WalletModal({
             return (
                 <UpperSection>
                     <CloseIcon onClick={toggleWalletModal}>
-                        <CloseColor />
+                        <CloseColor style={{"color":"#FFFFFF"}}/>
                     </CloseIcon>
-                    <HeaderRow>{error instanceof UnsupportedChainIdError ? 'Wrong Network' : 'Error connecting'}</HeaderRow>
+                    <HeaderRow style={{"color":"#FFFFFF"}}>{error instanceof UnsupportedChainIdError ? 'Wrong Network' : 'Error connecting'}</HeaderRow>
                     <ContentWrapper>
                         {error instanceof UnsupportedChainIdError ? <SwitchNetwork /> : 'Error connecting. Try refreshing the page.'}
                     </ContentWrapper>
@@ -287,7 +287,7 @@ export default function WalletModal({
         return (
             <UpperSection>
                 <CloseIcon onClick={toggleWalletModal}>
-                    <CloseColor />
+                    <CloseColor color='#FFFFFF'/>
                 </CloseIcon>
                 {walletView !== WALLET_VIEWS.ACCOUNT ? (
                     <HeaderRow color="blue">
@@ -302,7 +302,7 @@ export default function WalletModal({
                     </HeaderRow>
                 ) : (
                         <HeaderRow>
-                            <HoverText>Connect to a wallet</HoverText>
+                            <HoverText style={{"color":"#FFFFFF"}}>Connect to a wallet</HoverText>
                         </HeaderRow>
                     )}
                 <ContentWrapper>
@@ -318,7 +318,7 @@ export default function WalletModal({
                         )}
                     {walletView !== WALLET_VIEWS.PENDING && (
                         <Blurb>
-                            <span>New to Ethereum? &nbsp;</span>{' '}
+                            <span style={{"color":"#FFFFFF"}}>New to Ethereum? &nbsp;</span>{' '}
                             <ExternalLink href="https://ethereum.org/wallets/">Learn more about wallets</ExternalLink>
                         </Blurb>
                     )}

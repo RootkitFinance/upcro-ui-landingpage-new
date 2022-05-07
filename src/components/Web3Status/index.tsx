@@ -166,7 +166,7 @@ export default function Web3Status() {
     return (
       <>
         <Web3StatusConnect id="connect-wallet" onClick={toggleWalletModal} faded={!account}>
-          <Text>{'Connect to a wallet'}</Text>
+          <Text color={"#FFFFFF"}>{'Connect to a wallet'}</Text>
         </Web3StatusConnect>
         <WalletModal walletModalOpen={modalOpen} toggleWalletModal={toggleWalletModal} />
       </>
