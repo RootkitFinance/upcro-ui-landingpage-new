@@ -7,6 +7,7 @@ import { AutoColumn } from '../Column'
 import { RowBetween, RowFixed } from '../Row'
 
 import { darken } from 'polished'
+import { Box, Container, Heading, Text, Button, Image, Modal, Checkbox, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Stack, useDisclosure, FormControl, FormLabel,Switch  } from '@chakra-ui/react'
 
 enum SlippageError {
   InvalidInput = 'InvalidInput',
@@ -144,109 +145,158 @@ export default function SlippageTabs({ rawSlippage, setRawSlippage, deadline, se
     } catch {}
   }
 
-  return (
-    <AutoColumn gap="md">
-      <AutoColumn gap="sm">
-        <RowFixed className='slippage_p_prnt'>
-          <TYPE.black className='slippage_p'>
-            Slippage tolerance
-          </TYPE.black>
-          {/* <QuestionHelper text="Your transaction will revert if the price changes unfavorably by more than this percentage." /> */}
-        </RowFixed>
-        <RowBetween className="checkbox_options_prnt">
-          <Option
-            onClick={() => {
-              setSlippageInput('')
-              setRawSlippage(10)
-            }}
-            active={rawSlippage === 10}
-          >
-            0.1%
-          </Option>
-          <Option
-            onClick={() => {
-              setSlippageInput('')
-              setRawSlippage(50)
-            }}
-            active={rawSlippage === 50}
-          >
-            0.5%
-          </Option>
-          <Option
-            onClick={() => {
-              setSlippageInput('')
-              setRawSlippage(100)
-            }}
-            active={rawSlippage === 100}
-          >
-            1%
-          </Option>
-          <OptionCustom active={![10, 50, 100].includes(rawSlippage)} warning={!slippageInputIsValid} tabIndex={-1} className="index_btn">
-            <RowBetween>
-              {!!slippageInput &&
-              (slippageError === SlippageError.RiskyLow || slippageError === SlippageError.RiskyHigh) ? (
-                <SlippageEmojiContainer>
-                  <span role="img" aria-label="warning">
-                    ⚠️
-                  </span>
-                </SlippageEmojiContainer>
-              ) : null}
-              {/* https://github.com/DefinitelyTyped/DefinitelyTyped/issues/30451 */}
-              <Input
-                ref={inputRef as any}
-                placeholder={(rawSlippage / 100).toFixed(2)}
+  // let old =  (
+  //   <AutoColumn gap="md">
+  //     <AutoColumn gap="sm">
+  //       <RowFixed className='slippage_p_prnt'>
+  //         <TYPE.black className='slippage_p'>
+  //           Slippage tolerance
+  //         </TYPE.black>
+  //         {/* <QuestionHelper text="Your transaction will revert if the price changes unfavorably by more than this percentage." /> */}
+  //       </RowFixed>
+  //       <RowBetween className="checkbox_options_prnt">
+  //         <Option
+  //           onClick={() => {
+  //             setSlippageInput('')
+  //             setRawSlippage(10)
+  //           }}
+  //           active={rawSlippage === 10}
+  //         >
+  //           0.1%
+  //         </Option>
+  //         <Option
+  //           onClick={() => {
+  //             setSlippageInput('')
+  //             setRawSlippage(50)
+  //           }}
+  //           active={rawSlippage === 50}
+  //         >
+  //           0.5%
+  //         </Option>
+  //         <Option
+  //           onClick={() => {
+  //             setSlippageInput('')
+  //             setRawSlippage(100)
+  //           }}
+  //           active={rawSlippage === 100}
+  //         >
+  //           1%
+  //         </Option>
+  //         <OptionCustom active={![10, 50, 100].includes(rawSlippage)} warning={!slippageInputIsValid} tabIndex={-1} className="index_btn">
+  //           <RowBetween>
+  //             {!!slippageInput &&
+  //             (slippageError === SlippageError.RiskyLow || slippageError === SlippageError.RiskyHigh) ? (
+  //               <SlippageEmojiContainer>
+  //                 <span role="img" aria-label="warning">
+  //                   ⚠️
+  //                 </span>
+  //               </SlippageEmojiContainer>
+  //             ) : null}
+  //             {/* https://github.com/DefinitelyTyped/DefinitelyTyped/issues/30451 */}
+  //             <Input
+  //               ref={inputRef as any}
+  //               placeholder={(rawSlippage / 100).toFixed(2)}
+  //               value={slippageInput}
+  //               onBlur={() => {
+  //                 parseCustomSlippage((rawSlippage / 100).toFixed(2))
+  //               }}
+  //               onChange={e => parseCustomSlippage(e.target.value)}
+  //               color={!slippageInputIsValid ? 'red' : ''}
+  //             />
+  //             %
+  //           </RowBetween>
+  //         </OptionCustom>
+  //       </RowBetween>
+  //       {!!slippageError && (
+  //         <RowBetween
+  //           style={{
+  //             fontSize: '14px',
+  //             paddingTop: '7px',
+  //             color: slippageError === SlippageError.InvalidInput ? 'red' : '#F3841E'
+  //           }}
+  //         >
+  //           {slippageError === SlippageError.InvalidInput
+  //             ? 'Enter a valid slippage percentage'
+  //             : slippageError === SlippageError.RiskyLow
+  //             ? 'Your transaction may fail'
+  //             : 'Your transaction may be frontrun'}
+  //         </RowBetween>
+  //       )}
+  //     </AutoColumn>
+
+  //     <AutoColumn gap="sm">
+  //       <RowFixed className='slippage_p_prnt'>
+  //         <TYPE.black className='slippage_p'>
+  //           Transaction deadline
+  //         </TYPE.black>
+  //         {/* <QuestionHelper text="Your transaction will revert if it is pending for more than this long." /> */}
+  //       </RowFixed>
+  //       <RowFixed className="deadlin_time_box_prnt">
+  //         <OptionCustom style={{ width: '80px' }} tabIndex={-1} className="deadlin_time_box">
+  //           <Input
+  //             color={!!deadlineError ? 'red' : undefined}
+  //             onBlur={() => {
+  //               parseCustomDeadline((deadline / 60).toString())
+  //             }}
+  //             placeholder={(deadline / 60).toString()}
+  //             value={deadlineInput}
+  //             onChange={e => parseCustomDeadline(e.target.value)}
+  //           />
+  //         </OptionCustom>
+  //         <TYPE.body style={{ paddingLeft: '8px' }} fontSize={14}>
+  //           min
+  //         </TYPE.body>
+  //       </RowFixed>
+  //     </AutoColumn>
+  //   </AutoColumn>
+  // )
+
+  return (<>
+      <Box className='modal_body'>
+          <Heading as="h2">Slippage tolerance</Heading>
+          <Box className='forth_box_nums'>
+            <Box className='cstm_radio'>
+                <input type='radio' name='tollrens' onChange={() => {
+                  setSlippageInput('')
+                  setRawSlippage(10)
+                }}/>
+                <Heading as='h6' className='point_smn_won'>
+                    0.1%
+                </Heading>
+            </Box>
+            <Box className='cstm_radio'>
+                <input type='radio' name='tollrens' onChange={() => {
+                  setSlippageInput('')
+                  setRawSlippage(50)
+                }}/>
+                <Heading as='h6' className='point_smn_won point_smn_nonas'>
+                    0.5%
+                </Heading>
+            </Box>
+            <Box className='cstm_radio'>
+                <input type='radio' name='tollrens' onChange={() => {
+                  setSlippageInput('')
+                  setRawSlippage(100)
+                }}/>
+                <Heading as='h6' className='point_smn_won'>
+                    1%
+                </Heading>
+            </Box>
+            <Box className='input_any_popup'>
+                <input type='text' 
                 value={slippageInput}
+                placeholder={(rawSlippage / 100).toFixed(2)}
                 onBlur={() => {
                   parseCustomSlippage((rawSlippage / 100).toFixed(2))
                 }}
-                onChange={e => parseCustomSlippage(e.target.value)}
-                color={!slippageInputIsValid ? 'red' : ''}
-              />
-              %
-            </RowBetween>
-          </OptionCustom>
-        </RowBetween>
-        {!!slippageError && (
-          <RowBetween
-            style={{
-              fontSize: '14px',
-              paddingTop: '7px',
-              color: slippageError === SlippageError.InvalidInput ? 'red' : '#F3841E'
-            }}
-          >
-            {slippageError === SlippageError.InvalidInput
-              ? 'Enter a valid slippage percentage'
-              : slippageError === SlippageError.RiskyLow
-              ? 'Your transaction may fail'
-              : 'Your transaction may be frontrun'}
-          </RowBetween>
-        )}
-      </AutoColumn>
-
-      <AutoColumn gap="sm">
-        <RowFixed className='slippage_p_prnt'>
-          <TYPE.black className='slippage_p'>
-            Transaction deadline
-          </TYPE.black>
-          {/* <QuestionHelper text="Your transaction will revert if it is pending for more than this long." /> */}
-        </RowFixed>
-        <RowFixed className="deadlin_time_box_prnt">
-          <OptionCustom style={{ width: '80px' }} tabIndex={-1} className="deadlin_time_box">
-            <Input
-              color={!!deadlineError ? 'red' : undefined}
-              onBlur={() => {
-                parseCustomDeadline((deadline / 60).toString())
-              }}
-              placeholder={(deadline / 60).toString()}
-              value={deadlineInput}
-              onChange={e => parseCustomDeadline(e.target.value)}
-            />
-          </OptionCustom>
-          <TYPE.body style={{ paddingLeft: '8px' }} fontSize={14}>
-            min
-          </TYPE.body>
-        </RowFixed>
-      </AutoColumn>
-    </AutoColumn>
-  )
+                onChange={e => parseCustomSlippage(e.target.value)} className='nums_color'/>
+            </Box>
+          </Box>
+          <Heading as="h4">Transaction deadline</Heading>
+          <Box className='mint_box'>
+                  <input type='text' value="20" className='nums_color'/>
+              <Text>Min</Text>
+          </Box>
+    </Box>
+  </>)
 }

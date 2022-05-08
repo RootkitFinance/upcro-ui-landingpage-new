@@ -5,7 +5,7 @@ import LayoutTwo from './LayoutTwo'
 // import ReactSelect from 'react-select';
 
 
-export default function Swap() {
+export default function SwapUI() {
    // const { isOpen, onOpen, onClose } = useDisclosure();
    const { isOpen: isSettingModalOpen , onOpen: onSettingModalOpen, onClose: onSettingModalClose } = useDisclosure()
    const { isOpen: isFirstModalOpen , onOpen: onFristModalOpen, onClose: onFirstModalClose } = useDisclosure()

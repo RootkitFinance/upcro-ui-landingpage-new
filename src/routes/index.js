@@ -9,6 +9,7 @@ import Pools from '../pages/Pools';
 import Roadmap from '../pages/Roadmap';
 import Staking from '../pages/Staking';
 import Swap from '../pages/Swap';
+import SwapUI from '../pages/SwapUI';
 
 
 
@@ -29,6 +30,7 @@ const AppRoutes = () => {
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/staking' element={<Staking />} />
         <Route path='/swap' element={<Swap />} />
+        <Route path='/swapui' element={<SwapUI />} />
         <Route path='/faq' element={<Faq />} />
         <Route path='/roadmap' element={<Roadmap />} />
         <Route path='/pools' element={<Pools />} />
