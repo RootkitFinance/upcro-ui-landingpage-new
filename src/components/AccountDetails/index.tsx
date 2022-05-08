@@ -6,7 +6,7 @@ import { ExternalLink as LinkIcon } from 'react-feather'
 
 import { SUPPORTED_WALLETS } from '../../constants'
 import { ReactComponent as Close } from '../../assets/img/x.svg'
-import { injected, walletconnect } from '../../connectore'
+import { injected, walletconnect } from '../../connectors'
 import WalletConnectIcon from '../../assets/img/walletConnectIcon.svg'
 import { ExternalLink } from '../Link'
 import { Button, Text } from '@chakra-ui/react'

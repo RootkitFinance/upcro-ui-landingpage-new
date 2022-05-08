@@ -8,7 +8,7 @@ import { isMobile } from 'react-device-detect'
 import styled from 'styled-components'
 import MetamaskIcon from '../../assets/img/metamask.png'
 import { ReactComponent as Close } from '../../assets/img/x.svg'
-import { injected } from '../../connectore'
+import { injected } from '../../connectors'
 import { SUPPORTED_WALLETS } from '../../constants'
 
 import Modal from '../Modal'

@@ -1,142 +1,371 @@
-import React, {useEffect} from 'react'
-import { Box, Container, Heading, Text, Button, Image, Modal, Checkbox, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, Stack, useDisclosure, FormControl, FormLabel,Switch  } from '@chakra-ui/react'
+// import React from 'react'
+import { Box, Container, Heading, Text, Button, Image } from '@chakra-ui/react'
 import LayoutTwo from './LayoutTwo'
+import ReactSelect from 'react-select';
 
-// import ReactSelect from 'react-select';
+import { CurrencyAmount, JSBI, Token, Trade } from '../sdk'
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { ArrowDown } from 'react-feather'
+import ReactGA from 'react-ga'
+// import { Text } from 'rebass'
+import { ThemeContext } from 'styled-components'
+import AddressInputPanel from '../components/AddressInputPanel'
+import { ButtonError, ButtonLight, ButtonPrimary, ButtonConfirmed } from '../components/Button'
+import Card, { GreyCard } from '../components/Card'
+import Column, { AutoColumn } from '../components/Column'
+import ConfirmSwapModal from '../components/swap/ConfirmSwapModal'
+import CurrencyInputPanel from '../components/CurrencyInputPanel'
+import { SwapPoolTabs } from '../components/NavigationTabs'
+import { AutoRow, RowBetween } from '../components/Row'
+import AdvancedSwapDetailsDropdown from '../components/swap/AdvancedSwapDetailsDropdown'
+import confirmPriceImpactWithoutFee from '../components/swap/confirmPriceImpactWithoutFee'
+import { ArrowWrapper, BottomGrouping, SwapCallbackError, Wrapper } from '../components/swap/styleds'
+import TradePrice from '../components/swap/TradePrice'
+import TokenWarningModal from '../components/TokenWarningModal'
+import ProgressSteps from '../components/ProgressSteps'
+import SwapHeader from '../components/swap/SwapHeader'
 
+import { INITIAL_ALLOWED_SLIPPAGE, ROOTED_ADDRESS, STAKING_ADDRESS } from '../constants'
+import { useActiveWeb3React } from '../hooks'
+import { useCurrency, useAllTokens } from '../hooks/Tokens'
+import { ApprovalState, useApproveCallbackFromTrade } from '../hooks/useApproveCallback'
+import useENSAddress from '../hooks/useENSAddress'
+import { useSwapCallback } from '../hooks/useSwapCallback'
+import useWrapCallback, { WrapType } from '../hooks/useWrapCallback'
+import { useToggleSettingsMenu, useWalletModalToggle } from '../state/application/hooks'
+import { Field } from '../state/swap/actions'
+import {
+  useDefaultsFromURLSearch,
+  useDerivedSwapInfo,
+  useSwapActionHandlers,
+  useSwapState
+} from '../state/swap/hooks'
+import { useExpertModeManager, useUserSlippageTolerance, useUserSingleHopOnly } from '../state/user/hooks'
+import { LinkStyledButton, TYPE } from '../theme'
+import { maxAmountSpend } from '../utils/maxAmountSpend'
+import { shortenAddress } from '../utils';
+import { computeTradePriceBreakdown, warningSeverity } from '../utils/prices'
+import AppBody from './AppBody'
+import { ClickableText } from './Pool/styleds'
+import Loader from '../components/Loader'
+import { useIsTransactionUnsupported } from '../hooks/Trades'
+import UnsupportedCurrencyFooter from '../components/swap/UnsupportedCurrencyFooter'
+// import { RouteComponentProps } from 'react-router-dom'
+
+const currency = [
+    {
+        label: 'upBNB',
+        value: 0,
+        image: '/img/upcro_coin_ic.svg',
+    },
+    {
+        label: 'BTC',
+        value: 1,
+        image: '/img/btc_coin_ic.svg',
+    },
+    {
+        label: 'upBNB',
+        value: 2,
+        image: '/img/upcro_coin_ic.svg',
+    }
+];
+const currencytwo = [
+{
+    label: 'BTC',
+    value: 0,
+    image: '/img/btc_coin_ic.svg',
+},
+{
+    label: 'upBNB',
+    value: 1,
+    image: '/img/upcro_coin_ic.svg',
+},
+{
+    label: 'BTC',
+    value: 2,
+    image: '/img/btc_coin_ic.svg',
+}
+];
+  
 
 export default function Swap() {
-   // const { isOpen, onOpen, onClose } = useDisclosure();
-   const { isOpen: isSettingModalOpen , onOpen: onSettingModalOpen, onClose: onSettingModalClose } = useDisclosure()
-   const { isOpen: isFirstModalOpen , onOpen: onFristModalOpen, onClose: onFirstModalClose } = useDisclosure()
-   const { isOpen: isSecondModalOpen , onOpen: onSecondModalOpen, onClose: onSecondModalClose } = useDisclosure()
-   const { isOpen: isThirdModalOpen , onOpen: onThirdModalOpen, onClose: onThirdModalClose } = useDisclosure()
-   const { isOpen: isFourthModalOpen , onOpen: onFourthModalOpen, onClose: onFourthModalClose } = useDisclosure()
-   useEffect(() => {
-       document.body.classList.toggle('modalopenslcttknone', isFirstModalOpen);
-   },[isFirstModalOpen])
-   useEffect(() => {
-       document.body.classList.toggle('modalopenslcttkntwo', isSecondModalOpen);
-   },[isSecondModalOpen])
-   useEffect(() => {
-       document.body.classList.toggle('modalopenslcttknthree', isThirdModalOpen);
-   },[isThirdModalOpen])
-   useEffect(() => {
-       document.body.classList.toggle('modalopenslcttknfour', isFourthModalOpen);
-   },[isFourthModalOpen])
+    const loadedUrlParams = useDefaultsFromURLSearch()
+
+    // token warning stuff
+    const [loadedInputCurrency, loadedOutputCurrency] = [
+      useCurrency(loadedUrlParams?.inputCurrencyId),
+      useCurrency(loadedUrlParams?.outputCurrencyId)
+    ]
+    const [dismissTokenWarning, setDismissTokenWarning] = useState<boolean>(false)
+    const urlLoadedTokens: Token[] = useMemo(
+      () => [loadedInputCurrency, loadedOutputCurrency]?.filter((c): c is Token => c instanceof Token) ?? [],
+      [loadedInputCurrency, loadedOutputCurrency]
+    )
+    const handleConfirmTokenWarning = useCallback(() => {
+      setDismissTokenWarning(true)
+    }, [])
+  
+    // dismiss warning if all imported tokens are in active lists
+    const defaultTokens = useAllTokens()
+    const importTokensNotInDefault =
+      urlLoadedTokens &&
+      urlLoadedTokens.filter((token: Token) => {
+        return !Boolean(token.address in defaultTokens)
+      })
+  
+    const { account } = useActiveWeb3React()
+    const theme = useContext(ThemeContext)
+  
+    // toggle wallet when disconnected
+    const toggleWalletModal = useWalletModalToggle()
+  
+    // for expert mode
+    const toggleSettings = useToggleSettingsMenu()
+    const [isExpertMode] = useExpertModeManager()
+  
+    // get custom setting values for user
+    const [allowedSlippage] = useUserSlippageTolerance()
+  
+    // swap state
+    const { independentField, typedValue, recipient } = useSwapState()
+    const {
+      v2Trade,
+      currencyBalances,
+      parsedAmount,
+      currencies,
+      inputError: swapInputError
+    } = useDerivedSwapInfo()
+
+    const { wrapType, execute: onWrap, inputError: wrapInputError } = useWrapCallback(
+      currencies[Field.INPUT],
+      currencies[Field.OUTPUT],
+      typedValue
+    )
+    const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE
+    const { address: recipientAddress } = useENSAddress(recipient)
+    const trade = showWrap ? undefined : v2Trade
+  
+    const parsedAmounts = showWrap
+      ? {
+          [Field.INPUT]: parsedAmount,
+          [Field.OUTPUT]: parsedAmount
+        }
+      : {
+          [Field.INPUT]: independentField === Field.INPUT ? parsedAmount : trade?.inputAmount,
+          [Field.OUTPUT]: independentField === Field.OUTPUT ? parsedAmount : trade?.outputAmount
+        }
+  
+    const { onSwitchTokens, onCurrencySelection, onUserInput, onChangeRecipient } = useSwapActionHandlers()
+    const isValid = !swapInputError
+    const dependentField: Field = independentField === Field.INPUT ? Field.OUTPUT : Field.INPUT
+  
+    const handleTypeInput = useCallback(
+      (value: string) => {
+        onUserInput(Field.INPUT, value)
+      },
+      [onUserInput]
+    )
+    const handleTypeOutput = useCallback(
+      (value: string) => {
+        onUserInput(Field.OUTPUT, value)
+      },
+      [onUserInput]
+    )
+  
+    // reset if they close warning without tokens in params
+    const handleDismissTokenWarning = useCallback(() => {
+      setDismissTokenWarning(true)
+    //   history.push('/swap/')
+    }, [])
+  
+    // modal and loading
+    const [{ showConfirm, tradeToConfirm, swapErrorMessage, attemptingTxn, txHash }, setSwapState] = useState<{
+      showConfirm: boolean
+      tradeToConfirm: Trade | undefined
+      attemptingTxn: boolean
+      swapErrorMessage: string | undefined
+      txHash: string | undefined
+    }>({
+      showConfirm: false,
+      tradeToConfirm: undefined,
+      attemptingTxn: false,
+      swapErrorMessage: undefined,
+      txHash: undefined
+    })
+  
+    const formattedAmounts = {
+      [independentField]: typedValue,
+      [dependentField]: showWrap
+        ? parsedAmounts[independentField]?.toExact() ?? ''
+        : parsedAmounts[dependentField]?.toSignificant(6) ?? ''
+    }
+  
+    const route = trade?.route
+    const userHasSpecifiedInputOutput = Boolean(
+      currencies[Field.INPUT] && currencies[Field.OUTPUT] && parsedAmounts[independentField]?.greaterThan(JSBI.BigInt(0))
+    )
+    const noRoute = !route
+  
+    // check whether the user has approved the router on the input token
+    const [approval, approveCallback] = useApproveCallbackFromTrade(trade, allowedSlippage)
+  
+    // check if user has gone through approval process, used to show two step buttons, reset on token change
+    const [approvalSubmitted, setApprovalSubmitted] = useState<boolean>(false)
+  
+    // mark when a user has submitted an approval, reset onTokenSelection for input field
+    useEffect(() => {
+      if (approval === ApprovalState.PENDING) {
+        setApprovalSubmitted(true)
+      }
+    }, [approval, approvalSubmitted])
+  
+    const maxAmountInput: CurrencyAmount | undefined = maxAmountSpend(currencyBalances[Field.INPUT])
+    const atMaxAmountInput = Boolean(maxAmountInput && parsedAmounts[Field.INPUT]?.equalTo(maxAmountInput))
+  
+    // the callback to execute the swap
+    const { callback: swapCallback, error: swapCallbackError } = useSwapCallback(trade, allowedSlippage, recipient)
+    const { priceImpactWithoutFee } = computeTradePriceBreakdown(trade)
+  
+    const [singleHopOnly] = useUserSingleHopOnly()
+  
+    const handleSwap = useCallback(() => {
+      if (priceImpactWithoutFee && !confirmPriceImpactWithoutFee(priceImpactWithoutFee)) {
+        return
+      }
+      if (!swapCallback) {
+        return
+      }
+      setSwapState({ attemptingTxn: true, tradeToConfirm, showConfirm, swapErrorMessage: undefined, txHash: undefined })
+      swapCallback()
+        .then(hash => {
+          setSwapState({ attemptingTxn: false, tradeToConfirm, showConfirm, swapErrorMessage: undefined, txHash: hash })
+  
+          ReactGA.event({
+            category: 'Swap',
+            action:
+              recipient === null
+                ? 'Swap w/o Send'
+                : (recipientAddress ?? recipient) === account
+                ? 'Swap w/o Send + recipient'
+                : 'Swap w/ Send',
+            label: [
+              trade?.inputAmount?.currency?.symbol,
+              trade?.outputAmount?.currency?.symbol
+            ].join('/')
+          })
+  
+          ReactGA.event({
+            category: 'Routing',
+            action: singleHopOnly ? 'Swap with multihop disabled' : 'Swap with multihop enabled'
+          })
+        })
+        .catch(error => {
+          setSwapState({
+            attemptingTxn: false,
+            tradeToConfirm,
+            showConfirm,
+            swapErrorMessage: error.message,
+            txHash: undefined
+          })
+        })
+    }, [
+      priceImpactWithoutFee,
+      swapCallback,
+      tradeToConfirm,
+      showConfirm,
+      recipient,
+      recipientAddress,
+      account,
+      trade,
+      singleHopOnly
+    ])
+  
+    // errors
+    const [showInverted, setShowInverted] = useState<boolean>(false)
+  
+    // warnings on slippage
+    const priceImpactSeverity = warningSeverity(priceImpactWithoutFee)
+  
+    // show approve flow when: no error on inputs, not approved or pending, or approved in current session
+    // never show if price impact is above threshold in non expert mode
+    const showApproveFlow =
+      !swapInputError &&
+      (approval === ApprovalState.NOT_APPROVED ||
+        approval === ApprovalState.PENDING ||
+        (approvalSubmitted && approval === ApprovalState.APPROVED)) &&
+      !(priceImpactSeverity > 3 && !isExpertMode)
+  
+    const handleConfirmDismiss = useCallback(() => {
+      setSwapState({ showConfirm: false, tradeToConfirm, attemptingTxn, swapErrorMessage, txHash })
+      // if there was a tx hash, we want to clear the input
+      if (txHash) {
+        onUserInput(Field.INPUT, '')
+      }
+    }, [attemptingTxn, onUserInput, swapErrorMessage, tradeToConfirm, txHash])
+  
+    const handleAcceptChanges = useCallback(() => {
+      setSwapState({ tradeToConfirm: trade, swapErrorMessage, txHash, attemptingTxn, showConfirm })
+    }, [attemptingTxn, showConfirm, swapErrorMessage, trade, txHash])
+  
+    const handleInputSelect = useCallback(
+      inputCurrency => {
+        setApprovalSubmitted(false) // reset 2 step UI for approvals
+        onCurrencySelection(Field.INPUT, inputCurrency)
+      },
+      [onCurrencySelection]
+    )
+  
+    const handleMaxInput = useCallback(() => {
+      maxAmountInput && onUserInput(Field.INPUT, maxAmountInput.toExact())
+    }, [maxAmountInput, onUserInput])
+  
+    const handleOutputSelect = useCallback(outputCurrency => onCurrencySelection(Field.OUTPUT, outputCurrency), [
+      onCurrencySelection
+    ])
+  
+    const swapIsUnsupported = useIsTransactionUnsupported(currencies?.INPUT, currencies?.OUTPUT)
   return (
     <>
         <LayoutTwo>
+        <ConfirmSwapModal
+            isOpen={showConfirm}
+            trade={trade}
+            originalTrade={tradeToConfirm}
+            onAcceptChanges={handleAcceptChanges}
+            attemptingTxn={attemptingTxn}
+            txHash={txHash}
+            recipient={recipient}
+            allowedSlippage={allowedSlippage}
+            onConfirm={handleSwap}
+            swapErrorMessage={swapErrorMessage}
+            onDismiss={handleConfirmDismiss}
+          />
             <Box className='swap_main'>
                 <Container maxW="container.xl">
                     <Box className='swap_border_Box'>
-                        <Heading as="h4">
-                            Swap
-                        </Heading>
-                                <Button onClick={onSettingModalOpen}
-                                className="setting_swap_btn"
-                                >
-                                    <Image
-                                    src='/img/setting_swap_img.svg'
-                                    alt=''
-                                    className='setting_swap_img'
-                                    />
-                            </Button>
-                            <Box className='modale_box'>
-                                <Modal
-                                isOpen={isSettingModalOpen} onClose={onSettingModalClose} isCentered
-                                >
-                                    <ModalOverlay 
-                                    />
-                                    <ModalContent
-                                    className='man_box_modal'
-                                    >
-                                    <ModalHeader className='trans_hader'>Transaction Settings</ModalHeader>
-                                    <ModalCloseButton />
-                                    <ModalBody>
-                                        <Box className='modal_body'>
-                                                <Heading as="h2">Slippage tolerance</Heading>
-                                                <Box className='forth_box_nums'>
-                                                <Box className='cstm_radio'>
-                                                    <input type='radio' name='tollrens' />
-                                                    <Heading as='h6' className='point_smn_won'>
-                                                        0.1%
-                                                    </Heading>
-                                                </Box>
-                                                <Box className='cstm_radio'>
-                                                    <input type='radio' name='tollrens'/>
-                                                    <Heading as='h6' className='point_smn_won point_smn_nonas'>
-                                                        0.5%
-                                                    </Heading>
-                                                </Box>
-                                                <Box className='cstm_radio'>
-                                                    <input type='radio' name='tollrens' />
-                                                    <Heading as='h6' className='point_smn_won'>
-                                                        1%
-                                                    </Heading>
-                                                </Box>
-                                                <Box className='input_any_popup'>
-                                                    <input type='text' value="0.50%" className='nums_color'/>
-                                                </Box>
-                                            </Box>
-                                            <Heading as="h4">Transaction deadline</Heading>
-                                            <Box className='mint_box'>
-                                                    <input type='text' value="20" className='nums_color'/>
-                                                <Text>Min</Text>
-                                            </Box>
-                                                <Heading as="h1">Transaction deadline</Heading>
-                                                <Box className='switch_box margi_btm'>
-                                                    <Text>Toggle Expert Mode</Text>
-                                                    <FormControl display='flex' alignItems='center' className='switch_min'>
-                                                        <FormLabel className='switch_text'>
-                                                            on
-                                                        </FormLabel>
-                                                        <Switch id='email-alerts' className='round_switch' />
-                                                        <FormLabel className='switch_text'>
-                                                            off
-                                                        </FormLabel>
-                                                    </FormControl>
-                                                </Box>
-                                                <Box className='switch_box'>
-                                                    <Text>Disable Multihops</Text>
-                                                    <FormControl display='flex' alignItems='center' className='switch_min'>
-                                                        <FormLabel className='switch_text'>
-                                                            on
-                                                        </FormLabel>
-                                                        <Switch id='email-alerts' className='round_switch' />
-                                                        <FormLabel className='switch_text'>
-                                                            off
-                                                        </FormLabel>
-                                                    </FormControl>
-                                                </Box>
-                                                
-                                        </Box>
-                                    </ModalBody>
-                                    </ModalContent>
-                                </Modal>
-                            </Box>
-                            
+                        <Heading as="h4">Swap</Heading>
+                        <SwapHeader />
                         <Box className='spwa_cntnt_dark_box'>
                             <Box className='swap_upcro_brdr_bx'>
-                                <Box className='flex_bx'>
+                              <CurrencyInputPanel
+                                label={independentField === Field.OUTPUT && !showWrap && trade ? 'From (estimated)' : 'From'}
+                                value={formattedAmounts[Field.INPUT]}
+                                showMaxButton={!atMaxAmountInput}
+                                currency={currencies[Field.INPUT]}
+                                onUserInput={handleTypeInput}
+                                onMax={handleMaxInput}
+                                onCurrencySelect={handleInputSelect}
+                                otherCurrency={currencies[Field.OUTPUT]}
+                                id="swap-currency-input"
+                              />
+                              
+                                {/* <Box className='flex_bx'>
                                     <input type="number" value="281.594" />
-                                    <Button className='upmatic_btn_pop' onClick={onFristModalOpen}>
-                                        <Image
-                                        src='/img/upcro_coin_ic.svg'
-                                        alt=''
-                                        className='upcro_coin_ic'
-                                        />
-                                       upCRO
-                                        <Image
-                                        src='/img/pop_01.svg'
-                                        alt=''
-                                        className='down_arrow'
-                                        />
-                                    </Button>
-                                    {/* <Box className='slect_box'>
+                                    <Box className='slect_box'>
                                         <ReactSelect
                                             className='select_one'
                                             classNamePrefix="slct"
+                                            value={currency}
                                             options={currency}
                                             formatOptionLabel={currency => (
                                             <Box className='slect_bg'>
@@ -147,33 +376,39 @@ export default function Swap() {
                                             </Box>
                                             )}
                                         /> 
-                                    </Box> */}
+                                    </Box>
                                 </Box>
-                                
                                 <Box className='flex_bx flex_bx_02'>
-                                    <Text>$281.594</Text>
+                                    <Text>281.594</Text>
                                     <Text>Balance: 0.00</Text>
-                                </Box>
+                                </Box> */}
                             </Box>
+                            <Box className='swap_center_btn_prnt'>
+                              <Button 
+                                className='swap_center_btn'
+                                onClick={() => {
+                                  setApprovalSubmitted(false) // reset 2 step UI for approvals
+                                  onSwitchTokens()
+                                }}><Image src='img/down_arw_ic.svg' /></Button>
+                            </Box>                            
                             <Box className='swap_upcro_brdr_bx swap_btc_brdr_bx'>
-                                <Box className='flex_bx'>
-                                    <input type="number" value="281.594" />
-                                    <Button className='upmatic_btn_pop'>
-                                        <Image
-                                        src='/img/upcro_coin_ic.svg'
-                                        alt=''
-                                        className='upcro_coin_ic'
-                                        />
-                                        BTC
-                                        <Image
-                                        src='/img/pop_01.svg'
-                                        alt=''
-                                        className='down_arrow'
-                                        />
-                                    </Button>
-                                    {/* <Box className='slect_box'>
+
+                            <CurrencyInputPanel
+                                value={formattedAmounts[Field.OUTPUT]}
+                                onUserInput={handleTypeOutput}
+                                label={independentField === Field.INPUT && !showWrap && trade ? 'To (estimated)' : 'To'}
+                                showMaxButton={false}
+                                currency={currencies[Field.OUTPUT]}
+                                onCurrencySelect={handleOutputSelect}
+                                otherCurrency={currencies[Field.INPUT]}
+                                id="swap-currency-output"
+                              />
+                                {/* <Box className='flex_bx'>
+                                    <input type="number" value="3655.548654" />
+                                    <Box className='slect_box'>
                                         <ReactSelect
                                             className='select_one'
+                                            value={currencytwo}
                                             classNamePrefix="slct"
                                             options={currencytwo}
                                             formatOptionLabel={currencytwo => (
@@ -183,295 +418,178 @@ export default function Swap() {
                                             </div>
                                             )}
                                         /> 
-                                    </Box>       */}
+                                    </Box>      
                                 </Box>
                                 <Box className='flex_bx flex_bx_02'>
-                                    <Text>$281.594</Text>
+                                    <Text>$256.312</Text>
                                     <Text>Balance: 1,688,648</Text>
-                                </Box>
+                                </Box> */}
                             </Box>
-                            <Button className='swep_arw_btn_box'>
-                                <Image src="img/swep_aro_butm.svg" alt='' />
-                            </Button>
                             <Box className='text_row_darc'>
-                                <Text>1 upCRO = 0.00846454 BTC</Text>
+                                {/* <Text>1 upBNB = 0.00846454 BTC</Text>
                                 <Text>($0.00065486635)</Text>
-                                <Text>Gas: $32.455</Text>
+                                <Text className='last_p'>Gas: $32.455</Text> */}
                             </Box>
-                            <Button className='stake_full_btn'>Stake</Button>
+                            {/* <Button className='stake_full_btn'>Stake</Button> */}
+
+
+                            {recipient !== null && !showWrap ? (
+                              <>
+                                <AutoRow justify="space-between" style={{ padding: '0 1rem' }}>
+                                  <ArrowWrapper clickable={false}>
+                                    <ArrowDown size="16" color={theme.text2} />
+                                  </ArrowWrapper>
+                                  <LinkStyledButton id="remove-recipient-button" onClick={() => onChangeRecipient(null)}>
+                                    - Remove send
+                                  </LinkStyledButton>
+                                </AutoRow>
+                                <AddressInputPanel id="recipient" value={recipient} onChange={onChangeRecipient} />
+                              </>
+                            ) : null}
+
+                            {showWrap ? null : (
+                              <Card padding={showWrap ? '.25rem 1rem 0 1rem' : '0px'} borderRadius={'20px'}>
+                                <AutoColumn gap="8px" style={{ padding: '0 16px' }}>
+                                  {Boolean(trade) && (
+                                    <RowBetween align="center">
+                                      <Text fontWeight={500} fontSize={14} color={theme.text2}>
+                                        Price
+                                      </Text>
+                                      <TradePrice
+                                        price={trade?.executionPrice}
+                                        showInverted={showInverted}
+                                        setShowInverted={setShowInverted}
+                                      />
+                                    </RowBetween>
+                                  )}
+                                  {allowedSlippage !== INITIAL_ALLOWED_SLIPPAGE && (
+                                    <RowBetween align="center">
+                                      <ClickableText fontWeight={500} fontSize={14} color={theme.text2} onClick={toggleSettings}>
+                                        Slippage Tolerance
+                                      </ClickableText>
+                                      <ClickableText fontWeight={500} fontSize={14} color={theme.text2} onClick={toggleSettings}>
+                                        {allowedSlippage / 100}%
+                                      </ClickableText>
+                                    </RowBetween>
+                                  )}
+                                </AutoColumn>
+                              </Card>
+                            )}
+
+                          <BottomGrouping>
+                            {swapIsUnsupported ? (
+                              <ButtonPrimary disabled={true}>
+                                <TYPE.main mb="4px">Unsupported Asset</TYPE.main>
+                              </ButtonPrimary>
+                            ) : !account ? (
+                              <ButtonLight onClick={toggleWalletModal}>Connect Wallet</ButtonLight>
+                            ) : showWrap ? (
+                              <ButtonPrimary disabled={Boolean(wrapInputError)} onClick={onWrap}>
+                                {wrapInputError ??
+                                  (wrapType === WrapType.WRAP ? 'Wrap' : wrapType === WrapType.UNWRAP ? 'Unwrap' : null)}
+                              </ButtonPrimary>
+                            ) : noRoute && userHasSpecifiedInputOutput ? (
+                              <GreyCard style={{ textAlign: 'center' }}>
+                                <TYPE.main mb="4px">Insufficient liquidity for this trade.</TYPE.main>
+                                {singleHopOnly && <TYPE.main mb="4px">Try enabling multi-hop trades.</TYPE.main>}
+                              </GreyCard>
+                            ) : showApproveFlow ? (
+                              <RowBetween>
+                                <ButtonConfirmed
+                                  onClick={approveCallback}
+                                  disabled={approval !== ApprovalState.NOT_APPROVED || approvalSubmitted}
+                                  width="48%"
+                                  altDisabledStyle={approval === ApprovalState.PENDING} // show solid button while waiting
+                                  confirmed={approval === ApprovalState.APPROVED}
+                                >
+                                  {approval === ApprovalState.PENDING ? (
+                                    <AutoRow gap="6px" justify="center">
+                                      Approving <Loader stroke="white" />
+                                    </AutoRow>
+                                  ) : approvalSubmitted && approval === ApprovalState.APPROVED ? (
+                                    'Approved'
+                                  ) : (
+                                    'Approve ' + currencies[Field.INPUT]?.symbol
+                                  )}
+                                </ButtonConfirmed>
+                                <ButtonError
+                                  onClick={() => {
+                                    if (isExpertMode) {
+                                      handleSwap()
+                                    } else {
+                                      setSwapState({
+                                        tradeToConfirm: trade,
+                                        attemptingTxn: false,
+                                        swapErrorMessage: undefined,
+                                        showConfirm: true,
+                                        txHash: undefined
+                                      })
+                                    }
+                                  }}
+                                  width="48%"
+                                  id="swap-button"
+                                  disabled={
+                                    !isValid || approval !== ApprovalState.APPROVED || (priceImpactSeverity > 3 && !isExpertMode)
+                                  }
+                                  error={isValid && priceImpactSeverity > 2}
+                                >
+                                  <Text fontSize={16} fontWeight={500}>
+                                    {priceImpactSeverity > 3 && !isExpertMode
+                                      ? `Price Impact High`
+                                      : `Swap${priceImpactSeverity > 2 ? ' Anyway' : ''}`}
+                                  </Text>
+                                </ButtonError>
+                              </RowBetween>
+                            ) : (
+                              <ButtonError
+                                onClick={() => {
+                                  if (isExpertMode) {
+                                    handleSwap()
+                                  } else {
+                                    setSwapState({
+                                      tradeToConfirm: trade,
+                                      attemptingTxn: false,
+                                      swapErrorMessage: undefined,
+                                      showConfirm: true,
+                                      txHash: undefined
+                                    })
+                                  }
+                                }}
+                                id="swap-button"
+                                disabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError}
+                                error={isValid && priceImpactSeverity > 2 && !swapCallbackError}
+                              >
+                                <Text fontSize={20} fontWeight={500}>
+                                  {swapInputError
+                                    ? swapInputError
+                                    : priceImpactSeverity > 3 && !isExpertMode
+                                    ? `Price Impact Too High`
+                                    : `Swap${priceImpactSeverity > 2 ? ' Anyway' : ''}`}
+                                </Text>
+                              </ButtonError>
+                            )}
+                            {showApproveFlow && (
+                              <Column style={{ marginTop: '1rem' }}>
+                                <ProgressSteps steps={[approval === ApprovalState.APPROVED]} />
+                              </Column>
+                            )}
+                            {isExpertMode && swapErrorMessage ? <SwapCallbackError error={swapErrorMessage} /> : null}
+                            {/* {swapCallbackError ? <SwapCallbackError error={swapCallbackError} /> : null} */}
+
+                            {/* {swapErrorMessage ? <SwapCallbackError error={swapErrorMessage} /> : null} */}
+                          </BottomGrouping>
                         </Box>
                     </Box>
                     <Box className='contracts_box'>
                         <Heading as="h4">Contracts</Heading>
                         <Box className='upcro_copyflex'>
-                            <Heading as="h6">upCRO<Text>0xb0620........f790f<Button><Image src="img/copy_ic.svg" alt='' /></Button></Text></Heading>
-                            <Heading as="h6" className='right_h6'>xUpMATIC<Text>0x78Bf85......ed90e<Button><Image src="img/copy_ic.svg" alt='' /></Button></Text></Heading>
+                            <Heading as="h6">upBNB<Text>{shortenAddress(ROOTED_ADDRESS)}<Button><Image src="img/copy_ic.svg" alt='' /></Button></Text></Heading>
+                            <Heading as="h6" className='right_h6'>xUpBNB<Text>{shortenAddress(STAKING_ADDRESS)}<Button><Image src="img/copy_ic.svg" alt='' /></Button></Text></Heading>
                         </Box>
                     </Box>
                 </Container>
             </Box>
         </LayoutTwo>
-        <Modal isOpen={isFirstModalOpen} onClose={onFirstModalClose} isCentered id="SelectTokenModalone">
-            <ModalOverlay />
-            <ModalContent className='transaction_settings select_tocan_popup'>
-            <ModalHeader>Select a token</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody className='containt_cntr'>
-                <Box className='select_tocan_cntnt'>
-                    <Box className='inpt_slect_prnt'>
-                        <input type="text" placeholder="Search name or paste address"></input>
-                    </Box>
-                    <Box className='select_tocans_btm_box'>
-                        <Box className='select_tocans_btm_box_inn'>
-                            <Button onClick={onSecondModalOpen} className='tocn_bx'>
-                                <Image src='/img/slect_tokn_ic_01.svg' />
-                                <Box className='tcn_nam_input'>
-                                    <Box className='text_inpt_box'>
-                                        <Heading as="h5">BNB</Heading>
-                                        <input type="number" value="0.06273"></input>
-                                    </Box>
-                                    <Text>BNB</Text>
-                                </Box>
-                            </Button>
-                            <Box className='tocn_bx'>
-                                <Image src='/img/slect_tokn_ic_02.svg' />
-                                <Box className='tcn_nam_input'>
-                                    <Box className='text_inpt_box'>
-                                        <Heading as="h5">ADAFLECT</Heading>
-                                        <input type="number" value="0"></input>
-                                    </Box>
-                                    <Text>ADAFlect</Text>
-                                </Box>
-                            </Box>
-                            <Box className='tocn_bx'>
-                                <Image src='/img/slect_tokn_ic_03.svg' />
-                                <Box className='tcn_nam_input'>
-                                    <Box className='text_inpt_box'>
-                                        <Heading as="h5">bPRISM</Heading>
-                                        <input type="number" value="0"></input>
-                                    </Box>
-                                    <Text>Binance PRISM Token</Text>
-                                </Box>
-                            </Box>
-                            <Box className='tocn_bx'>
-                                <Image src='/img/slect_tokn_ic_04.svg' />
-                                <Box className='tcn_nam_input'>
-                                    <Box className='text_inpt_box'>
-                                        <Heading as="h5">ADMC</Heading>
-                                        <input type="number" value="0"></input>
-                                    </Box>
-                                    <Text>Adamant</Text>
-                                </Box>
-                            </Box>
-                            <Box className='tocn_bx'>
-                                <Image src='/img/slect_tokn_ic_05.svg' />
-                                <Box className='tcn_nam_input'>
-                                    <Box className='text_inpt_box'>
-                                        <Heading as="h5">BUSD</Heading>
-                                        <input type="number" value="0"></input>
-                                    </Box>
-                                    <Text>Binange-Pegged BUSD</Text>
-                                </Box>
-                            </Box>
-                            <Box className='tocn_bx'>
-                                <Image src='/img/slect_tokn_ic_06.svg' />
-                                <Box className='tcn_nam_input'>
-                                    <Box className='text_inpt_box'>
-                                        <Heading as="h5">DOLPH</Heading>
-                                        <input type="number" value="0"></input>
-                                    </Box>
-                                    <Text>Doplhins Finance</Text>
-                                </Box>
-                            </Box>
-                            <Box className='tocn_bx'>
-                                <Image src='/img/slect_tokn_ic_07.svg' />
-                                <Box className='tcn_nam_input'>
-                                    <Box className='text_inpt_box'>
-                                        <Heading as="h5">EMPIRE</Heading>
-                                        <input type="number" value="0"></input>
-                                    </Box>
-                                    <Text>EmpireDEX</Text>
-                                </Box>
-                            </Box>
-                            {/* <Box className='tocn_bx'>
-                                <Image src='/img/slt_tcn_01.svg' />
-                                <Box className='tcn_nam_input'>
-                                    <Box className='text_inpt_box'>
-                                        <Heading as="h5">BNB</Heading>
-                                        <input type="number" value="0.06273"></input>
-                                    </Box>
-                                    <Text>BNB</Text>
-                                </Box>
-                            </Box>
-                            <Box className='tocn_bx'>
-                                <Image src='/img/slt_tcn_02.svg' />
-                                <Box className='tcn_nam_input'>
-                                    <Box className='text_inpt_box'>
-                                        <Heading as="h5">ADAFLECT</Heading>
-                                        <input type="number" value="0"></input>
-                                    </Box>
-                                    <Text>ADAFlect</Text>
-                                </Box>
-                            </Box>
-                            <Box className='tocn_bx'>
-                                <Image src='/img/slt_tcn_03.svg' />
-                                <Box className='tcn_nam_input'>
-                                    <Box className='text_inpt_box'>
-                                        <Heading as="h5">bPRISM</Heading>
-                                        <input type="number" value="0"></input>
-                                    </Box>
-                                    <Text>Binance PRISM Token</Text>
-                                </Box>
-                            </Box>
-                            <Box className='tocn_bx'>
-                                <Image src='/img/slt_tcn_04.svg' />
-                                <Box className='tcn_nam_input'>
-                                    <Box className='text_inpt_box'>
-                                        <Heading as="h5">ADMC</Heading>
-                                        <input type="number" value="0"></input>
-                                    </Box>
-                                    <Text>Adamant</Text>
-                                </Box>
-                            </Box>
-                            <Box className='tocn_bx'>
-                                <Image src='/img/slt_tcn_05.svg' />
-                                <Box className='tcn_nam_input'>
-                                    <Box className='text_inpt_box'>
-                                        <Heading as="h5">BUSD</Heading>
-                                        <input type="number" value="0"></input>
-                                    </Box>
-                                    <Text>Binange-Pegged BUSD</Text>
-                                </Box>
-                            </Box>
-                            <Box className='tocn_bx'>
-                                <Image src='/img/slt_tcn_06.svg' />
-                                <Box className='tcn_nam_input'>
-                                    <Box className='text_inpt_box'>
-                                        <Heading as="h5">DOLPH</Heading>
-                                        <input type="number" value="0"></input>
-                                    </Box>
-                                    <Text>Doplhins Finance</Text>
-                                </Box>
-                            </Box>
-                            <Box className='tocn_bx'>
-                                <Image src='/img/slt_tcn_07.svg' />
-                                <Box className='tcn_nam_input'>
-                                    <Box className='text_inpt_box'>
-                                        <Heading as="h5">EMPIRE</Heading>
-                                        <input type="number" value="0"></input>
-                                    </Box>
-                                    <Text>EmpireDEX</Text>
-                                </Box>
-                            </Box> */}
-                        </Box>
-                        
-                    </Box>
-                </Box>
-                <Box className='manage_btn_prnt'>
-                    <Button onClick={onThirdModalOpen}><Image src='/img/mange_btn_img.svg' />Manage</Button>
-                </Box>
-            </ModalBody>
-            
-            </ModalContent>
-        </Modal>
-        <Modal isOpen={isSecondModalOpen} onClose={onSecondModalClose} isCentered id="SelectTokenModaltwo">
-            <ModalOverlay />
-            <ModalContent className='transaction_settings select_tocan_popup'>
-            <ModalHeader>Select a token</ModalHeader>
-            <ModalCloseButton />
-            <ModalBody className='containt_cntr'>
-                <Box className='select_tocan_cntnt'>
-                    <Box className='inpt_slect_prnt'>
-                        <input type="text" placeholder="Search name or paste address"></input>
-                    </Box>
-                    <Button onClick={onFourthModalOpen} className='select_tocan_root_box'>
-                        <Box className='root_img_text_box'>
-                            <Image src='/img/slect_tokn_ic_01.svg' />
-                            <Box >
-                                <Heading as="h6" >upBNB</Heading>
-                                <Text>ROOTKIT</Text>
-                            </Box>
-                        </Box>
-                        <Heading as="h6" >0.06273</Heading>
-                    </Button>
-                    {/* <ImportToken /> */}
-                    <Box className='exclim_text'>
-                        <Heading as="h5" >Expanded results from inactive Token Lists</Heading>
-                        <Image src='/img/nolj_ic.svg' />
-                    </Box>
-                </Box>
-                
-            </ModalBody>
-            </ModalContent>
-        </Modal>
-        <Modal isOpen={isThirdModalOpen} onClose={onThirdModalClose} isCentered id="SelectTokenModalthree">
-            <ModalOverlay />
-            <ModalContent className='transaction_settings select_tocan_popup manag_modal_cntnt'>
-            <ModalHeader>Manage</ModalHeader>
-            <ModalCloseButton />
-            <ModalCloseButton className='arrow_btn'/>
-            <ModalBody className='containt_cntr'>
-                <Box className='manage_tab_main'>
-                    <Box className='select_tocan_cntnt pading_box'>
-                        <Box className='inpt_slect_prnt slect_width'>
-                            <input type="text" placeholder="Search name or paste address"></input>
-                        </Box>
-                        <Box className='empr_df_list_tcn'>
-                              <Box className='empr_text'>
-                                <Image src='/img/mange_ic_01.svg' />
-                                <Box>
-                                    <Heading as="h5">upBNB</Heading>
-                                    <Text >84 tokens <Image src='/img/mange_sting_ic.svg' /></Text>
-                                </Box>
-                              </Box>
-                              <Stack direction='row' className='manage_switch'>
-                                <Text>Off</Text>
-                                <Switch colorScheme='teal' size='lg' />
-                                <Text>On</Text>
-                              </Stack>
-                            </Box>
-                    </Box>
-                </Box>
-            </ModalBody>
-            </ModalContent>
-        </Modal>
-
-        <Modal isOpen={isFourthModalOpen} onClose={onFourthModalClose} isCentered id="SelectTokenModalfour">
-            <ModalOverlay />
-            <ModalContent className='transaction_settings select_tocan_popup imp_tocan_popup' >
-            <ModalHeader>Import Token</ModalHeader>
-            <ModalCloseButton />
-            <ModalCloseButton className='back_btn_imp' />
-            <ModalBody className='containt_cntr'>
-                <Box className='select_tocan_cntnt'>
-                    <Box className='root_bnb_box'>
-                        <Box className='root_bnb_raw'>
-                            <Image src='/img/mange_ic_01.svg' />
-                            <Heading as="h6" >upBNB</Heading>
-                            <Text>ROOTKIT</Text>
-                        </Box>
-                        <Text className='alt_text'>
-                            0x1759254EB142bcF0175347DA0f3c19235538a9A
-                        </Text>
-                        <Box className='unknwon_bx'>
-                            <Image src='/img/alrt_ic.svg' />
-                            <Text>Unknown source</Text>
-                        </Box>
-                    </Box>
-                    <Box className='trade_at_your_risk_box'>
-                        <Image src='/img/red_alrt_ic.svg' className='jam_tringle_ic' />
-                        <Heading as="h5">Trade at your owk risk!</Heading>
-                        <Text>Anyone an create a token, including creating fake versions of exiting tokens that claim to represent projects.</Text>
-                        <Heading as="h6">If you purchase this token, you may not be avle to sell it back.</Heading>
-                        <Checkbox className='undersan_check_box'>I understand</Checkbox>
-                    </Box>
-                </Box>
-                <Box className='manage_btn_prnt'>
-                    <Button>Import</Button>
-                </Box>
-            </ModalBody>
-            </ModalContent>
-        </Modal>
     </>
   )
 }
