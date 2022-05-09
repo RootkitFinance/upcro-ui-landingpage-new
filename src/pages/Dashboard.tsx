@@ -9,8 +9,20 @@ import {
   Th,
   Td,
 } from '@chakra-ui/react'
+import TokenChart from '../components/TokenChart'
 
 export default function Dashboard() {
+  let address = "0xb062084affdf75b9b494d56b8417f1b981df790f"
+  let backgroundColor = "#2172E5"
+  let priceUSD = "0.1"
+  
+  const CHART_VIEW = {
+    VOLUME: 'Volume',
+    LIQUIDITY: 'Liquidity',
+    PRICE: 'Price',
+    LINE_PRICE: 'Price (Line)',
+  }
+
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
@@ -22,12 +34,15 @@ export default function Dashboard() {
               <SimpleGrid columns={12} columnGap={4} rowGap={3} >
                 <GridItem colSpan={[12, 12, 12, 6]}>
                   <Box className='dashboard_chart_box price_chart_main'>
-                    <Image src='img/price_chart_img.png' alt='' />
+                    <Heading as="h3" color="#FFFFFF">Price Chart</Heading><br/>
+                    <TokenChart address={address} color={backgroundColor} base={priceUSD} view={CHART_VIEW.PRICE} />
                   </Box>
                 </GridItem>
                 <GridItem colSpan={[12, 12, 12, 6]}>
                   <Box className='dashboard_chart_box price_chart_main'>
-                    <Image src='img/tvl_chrt_img.png' alt='' />
+                    {/* <Image src='img/tvl_chrt_img.png' alt='' /> */}
+                    <Heading as="h3" color="#FFFFFF">Liquidity Chart</Heading><br/>
+                    <TokenChart address={address} color={backgroundColor} base={priceUSD} view={CHART_VIEW.LIQUIDITY} />
                   </Box>
                 </GridItem>
                 <GridItem colSpan={[12, 12, 12, 6]}>

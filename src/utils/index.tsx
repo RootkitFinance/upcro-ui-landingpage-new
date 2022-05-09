@@ -7,7 +7,15 @@ import { Contract } from '@ethersproject/contracts'
 import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
 import { BigNumber } from '@ethersproject/bignumber'
 import EmpireRouterABI from '../constants/abis/router.json'
+import Numeral from 'numeral'
+import dayjs from 'dayjs'
+import { timeframeOptions } from '../constants'
+import utc from 'dayjs/plugin/utc'
+import { blockClient } from '../apollo/client'
+import { GET_BLOCKS } from '../apollo/queries'
 // import IPancakeRouter02ABI from '../constants/abis/IPancakeRouter02.json'
+
+dayjs.extend(utc)
 
 // returns the checksummed address if the address is valid, otherwise returns false
 export function isAddress(value: any): string | false {
@@ -132,4 +140,139 @@ export function calculateGasMargin(value: BigNumber): BigNumber {
 // account is optional
 export function getRouterContract(_: number, library: Web3Provider, account?: string): Contract {
   return getContract(ROUTER_ADDRESS, EmpireRouterABI, library, account)
+}
+
+export const toK = (num: string) => {
+  return Numeral(num).format('0.[00]a')
+}
+
+export const toNiceDate = (date: any) => {
+  let x = dayjs.utc(dayjs.unix(date)).format('MMM DD')
+  return x
+}
+
+export const toNiceDateYear = (date: number) => dayjs.utc(dayjs.unix(date)).format('MMMM DD, YYYY')
+
+// using a currency library here in case we want to add more in future
+export const formatDollarAmount = (num: any, digits : any) => {
+  const formatter = new Intl.NumberFormat([], {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
+  })
+  return formatter.format(num)
+}
+
+export const formattedNum = (number: any, usd = false, acceptNegatives = false) => {
+  if (isNaN(number) || number === '' || number === undefined) {
+    return usd ? '$0' : 0
+  }
+  let num = parseFloat(number)
+
+  if (num > 500000000) {
+    return (usd ? '$' : '') + toK(num.toFixed(0))
+  }
+
+  if (num === 0) {
+    if (usd) {
+      return '$0'
+    }
+    return 0
+  }
+
+  if (num < 0.0001 && num > 0) {
+    return usd ? '< $0.0001' : '< 0.0001'
+  }
+
+  if (num > 1000) {
+    return usd ? formatDollarAmount(num, 0) : Number(parseFloat(num+"").toFixed(0)).toLocaleString()
+  }
+
+  if (usd) {
+    if (num < 0.1) {
+      return formatDollarAmount(num, 4)
+    } else {
+      return formatDollarAmount(num, 2)
+    }
+  }
+
+  return Number(parseFloat(num+"").toFixed(4)).toString()
+}
+
+export function getTimeframe(timeWindow: any) {
+  const utcEndTime = dayjs.utc()
+  // based on window, get starttime
+  let utcStartTime
+  switch (timeWindow) {
+    case timeframeOptions.WEEK:
+      utcStartTime = utcEndTime.subtract(1, 'week').endOf('day').unix() - 1
+      break
+    case timeframeOptions.MONTH:
+      utcStartTime = utcEndTime.subtract(1, 'month').endOf('day').unix() - 1
+      break
+    case timeframeOptions.ALL_TIME:
+      utcStartTime = utcEndTime.subtract(1, 'year').endOf('day').unix() - 1
+      break
+    default:
+      utcStartTime = utcEndTime.subtract(1, 'year').startOf('year').unix() - 1
+      break
+  }
+  return utcStartTime
+}
+
+export async function splitQuery(query:any, localClient:any, vars:any, list:any, skipCount = 100) {
+  let fetchedData = {}
+  let allFound = false
+  let skip = 0
+
+  while (!allFound) {
+    let end = list.length
+    if (skip + skipCount < list.length) {
+      end = skip + skipCount
+    }
+    let sliced = list.slice(skip, end)
+    let result = await localClient.query({
+      query: query(...vars, sliced),
+      fetchPolicy: 'cache-first',
+    })
+    fetchedData = {
+      ...fetchedData,
+      ...result.data,
+    }
+    if (Object.keys(result.data).length < skipCount || skip + skipCount > list.length) {
+      allFound = true
+    } else {
+      skip += skipCount
+    }
+  }
+
+  return fetchedData
+}
+/**
+ * @notice Fetches block objects for an array of timestamps.
+ * @dev blocks are returned in chronological order (ASC) regardless of input.
+ * @dev blocks are returned at string representations of Int
+ * @dev timestamps are returns as they were provided; not the block time.
+ * @param {Array} timestamps
+ */
+ export async function getBlocksFromTimestamps(timestamps:any, skipCount = 500) {
+  if (timestamps?.length === 0) {
+    return []
+  }
+
+  let fetchedData:any = await splitQuery(GET_BLOCKS, blockClient, [], timestamps, skipCount)
+
+  let blocks = []
+  if (fetchedData) {
+    for (var t in fetchedData) {
+      if (fetchedData[t].length > 0) {
+        blocks.push({
+          timestamp: t.split('t')[1],
+          number: fetchedData[t][0]['number'],
+        })
+      }
+    }
+  }
+  return blocks
 }

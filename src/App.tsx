@@ -13,6 +13,9 @@ import MulticallUpdater from './state/multicall/updater'
 import TransactionUpdater from './state/transactions/updater'
 import { Provider } from 'react-redux'
 import store from './state'
+import LocalStorageContextProvider, { Updater as LocalStorageContextUpdater } from './contexts/LocalStorage'
+import TokenDataContextProvider from './contexts/TokenData'
+import ApplicationContextProvider from './contexts/Application'
 
 function App() {
   const addPendingTransaction = (description: string, txResponse: TransactionResponse) => {
@@ -34,8 +37,21 @@ function App() {
       </>
     )
   }
+
+  function ContextProviders({ children }:{children:any}) {
+    return (
+      <LocalStorageContextProvider>
+        <ApplicationContextProvider>
+          <TokenDataContextProvider>
+              {children}
+          </TokenDataContextProvider>
+        </ApplicationContextProvider>
+      </LocalStorageContextProvider>
+    )
+  }
   return (
     <ChakraProvider>
+      <ContextProviders>
        <Provider store={store}>
           <TransactionContext.Provider value={{ addPendingTransaction }}>
             <Updaters />
@@ -48,6 +64,7 @@ function App() {
             </AppContextProvider>
            </TransactionContext.Provider> 
         </Provider>
+      </ContextProviders>
      </ChakraProvider>
   );
 }

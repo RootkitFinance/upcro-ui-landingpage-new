@@ -2,6 +2,21 @@ import { AbstractConnector } from '@web3-react/abstract-connector'
 import { injected, walletconnect } from '../connectors'
 import { ChainId, JSBI, Percent, Token, WETH } from '../sdk'
 
+export const timeframeOptions = {
+  WEEK: '1 week',
+  MONTH: '1 month',
+  // THREE_MONTHS: '3 months',
+  // YEAR: '1 year',
+  HALF_YEAR: '6 months',
+  ALL_TIME: 'All time',
+}
+
+export const SUPPORTED_LIST_URLS__NO_ENS = ['https://www.coingecko.com/tokens_list/uniswap/defi_100/v_0_0_0.json']
+
+export const FACTORY_ADDRESS = '0x06530550A48F990360DFD642d2132354A144F31d'
+
+export const BUNDLE_ID = '1'
+
 export const NETWORK_LABELS: { [chainId in number]?: string } = {
   25: 'Cronos'
 }

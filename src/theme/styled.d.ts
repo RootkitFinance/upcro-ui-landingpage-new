@@ -45,6 +45,8 @@ export interface Colors {
   yellow1: Color
   yellow2: Color
   blue1: Color
+
+  panelColor: Color
 }
 
 export interface Grids {

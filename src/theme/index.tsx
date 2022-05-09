@@ -79,8 +79,9 @@ export function colors(): Colors {
     green1: '#27AE60',
     yellow1: '#FFE270',
     yellow2: '#F3841E',
-    blue1: '#2172E5'
+    blue1: '#2172E5',
 
+    panelColor: 'rgba(255, 255, 255, 0)',
     // dont wanna forget these blue yet
     // blue4: '#153d6f70',
     // blue5: '#153d6f70'
