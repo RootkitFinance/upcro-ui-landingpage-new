@@ -30,7 +30,7 @@ export default function Dashboard() {
                     <Image src='img/tvl_chrt_img.png' alt='' />
                   </Box>
                 </GridItem>
-                <GridItem colSpan={[12, 12, 12, 6]}>
+                {/* <GridItem colSpan={[12, 12, 12, 6]}>
                   <Box className='dashboard_chart_box'>
                     <Box className='flex_chart_header'>
                       <Heading as="h3">List of all contracts</Heading>
@@ -43,7 +43,7 @@ export default function Dashboard() {
                       <Heading as="h3">Pending votes</Heading>
                     </Box>
                   </Box>
-                </GridItem>
+                </GridItem> */}
                 <GridItem colSpan={[12, 12, 12, 12]}>
                   <Box className='dashboard_chart_box dashboard_chart_box_last'>
                     <Box className='flex_chart_header flex_chart_header_last'>
