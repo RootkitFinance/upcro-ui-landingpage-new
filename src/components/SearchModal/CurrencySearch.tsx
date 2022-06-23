@@ -23,7 +23,7 @@ import { useOnClickOutside } from '../../hooks/useOnClickOutside'
 import ImportRow from './ImportRow'
 import { Edit } from 'react-feather'
 import useDebounce from '../../hooks/useDebounce'
-import { useTheme } from '@chakra-ui/react'
+import { Box, useTheme } from '@chakra-ui/react'
 
 const ContentWrapper = styled(Column)`
   width: 100%;
@@ -161,75 +161,77 @@ export function CurrencySearch({
   const filteredInactiveTokens: Token[] = useSortedTokensByQuery(inactiveTokens, debouncedQuery)
 
   return (
-    <ContentWrapper className='select_tocn_modal'>
-      <PaddedColumn className='select_tocn_modal_inn' >
-        <RowBetween className='select_text_prnt'>
-          <Text className='select_text'>
-            Select a token
-          </Text>
-          <CloseIcon onClick={onDismiss} className="close_btn" />
-        </RowBetween>
-        <Row className='inpt_prnt_prnt'>
-          <SearchInput
-            type="text"
-            id="token-search-input"
-            placeholder={t('Search name or paste address')}
-            autoComplete="off"
-            value={searchQuery}
-            ref={inputRef as RefObject<HTMLInputElement>}
-            onChange={handleInput}
-            onKeyDown={handleEnter}
-          />
-        </Row>
-        {showCommonBases && (
-          <CommonBases chainId={chainId} onSelect={handleCurrencySelect} selectedCurrency={selectedCurrency} />
-        )}
-      </PaddedColumn>
-      <Separator />
-      {searchToken && !searchTokenIsAdded ? (
-        <Column style={{ padding: '20px 0', height: '100%' }} className="tocn_list_prnt">
-          <ImportRow token={searchToken} showImportView={showImportView} setImportToken={setImportToken} />
-        </Column>
-      ) : filteredSortedTokens?.length > 0 || filteredInactiveTokens?.length > 0 ? (
-        <div style={{ flex: '1' }}>
-          <AutoSizer disableWidth className='currency_list_prnt'>
-            {({ height }) => (
-              <CurrencyList
-                height={height}
-                showETH={showETH}
-                currencies={
-                  filteredInactiveTokens ? filteredSortedTokens.concat(filteredInactiveTokens) : filteredSortedTokens
-                }
-                breakIndex={inactiveTokens && filteredSortedTokens ? filteredSortedTokens.length : undefined}
-                onCurrencySelect={handleCurrencySelect}
-                otherCurrency={otherSelectedCurrency}
-                selectedCurrency={selectedCurrency}
-                fixedListRef={fixedList}
-                showImportView={showImportView}
-                setImportToken={setImportToken}
+    <>
+      <ContentWrapper className='select_tocn_modal'>
+        <Text as="header" className='select_text'>
+          Select a token
+        </Text>
+        <CloseIcon onClick={onDismiss} className="close_btn close_btn_as" />
+        <Box className='select_tocan_cntnt'>
+          <PaddedColumn className='select_tocn_modal_inn' >
+            <Row className='inpt_slect_prnt'>
+              <SearchInput
+                type="text"
+                id="token-search-input"
+                placeholder={t('Search name or paste address')}
+                autoComplete="off"
+                value={searchQuery}
+                ref={inputRef as RefObject<HTMLInputElement>}
+                onChange={handleInput}
+                onKeyDown={handleEnter}
               />
+            </Row>
+            {showCommonBases && (
+              <CommonBases chainId={chainId} onSelect={handleCurrencySelect} selectedCurrency={selectedCurrency} />
             )}
-          </AutoSizer>
-        </div>
-      ) : (
-        <Column style={{ padding: '20px', height: '100%' }}>
-          <TYPE.main color={theme.text3} textAlign="center" mb="20px">
-            No results found.
-          </TYPE.main>
-        </Column>
-      )}
-      <Footer className='manage_btn_prnt'>
-        <Row justify="center" className='manage_btn'>
-          <ButtonText onClick={showManageView} color={theme.blue1} className="list-token-manage-button">
-            <RowFixed>
-              <IconWrapper size="16px" marginRight="6px">
-                <Edit />
-              </IconWrapper>
-              <TYPE.main color={theme.blue1}>Manage</TYPE.main>
-            </RowFixed>
-          </ButtonText>
-        </Row>
-      </Footer>
-    </ContentWrapper>
+          </PaddedColumn>
+          {/* <Separator /> */}
+          {searchToken && !searchTokenIsAdded ? (
+            <Column style={{ padding: '20px 0', height: '100%' }} className="tocn_list_prnt">
+              <ImportRow token={searchToken} showImportView={showImportView} setImportToken={setImportToken} />
+            </Column>
+          ) : filteredSortedTokens?.length > 0 || filteredInactiveTokens?.length > 0 ? (
+            <div style={{ flex: '1' }}>
+              <AutoSizer disableWidth className='currency_list_prnt'>
+                {({ height }) => (
+                  <CurrencyList
+                    height={height}
+                    showETH={showETH}
+                    currencies={
+                      filteredInactiveTokens ? filteredSortedTokens.concat(filteredInactiveTokens) : filteredSortedTokens
+                    }
+                    breakIndex={inactiveTokens && filteredSortedTokens ? filteredSortedTokens.length : undefined}
+                    onCurrencySelect={handleCurrencySelect}
+                    otherCurrency={otherSelectedCurrency}
+                    selectedCurrency={selectedCurrency}
+                    fixedListRef={fixedList}
+                    showImportView={showImportView}
+                    setImportToken={setImportToken}
+                  />
+                )}
+              </AutoSizer>
+            </div>
+          ) : (
+            <Column style={{ padding: '20px', height: '100%' }}>
+              <TYPE.main color={theme.text3} textAlign="center" mb="20px">
+                No results found.
+              </TYPE.main>
+            </Column>
+          )}
+        </Box>
+        <Footer className='manage_btn_prnt'>
+          <Row justify="center" className='manage_btn'>
+            <ButtonText onClick={showManageView} color={theme.blue1} className="list-token-manage-button">
+              <RowFixed>
+                <IconWrapper size="16px" marginRight="6px">
+                  <Edit />
+                </IconWrapper>
+                <TYPE.main color={theme.blue1}>Manage</TYPE.main>
+              </RowFixed>
+            </ButtonText>
+          </Row>
+        </Footer>
+      </ContentWrapper>
+    </>
   )
 }

@@ -62,7 +62,7 @@ export default function Manage({
       <PaddedColumn className='manage_header_prnt'>
         <RowBetween>
           <ArrowLeft style={{ cursor: 'pointer' }} onClick={() => setModalView(CurrencyModalView.search)} className="back_arrow_btn" />
-          <Text className='manage_header'>
+          <Text as="header" className='manage_header'>
             Manage
           </Text>
           <CloseIcon onClick={onDismiss} className="close_btn" />
@@ -70,7 +70,7 @@ export default function Manage({
       </PaddedColumn>
       {/* <Separator /> */}
       <PaddedColumn style={{ paddingBottom: 0 }} className="paddin_box">
-        <ToggleWrapper className='emp_list_prnt'>
+        <ToggleWrapper className='select_tocan_cntnt select_tocan_cntnt_mng'>
         <ManageLists setModalView={setModalView} setImportList={setImportList} setListUrl={setListUrl} />
           {/* <ToggleOption onClick={() => setShowLists(!showLists)} active={showLists}>
             Lists

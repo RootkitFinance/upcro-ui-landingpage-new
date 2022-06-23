@@ -1,3 +1,4 @@
+import { Text } from '@chakra-ui/react';
 import React from 'react'
 import styled from 'styled-components'
 import { TYPE } from '../../theme'
@@ -40,23 +41,25 @@ export interface ToggleProps {
 export default function ListToggle({ id, isActive, bgColor, toggle }: ToggleProps) {
   return (
     <div className='flex_raw'>
-      OFF
+      <Text>OFF</Text>
+      &nbsp;
       <Wrapper id={id} isActive={isActive} onClick={toggle}>
         
         {isActive && (
-          <StatusText fontWeight="600" margin="0 6px" isActive={true}>
+          <StatusText fontWeight="600" margin="0 6px" isActive={true} className="switch_tgl_wdth">
             
           </StatusText>
         )}
         <ToggleElement isActive={isActive} bgColor={bgColor} />
         {!isActive && (
-          <StatusText fontWeight="600" margin="0 6px" isActive={false}>
+          <StatusText fontWeight="600" margin="0 6px" isActive={false} className="switch_tgl_wdth">
             
           </StatusText>
         )}
         
       </Wrapper>
-      ON
+      &nbsp;
+      <Text>ON</Text>
     </div>
     
   )

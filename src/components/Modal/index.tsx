@@ -115,7 +115,7 @@ export default function Modal({
         ({ item, key, props }) =>
           item && (
             <StyledDialogOverlay key={key} style={props} onDismiss={onDismiss} initialFocusRef={initialFocusRef}>
-              <StyledDialogContent
+              <StyledDialogContent  className="transaction_settings select_tocan_popup manag_modal_cntnt"
                 {...(isMobile
                   ? {
                       ...bind(),

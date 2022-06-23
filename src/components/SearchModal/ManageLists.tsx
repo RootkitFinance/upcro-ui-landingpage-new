@@ -23,7 +23,7 @@ import ListLogo from '../ListLogo'
 import Row, { RowFixed, RowBetween } from '../Row'
 import { PaddedColumn, SearchInput, Separator, SeparatorDark } from './styleds'
 import { useListColor } from '../../hooks/useColor'
-import { Button, useTheme } from '@chakra-ui/react'
+import { Button, Text, useTheme } from '@chakra-ui/react'
 import ListToggle from '../Toggle/ListToggle'
 import Card from '../Card'
 import { CurrencyModalView } from './CurrencySearchModal'
@@ -176,8 +176,8 @@ const ListRow = memo(function ListRow({ listUrl }: { listUrl: string }) {
   if (!list) return null
  
   return (
-    <RowWrapper active={isActive} bgColor={listColor} key={listUrl} id={listUrlRowHTMLId(listUrl)} className="list_mange_cntnt">
-      <Button onClick={onOpen} className='modal_slct_tcn_wrpr'>
+    <RowWrapper active={isActive} bgColor={listColor} key={listUrl} id={listUrlRowHTMLId(listUrl)} className="empr_df_list_tcn">
+      <Button onClick={onOpen} className='empr_text'>
         {list.logoURI ? (
           <ListLogo size="40px" style={{ marginRight: '1rem' }} logoURI={list.logoURI} alt={`${list.name} list logo`} />
         ) : (
@@ -185,12 +185,16 @@ const ListRow = memo(function ListRow({ listUrl }: { listUrl: string }) {
         )}
         <Column style={{ flex: '1' }}>
           <Row>
+            <Heading as="h5">
             <StyledTitleText className='manage_tocn_text_big' active={isActive}>{list.name}</StyledTitleText>
+            </Heading>
           </Row>
-          <RowFixed mt="4px">
-            <StyledListUrlText active={isActive} mr="6px" className='manage_tocn_small'>
-              {list.tokens.length} tokens
-            </StyledListUrlText>
+          <RowFixed>
+            <Text>
+              <StyledListUrlText active={isActive} mr="6px" className='manage_tocn_small'>
+                {list.tokens.length} tokens
+              </StyledListUrlText>
+            </Text>            
             <StyledMenu ref={node as any}>
               <ButtonEmpty onClick={toggle} ref={setReferenceElement} padding="0">
                 <Settings stroke={isActive ? theme.bg1 : theme.text1} size={12} />
@@ -359,7 +363,7 @@ export function ManageLists({
   return (
     <Wrapper>
       <PaddedColumn className='input_prnt'>
-        <Row className='inpt_inn'>
+        <Row className='inpt_slect_prnt slect_width'>
           <SearchInput
             type="text"
             id="list-add-input"
