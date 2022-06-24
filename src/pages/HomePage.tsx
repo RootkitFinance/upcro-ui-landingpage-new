@@ -26,7 +26,7 @@ export default function HomePage() {
           <FeaturesSec />
           <TeamSec />
           <ArticleSec />
-          <RoadmapSec />
+          {/* <RoadmapSec /> */}
           <HowToBuySec />
         </Box>
       </>

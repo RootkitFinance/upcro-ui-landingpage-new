@@ -164,7 +164,8 @@ body{
   left: 0;
   top: 0;
   width: 100%;
-  background: #272D37;
+  background: linear-gradient(180deg, #000000 0%, #212121 100%);
+  box-shadow: 0px 10px 40px rgba(13, 110, 253, 0.2);
   padding: 10px 110px;
   z-index: 99999;
   .desc_linl_pnt{
@@ -306,7 +307,7 @@ body{
 }
 .homepage_main {
   background: url(../img/homepage_bg.jpg) no-repeat center;
-  min-height: 6992px;
+  // min-height: 6992px;
   background-size: cover;
 }
 .upcro_launch_main{
@@ -454,7 +455,7 @@ body{
     }
     .sadow_box{
       padding: 30px 0 35px 0;
-      background: #000000;
+      background: linear-gradient(180deg, #000000 0%, #212121 100%);
       box-shadow: 0px 15px 80px rgba(13, 110, 253, 0.5);
       border-radius: 90px;
       h6{
@@ -569,7 +570,7 @@ body{
     padding: 0 20px;
     max-width: 1744px;
     width: 100%;
-    background: #0D6EFD url(../img/tech_bg_img.png) no-repeat center 0;
+    background: url(../img/tech_bg_img.jpg) no-repeat center 0;
     background-size: cover;
     border-radius: 90px;
     margin: 0 auto;
@@ -806,7 +807,7 @@ body{
     }
     .sadow_box{
       padding: 30px 0 35px 0;
-      background: #000000;
+      background: linear-gradient(180deg, #000000 0%, #212121 100%);
       box-shadow: 0px 15px 80px rgba(13, 110, 253, 0.5);
       border-radius: 90px;
       h6{
@@ -1377,7 +1378,7 @@ body{
   margin-top: 140px;
   padding: 0 15px;
   .howtobuy_inn{
-    background: #0D6EFD;
+    background: linear-gradient(131.77deg, #0D8AFD 18.39%, #021C42 73.59%);
     border-radius: 90px;
     max-width: 1784px;
     min-height: 200px;
@@ -2449,15 +2450,17 @@ body{
   }
   .swap_center_btn{
     position: absolute;
-    left: calc(50% - 18px);
+    left: calc(50% - 17px);
     min-width: 36px;
     height: 36px;
     padding: 0;
-    background: #20262F;
+    background: #000000;
     box-shadow: none;
-    bottom: calc(50% - 3px);
+    bottom: calc(50% - 14px);
+    z-index: 1;
     &:hover{
-      background: #11151a;
+      background: #000000;
+      opacity: 0.8;
     }
   }
   h4{
@@ -2525,22 +2528,28 @@ body{
     font-family: $f_primary;
     font-style: normal;
     font-weight: 700;
-    font-size: 16px;
+    font-size: 16px !important;
     line-height: 19px;
+    border: none !important;
     text-align: center;
-    color: #FFFFFF;
-    background: linear-gradient(112.28deg, #06D8B2 -10.4%, #065BD8 81.78%) !important;
-    opacity: 0.4;
+    color: #FFFFFF !important;
+    background: #0D6EFD !important;
     border-radius: 60px;
     width: 100%;
     height: 48px;
     margin-top: 30px;
     box-shadow: none;
     transition: all 0.2s ease-out;
+    cursor: pointer !important;
     &:hover{
-      background: linear-gradient(112.28deg, #06D8B2 -10.4%, #065BD8 81.78%);
+      opacity: 0.8;
     }
   }
+}
+.swap_border_Box .stake_full_btn_not_connected{
+  background: linear-gradient(112.28deg, #06D8B2 -10.4%, #065BD8 81.78%) !important;
+  opacity: 0.4;
+  border: none;
 }
 .slect_box {
   .slct__menu {
@@ -2609,7 +2618,7 @@ body{
 }
 @media screen and (max-width: 575px) {
   .swap_border_Box .swap_center_btn{
-    bottom: calc(50% - 7px);
+    bottom: calc(50% - 18px);
   }
   .swap_main {
     padding-top: 80px;
@@ -2660,9 +2669,6 @@ body{
 @media screen and (max-width: 479px) {
   .swap_border_Box .text_row_darc {
     flex-direction: column;
-  }
-  .swap_border_Box .swap_center_btn {
-    bottom: calc(50% - -14px);
   }
 }
 .faq_main{
@@ -4554,7 +4560,7 @@ body{
     border: 1px solid #BDD7FF;
     box-sizing: border-box;
     border-radius: 4px;
-    width: 114px;
+    width: auto;
     height: 36px;
     font-family: $f_primary;
     font-weight: 500;
@@ -4576,6 +4582,18 @@ body{
     .down_arrow{
       margin-left: 2px;
     }
+    img {
+      height: 20px !important;
+      width: 20px !important;
+    }
+    span {
+      font-family: 'Roboto';
+      font-weight: 500 !important;
+      font-size: 16px !important;
+      line-height: 19px !important;
+      color: #FFFFFF !important;
+      margin: 0 8px 0 4px!important;
+    }
   }
 }
 
@@ -4587,6 +4605,11 @@ body{
   max-width: 451px;
   min-height: 603px;
   @media screen and (min-width: 1280px) {
+    right: -7%;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .select_tocan_popup {
     right: -7%;
   }
 }
@@ -5340,4 +5363,32 @@ button.select_tocan_root_box {
   .flex_raw button .switch_tgl_wdth {
     width: 4px !important;
   }
+}
+.currency_text_big {
+  font-family: 'Roboto';
+  font-weight: 500 !important;
+  font-size: 14px;
+  line-height: 16px;
+  color: #FFFFFF !important;
+  margin-bottom: 2px !important;
+}
+.currency_text_small {
+  font-family: 'Roboto';
+  font-weight: 300 !important;
+  font-size: 11px;
+  line-height: 13px;
+  color: #FFFFFF !important;
+}
+.max_btn_as {
+  padding: 0 5px;
+  background: #3fb7bd !important;
+  color: #ffffff !important;
+  border-radius: 5px !important;
+  transition: all 0.2s ease-out;
+  &:hover {
+    background: #31989d !important;
+  }
+}
+.jam_tringlered_ic {
+  height: 32px !important;
 }

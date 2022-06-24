@@ -482,7 +482,7 @@ export default function Swap() {
                                 <TYPE.main mb="4px">Unsupported Asset</TYPE.main>
                               </ButtonPrimary>
                             ) : !account ? (
-                              <ButtonLight onClick={toggleWalletModal}>Connect Wallet</ButtonLight>
+                              <ButtonLight onClick={toggleWalletModal} className="stake_full_btn stake_full_btn_not_connected">Connect Wallet</ButtonLight>
                             ) : showWrap ? (
                               <ButtonPrimary disabled={Boolean(wrapInputError)} onClick={onWrap}>
                                 {wrapInputError ??
@@ -558,6 +558,7 @@ export default function Swap() {
                                 id="swap-button"
                                 disabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError}
                                 error={isValid && priceImpactSeverity > 2 && !swapCallbackError}
+                                className="stake_full_btn"
                               >
                                 <Text fontSize={20} fontWeight={500}>
                                   {swapInputError

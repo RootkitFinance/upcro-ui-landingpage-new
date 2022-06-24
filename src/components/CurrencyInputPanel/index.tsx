@@ -259,13 +259,13 @@ export default function CurrencyInputPanel({
             }}
         />
 {account && currency && showMaxButton && label !== 'To' && (
-                <StyledBalanceMax onClick={onMax}>MAX</StyledBalanceMax>
+                <StyledBalanceMax onClick={onMax} className="max_btn_as">MAX</StyledBalanceMax>
               )}
         <Box className='slect_box'>
 
           <CurrencySelect
               selected={!!currency}
-              className="open-currency-select-button"
+              className="open-currency-select-button upmatic_btn_pop"
               onClick={() => {
                 if (!disableCurrencySelect) {
                   setModalOpen(true)

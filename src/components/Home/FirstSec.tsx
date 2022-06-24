@@ -1,8 +1,18 @@
 import React from 'react'
 import { Box, SimpleGrid, GridItem, Heading, Text, Button, Image } from '@chakra-ui/react'
 import { Element } from 'react-scroll';
+import Lottie from 'react-lottie'
+import t1 from '../../assets/lottie/upCRO.json'
 // import { motion, useMotionValue, useTransform } from "framer-motion";
 
+const top = {
+    loop: true,
+    autoplay: true,
+    animationData: t1,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+};
 export default function FirstSec() {
     // const x = useMotionValue(200);
     // const y = useMotionValue(200);
@@ -58,7 +68,8 @@ export default function FirstSec() {
                                         rotateY: rotateY
                                     }}> */}
                                         <Box className='radial_gradiant_box'>
-                                            <Image src='img/first_clas_img_one.svg' className='upcro_first_img' />
+                                            <Lottie options={top} width={450} height={450}></Lottie>
+                                            {/* <Image src='img/first_clas_img_one.svg' className='upcro_first_img' /> */}
                                         </Box>
                                     {/* </motion.div>
                                 </motion.div> */}
