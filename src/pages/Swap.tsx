@@ -50,6 +50,8 @@ import { ClickableText } from './Pool/styleds'
 import Loader from '../components/Loader'
 import { useIsTransactionUnsupported } from '../hooks/Trades'
 import UnsupportedCurrencyFooter from '../components/swap/UnsupportedCurrencyFooter'
+import Lottie from 'react-lottie'
+import t1 from '../assets/lottie/CRO_Dashboard_2.json'
 // import { RouteComponentProps } from 'react-router-dom'
 
 const currency = [
@@ -324,6 +326,15 @@ export default function Swap() {
     ])
   
     const swapIsUnsupported = useIsTransactionUnsupported(currencies?.INPUT, currencies?.OUTPUT)
+    const top = {
+      loop: true,
+      autoplay: true,
+      animationData: t1,
+      rendererSettings: {
+        preserveAspectRatio: "xMidYMid slice"
+      }
+  };
+  
   return (
     <>
         <LayoutTwo>
@@ -341,7 +352,10 @@ export default function Swap() {
             onDismiss={handleConfirmDismiss}
           />
             <Box className='swap_main'>
-                <Container maxW="container.xl">
+              <Box className='dsbrdanmtnbg'>
+                <Lottie options={top} width={1640} height={2057}></Lottie>
+              </Box>
+                <Container maxW="container.xl" className='psjn_rltv_aj'>
                     <Box className='swap_border_Box'>
                         <Heading as="h4">Swap</Heading>
                         <SwapHeader />

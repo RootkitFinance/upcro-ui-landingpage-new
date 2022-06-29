@@ -9,13 +9,26 @@ import {
   Th,
   Td,
 } from '@chakra-ui/react'
+import Lottie from 'react-lottie'
+import t1 from '../assets/lottie/CRO_Dashboard_2.json'
 
 export default function Pools() {
+  const top = {
+    loop: true,
+    autoplay: true,
+    animationData: t1,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+};
   return (
     <>
         <LayoutTwo>
             <Box className='pools_main'>
-              <Box className='pool_list_box'>
+              <Box className='dsbrdanmtnbg'>
+                <Lottie options={top} width={1640} height={2057}></Lottie>
+              </Box>
+              <Box className='pool_list_box '>
                 <Box className='dashboard_chart_box dashboard_chart_box_last'>
                     <Box className='flex_chart_header flex_chart_header_last'>
                       <Heading as="h3">List of all pools</Heading>

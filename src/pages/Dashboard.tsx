@@ -11,6 +11,9 @@ import {
 } from '@chakra-ui/react'
 import TokenChart from '../components/TokenChart'
 
+import Lottie from 'react-lottie'
+import t1 from '../assets/lottie/CRO_Dashboard_1.json'
+
 export default function Dashboard() {
   let address = "0xb062084affdf75b9b494d56b8417f1b981df790f"
   let backgroundColor = "#2172E5"
@@ -22,6 +25,14 @@ export default function Dashboard() {
     PRICE: 'Price',
     LINE_PRICE: 'Price (Line)',
   }
+  const top = {
+    loop: true,
+    autoplay: true,
+    animationData: t1,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice"
+    }
+};
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -30,6 +41,9 @@ export default function Dashboard() {
     <>
         <LayoutTwo>
           <Box className='dashboard_main_page'>
+            <Box className='dsbrdanmtnbg'>
+              <Lottie options={top} width={1640} height={2057}></Lottie>
+            </Box>
             <Box className='dashboard_cntnt_box'>
               <SimpleGrid columns={12} columnGap={4} rowGap={3} >
                 <GridItem colSpan={[12, 12, 12, 6]}>
